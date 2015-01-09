@@ -1,5 +1,10 @@
 #include <iostream>       // for CIN and COUT
 
+// declare prototype
+template <class T>
+class VectorIterator;
+
+
 template <class T>
 class Vector
 {
@@ -60,7 +65,7 @@ public:
 		data[current_size] = item;
 		current_size++;
 	}
-	T & operator [](int index) throw()
+	T & operator [](int index) throw(const char *)
 	{
 		if (index < 0 || index >= capacity_size)
 		{
@@ -68,10 +73,51 @@ public:
 		}
 		return data[index];
 	}
-	void begin(); //TODO: not void
-	void end(); //TODO: not void
+	VectorIterator <T> begin()
+	{
+		return VectorIterator <T>(data);
+	}
+	VectorIterator <T> end()
+	{
+		return VectorIterator <T>(data + capacity_size);
+	}
 private:
 	T * data;
 	int current_size;
 	int capacity_size;
+};
+
+template <class T>
+class VectorIterator
+{
+public:
+	VectorIterator() : pVector(NULL) {}
+	VectorIterator(T * pVectorInput) : pVector(pVectorInput) {}
+	VectorIterator(const VectorIterator & rhs)  { *this = rhs; }
+	bool operator != (const VectorIterator & rhs) const
+	{
+		return rhs.pVector != this->pVector;
+	}
+	VectorIterator & operator = (const VectorIterator & rhs)
+	{
+		this->p = rhs.p;
+		return *this;
+	}
+	T & operator * ()
+	{
+		return *pVector;
+	}
+	VectorIterator<T> & operator ++ ()
+	{
+		pVector++;
+		return *this;
+	}
+	VectorIterator<T> & operator ++ (int postfix)
+	{
+		VectorIterator tmp(*this);
+		pVector++;
+		return tmp;
+	}
+private:
+	T * pVector; //Pointer of generic type
 };
