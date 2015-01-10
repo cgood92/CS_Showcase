@@ -1,3 +1,14 @@
+/***********************************************************************
+* Program:
+*    Lesson 00, Vector
+*    Brother Sloan, CS 235
+* Author:
+*    Clint Goodman
+* Summary:
+*    This is a header file that implements a data structure acting
+*	just like a vector.  
+************************************************************************/
+
 #include <iostream>       // for CIN and COUT
 
 // declare prototype
@@ -91,7 +102,10 @@ private:
 	int capacity_size;
 	void initFromZero()
 	{
-		capacity_size = 1;
+		if (capacity_size == 0)
+		{
+			capacity_size = 1;
+		}
 		data = new T[capacity_size];
 	}
 };
