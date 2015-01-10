@@ -9,7 +9,7 @@ template <class T>
 class Vector
 {
 public:
-	Vector() //Default constructor
+	Vector() : data(NULL), current_size(0), capacity_size(0) //Default constructor
 	{
 		Vector(0);
 	}
@@ -18,8 +18,17 @@ public:
 	{
 		data = NULL;
 		delete [] data;
-	} 
-	Vector(const Vector<T> & lhs); //Copy constructor
+	}
+	Vector(const Vector<T> & rhs) //Copy constructor
+	{
+		capacity_size = rhs.capacity_size;
+		current_size = rhs.current_size;
+		data = new T[capacity_size];
+		for (int i = 0; i < rhs.current_size; i++)
+		{
+			this->data[i] = rhs.data[i];
+		}
+	}
 	bool empty()
 	{
 		return (current_size == 0);
@@ -40,14 +49,9 @@ public:
 	void push_back(T item)
 	{
 		//Capacity has to be more than one
-		if (capacity_size == 0)
+		if (data == NULL)
 		{
-			capacity_size = 1;
-		}
-		//Array has not been created yet
-		if (current_size == 0)
-		{
-			data = new T[capacity_size];
+			initFromZero();
 		}
 		//If the capactiy is full, double the capactiy
 		if (current_size >= capacity_size)
@@ -79,12 +83,17 @@ public:
 	}
 	VectorIterator <T> end()
 	{
-		return VectorIterator <T>(data + capacity_size);
+		return VectorIterator <T>(data + current_size);
 	}
 private:
 	T * data;
 	int current_size;
 	int capacity_size;
+	void initFromZero()
+	{
+		capacity_size = 1;
+		data = new T[capacity_size];
+	}
 };
 
 template <class T>
@@ -98,9 +107,15 @@ public:
 	{
 		return rhs.pVector != this->pVector;
 	}
+
+	bool operator == (const VectorIterator & rhs) const
+	{
+		return rhs.pVector == this->pVector;
+	}
+	
 	VectorIterator & operator = (const VectorIterator & rhs)
 	{
-		this->p = rhs.p;
+		this->pVector = rhs.pVector;
 		return *this;
 	}
 	T & operator * ()
@@ -110,6 +125,11 @@ public:
 	VectorIterator<T> & operator ++ ()
 	{
 		pVector++;
+		return *this;
+	}
+	VectorIterator<T> & operator -- ()
+	{
+		pVector--;
 		return *this;
 	}
 	VectorIterator<T> & operator ++ (int postfix)
