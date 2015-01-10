@@ -20,17 +20,20 @@ template <class T>
 class Vector
 {
 public:
-	Vector() : data(NULL), current_size(0), capacity_size(0) //Default constructor
+	//Default constructor
+	Vector() : data(NULL), current_size(0), capacity_size(0)
 	{
 		Vector(0);
 	}
-	Vector(int capacity_size) : data(NULL), current_size(0), capacity_size(capacity_size) {} //Non-default constructor
+	//Non-default constructor
+	Vector(int capacity_size) : data(NULL), current_size(0), capacity_size(capacity_size) {}
 	~Vector()  //Destructor
 	{
 		data = NULL;
 		delete [] data;
 	}
-	Vector(const Vector<T> & rhs) //Copy constructor
+	//Copy constructor
+	Vector(const Vector<T> & rhs)
 	{
 		capacity_size = rhs.capacity_size;
 		current_size = rhs.current_size;
@@ -67,14 +70,7 @@ public:
 		//If the capactiy is full, double the capactiy
 		if (current_size >= capacity_size)
 		{
-			capacity_size *= 2;
-			//TODO: make a new array; copy all the old array into this array
-			T * tempData = new T[capacity_size];
-			for (int i = 0; i < current_size; i++)
-			{
-				tempData[i] = data[i];
-			}
-			data = tempData;
+			extendSize();
 		}
 		//Add the data
 		data[current_size] = item;
@@ -82,7 +78,8 @@ public:
 	}
 	T & operator [](int index) throw(const char *)
 	{
-		if (index < 0 || index >= capacity_size)
+		//Check the range of the index
+		if (index < 0 || index >= current_size)
 		{
 			throw "ERROR: Invalid index";
 		}
@@ -107,6 +104,11 @@ private:
 			capacity_size = 1;
 		}
 		data = new T[capacity_size];
+	}
+	void extendSize()
+	{
+		capacity_size *= 2;
+		*this = Vector(*this);
 	}
 };
 
@@ -153,5 +155,6 @@ public:
 		return tmp;
 	}
 private:
-	T * pVector; //Pointer of generic type
+	//Pointer of generic type
+	T * pVector;
 };
