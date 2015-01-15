@@ -30,22 +30,22 @@ class Set
 private:
 	T * data;          // dynamically allocated array of T
 	//I switched "size" for "numItems"
-	int Size;          //the current Set size, or number of items
+	int size;          //the current Set size, or number of items
 	//currently within the vector
-	int Capacity;      // how many items can I put on the Set before full?
-	void resize(int newCapacity) throw (bad_alloc);
+	int capacity;      // how many items can I put on the Set before full?
+	void resize(int newcapacity) throw (bad_alloc);
 
 public:
 	/////////constructors///////////////////
 	// default constructor : empty and kinda useless
-	Set() : data(NULL), Size(0), Capacity(0) {}
+	Set() : data(NULL), size(0), capacity(0) {}
 	// copy constructor : copy it
-	Set(const Set<T> & rhs) : data(NULL), Size(0), Capacity(0)
+	Set(const Set<T> & rhs) : data(NULL), size(0), capacity(0)
 	{
 		if (rhs.size())   { *this = rhs; }
 	}
 	// non-default constructor : pre-allocate
-	Set(int capacity) : data(NULL), Size(0), Capacity(0)
+	Set(int capacity) : data(NULL), size(0), capacity(0)
 	{
 		if (capacity > 0) { resize(capacity); }
 	}
@@ -70,22 +70,22 @@ public:
 	}
 
 	//Return the Setsize
-	int size()        const{ return Size; }
+	int size()        const{ return size; }
 
 	//Test whether the set is empty
-	bool empty()      const { return Size == 0; }
+	bool empty()      const { return size == 0; }
 
-	//returns the Capacity size
-	int capacity()    const{ return Capacity; }
+	//returns the capacity size
+	int capacity()    const{ return capacity; }
 
 	// remove all the items from the container
-	void clear()      { Size = 0; }
+	void clear()      { size = 0; }
 
 	// return an iterator to the beginning of the list
 	SetIterator <T> begin()   { return SetIterator<T>(data); }
 
 	// return an iterator to the end of the list
-	SetIterator <T> end()     { return SetIterator<T>(data + Size); }
+	SetIterator <T> end()     { return SetIterator<T>(data + size); }
 
 	//not int, but return the type of variable being used (char, int, float..)
 	SetIterator<T> & find(T element);
@@ -106,21 +106,21 @@ void Set<T> ::insert(const T & item)
 	SetIterator<T> iter_find = find(item);
 	/* If iterator returned is the same as the end, but the item is not the last,
 	this means that the item was not found, so we can insert it */
-	if (*iter_find == data[Size - 1] && data[Size - 1] != item)
+	if (*iter_find == data[size - 1] && data[size - 1] != item)
 	{
 		//If full, increase capacity
-		if (Size == Capacity)
+		if (size == capacity)
 		{
-			resize(Capacity * 2);
+			resize(capacity * 2);
 		}
 		//"i" is pulled out to this scope so we can use it a few lines down
 		int i;
-		for (i = this->Size + 1; data[i] > item; i--)
+		for (i = this->size + 1; data[i] > item; i--)
 		{
 			data[i] = data[i + 1];
 		}
 		data[i] = item;
-		this->Size++;
+		this->size++;
 	}
 }
 
@@ -131,7 +131,7 @@ template <class T>
 SetIterator<T> & Set<T> ::find(T element)
 {
 	int iBegin = 0;
-	int iEnd = Size - 1;
+	int iEnd = size - 1;
 	while ((iBegin == iEnd) || (iBegin < iEnd))
 	{
 		int iMiddle = (iBegin + iEnd) / 2;
@@ -148,7 +148,7 @@ SetIterator<T> & Set<T> ::find(T element)
 			iBegin = iMiddle + 1;
 		}
 	}
-	return SetIterator<T>(data, Size);
+	return SetIterator<T>(data, size);
 }
 
 
@@ -166,6 +166,7 @@ void Set<T> ::erase(const SetIterator<T> & tIterator)
 template <class T>
 Set<T> Set<T> ::operator && (const Set<T> & rhs)
 {
+	//TODO
 	return rhs;
 }
 
@@ -184,20 +185,20 @@ Set<T> Set<T> ::operator || (const Set<T> & rhs)
 * //creating the steps for resizing the Set
 ***********************************************************************/
 template <class T>
-void Set<T> ::resize(int newCapacity) throw (bad_alloc)
+void Set<T> ::resize(int newcapacity) throw (bad_alloc)
 {
 	//allocate new array
 	T * pNew;
-	pNew = new T[newCapacity];
+	pNew = new T[newcapacity];
 	//copy data from old array
-	for (int i = 0; i < Size; i++)
+	for (int i = 0; i < size; i++)
 	{
 		pNew[i] = data[i];
 	}
 	//delete old and assign the new
 	delete[] data;
 	data = pNew;
-	Capacity = newCapacity;
+	capacity = newcapacity;
 }
 
 /**********************************************************************
@@ -207,17 +208,17 @@ void Set<T> ::resize(int newCapacity) throw (bad_alloc)
 template <class T>
 Set<T> & Set<T> :: operator = (const Set<T> & rhs) throw (bad_alloc)
 {
-	Size = 0; //remove all previously in the data
+	size = 0; //remove all previously in the data
 	//make sure we are big enough for the data
-	if (rhs.Size > Capacity)
+	if (rhs.size > capacity)
 	{
-		resize(rhs.Size);
+		resize(rhs.size);
 	}
-	assert(Capacity >= rhs.Size);
+	assert(capacity >= rhs.size);
 
 	//copy the data from the other size
-	Size = rhs.Size;
-	for (int i = 0; i < rhs.Size; i++)
+	size = rhs.size;
+	for (int i = 0; i < rhs.size; i++)
 	{
 		data[i] = rhs.data[i];
 	}
@@ -231,7 +232,7 @@ Set<T> & Set<T> :: operator = (const Set<T> & rhs) throw (bad_alloc)
 template <class T>
 Set<T> & Set<T> :: operator [] (const Set<T> & rhs) throw (bool)
 {
-	if ((rhs < 0) || (rhs > Size))
+	if ((rhs < 0) || (rhs > size))
 	{
 		throw true;
 	}
