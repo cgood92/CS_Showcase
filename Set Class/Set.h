@@ -19,7 +19,6 @@ using namespace std;
 //early declaration of the "SetIterator" class for the "Vector" class
 template <class T>
 class SetIterator;
-
 /**********************************************************************
 * Set
 * //creating the class for sets
@@ -30,22 +29,22 @@ class Set
 private:
 	T * data;          // dynamically allocated array of T
 	//I switched "size" for "numItems"
-	int size;          //the current Set size, or number of items
+	int current_size;          //the current Set size, or number of items
 	//currently within the vector
-	int capacity;      // how many items can I put on the Set before full?
-	void resize(int newcapacity) throw (bad_alloc);
+	int capacity_size;      // how many items can I put on the Set before full?
+	void resize(int newCapacity) throw (bad_alloc);
 
 public:
 	/////////constructors///////////////////
 	// default constructor : empty and kinda useless
-	Set() : data(NULL), size(0), capacity(0) {}
+	Set() : data(NULL), current_size(0), capacity_size(0) {}
 	// copy constructor : copy it
-	Set(const Set<T> & rhs) : data(NULL), size(0), capacity(0)
+	Set(const Set<T> & rhs) : data(NULL), current_size(0), capacity_size(0)
 	{
 		if (rhs.size())   { *this = rhs; }
 	}
 	// non-default constructor : pre-allocate
-	Set(int capacity) : data(NULL), size(0), capacity(0)
+	Set(int capacity) : data(NULL), current_size(0), capacity_size(0)
 	{
 		if (capacity > 0) { resize(capacity); }
 	}
@@ -70,25 +69,25 @@ public:
 	}
 
 	//Return the Setsize
-	int size()        const{ return size; }
+	int size()        const{ return current_size; }
 
 	//Test whether the set is empty
-	bool empty()      const { return size == 0; }
+	bool empty()      const { return current_size == 0; }
 
-	//returns the capacity size
-	int capacity()    const{ return capacity; }
+	//returns the capacity_size size
+	int capacity()    const{ return capacity_size; }
 
 	// remove all the items from the container
-	void clear()      { size = 0; }
+	void clear()      { current_size = 0; }
 
 	// return an iterator to the beginning of the list
 	SetIterator <T> begin()   { return SetIterator<T>(data); }
 
 	// return an iterator to the end of the list
-	SetIterator <T> end()     { return SetIterator<T>(data + size); }
+	SetIterator <T> end()     { return SetIterator<T>(data + current_size); }
 
 	//not int, but return the type of variable being used (char, int, float..)
-	SetIterator<T> & find(T element);
+	SetIterator<T> find(T element);
 
 	void insert(const T & item);
 	void erase(const SetIterator <T> & tIterator);
@@ -103,24 +102,34 @@ public:
 template <class T>
 void Set<T> ::insert(const T & item)
 {
+	//If this is first insert, allocate some space, insert it, and quit
+	if (current_size == 0)
+	{
+		resize(1);
+		data[0] = item;
+		current_size++;
+		return;
+	}
+
 	SetIterator<T> iter_find = find(item);
+
 	/* If iterator returned is the same as the end, but the item is not the last,
 	this means that the item was not found, so we can insert it */
-	if (*iter_find == data[size - 1] && data[size - 1] != item)
+	if (*iter_find == data[current_size - 1] && data[current_size - 1] != item)
 	{
 		//If full, increase capacity
-		if (size == capacity)
+		if (current_size == capacity_size)
 		{
-			resize(capacity * 2);
+			resize(capacity_size * 2);
 		}
 		//"i" is pulled out to this scope so we can use it a few lines down
 		int i;
-		for (i = this->size + 1; data[i] > item; i--)
+		for (i = this->current_size; data[i] > item; i--)
 		{
 			data[i] = data[i + 1];
 		}
 		data[i] = item;
-		this->size++;
+		this->current_size++;
 	}
 }
 
@@ -128,16 +137,16 @@ void Set<T> ::insert(const T & item)
 /**********************************************************************
 ***********************************************************************/
 template <class T>
-SetIterator<T> & Set<T> ::find(T element)
+SetIterator<T> Set<T> ::find(T element)
 {
 	int iBegin = 0;
-	int iEnd = size - 1;
+	int iEnd = current_size - 1;
 	while ((iBegin == iEnd) || (iBegin < iEnd))
 	{
 		int iMiddle = (iBegin + iEnd) / 2;
 		if (element == data[iMiddle])
 		{
-			return SetIterator<T>(data, iMiddle);
+			return SetIterator<T>(data, iMiddle - 1);
 		}
 		if (element < data[iMiddle])
 		{
@@ -148,7 +157,8 @@ SetIterator<T> & Set<T> ::find(T element)
 			iBegin = iMiddle + 1;
 		}
 	}
-	return SetIterator<T>(data, size);
+	return SetIterator<T>(data, current_size - 1);
+
 }
 
 
@@ -185,20 +195,20 @@ Set<T> Set<T> ::operator || (const Set<T> & rhs)
 * //creating the steps for resizing the Set
 ***********************************************************************/
 template <class T>
-void Set<T> ::resize(int newcapacity) throw (bad_alloc)
+void Set<T> ::resize(int newCapacity) throw (bad_alloc)
 {
 	//allocate new array
 	T * pNew;
-	pNew = new T[newcapacity];
+	pNew = new T[newCapacity];
 	//copy data from old array
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < current_size; i++)
 	{
 		pNew[i] = data[i];
 	}
 	//delete old and assign the new
 	delete[] data;
 	data = pNew;
-	capacity = newcapacity;
+	capacity_size = newCapacity;
 }
 
 /**********************************************************************
@@ -208,17 +218,17 @@ void Set<T> ::resize(int newcapacity) throw (bad_alloc)
 template <class T>
 Set<T> & Set<T> :: operator = (const Set<T> & rhs) throw (bad_alloc)
 {
-	size = 0; //remove all previously in the data
+	current_size = 0; //remove all previously in the data
 	//make sure we are big enough for the data
-	if (rhs.size > capacity)
+	if (rhs.current_size > capacity_size)
 	{
-		resize(rhs.size);
+		resize(rhs.current_size);
 	}
-	assert(capacity >= rhs.size);
+	assert(capacity_size >= rhs.current_size);
 
 	//copy the data from the other size
-	size = rhs.size;
-	for (int i = 0; i < rhs.size; i++)
+	current_size = rhs.current_size;
+	for (int i = 0; i < rhs.current_size; i++)
 	{
 		data[i] = rhs.data[i];
 	}
@@ -232,7 +242,7 @@ Set<T> & Set<T> :: operator = (const Set<T> & rhs) throw (bad_alloc)
 template <class T>
 Set<T> & Set<T> :: operator [] (const Set<T> & rhs) throw (bool)
 {
-	if ((rhs < 0) || (rhs > size))
+	if ((rhs < 0) || (rhs > current_size))
 	{
 		throw true;
 	}
@@ -252,8 +262,9 @@ public:
 	SetIterator() : p(0x00000000)  {}
 	// initialize to direct the private variable "t" to some item
 	SetIterator(T * p) : p(p)      {}
-	SetIterator(T * p, int index) : p(p)
+	SetIterator(T * pInput, int index)
 	{
+		this->p = pInput;
 		for (int i = 0; i < index; i++)
 			p++;
 	}
@@ -291,7 +302,7 @@ public:
 		return *this;
 	}
 	// postfix decrement
-	SetIterator <T> operator--(int prefix)
+	SetIterator <T> & operator--(int prefix)
 	{
 		SetIterator tmp(*this);
 		p--;
@@ -304,7 +315,7 @@ public:
 		return *this;
 	}
 	// postfix increment
-	SetIterator <T> operator++(int postfix)
+	SetIterator <T> & operator++(int postfix)
 	{
 		SetIterator tmp(*this);
 		p++;
