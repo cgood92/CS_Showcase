@@ -113,7 +113,7 @@ void Set<T> ::insert(const T & item)
 
 	/* If iterator returned is the same as the end, but the item is not the last,
 	this means that the item was not found, so we can insert it */
-	if (*iter_find == data[current_size - 1] && data[current_size - 1] != item)
+	if (iter_find == this->end())
 	{
 		//If full, increase capacity
 		if (current_size == capacity_size)
@@ -145,7 +145,7 @@ SetIterator<T> Set<T> ::find(T element)
 		int iMiddle = (iBegin + iEnd) / 2;
 		if (element == data[iMiddle])
 		{
-			return SetIterator<T>(data, iMiddle - 1);
+			return SetIterator<T>(data + iMiddle);
 		}
 		if (element < data[iMiddle])
 		{
@@ -156,7 +156,7 @@ SetIterator<T> Set<T> ::find(T element)
 			iBegin = iMiddle + 1;
 		}
 	}
-	return SetIterator<T>(data, current_size - 1);
+	return this->end();
 }
 
 /**********************************************************************
@@ -230,8 +230,7 @@ void Set<T> ::erase(SetIterator<T> & iteratorInput)
 	{
 		if (data[i] == *iteratorInput)
 		{
-			i++;
-			for (; i < current_size; i++)
+			for (; i < current_size - 1; i++)
 			{
 				data[i] = data[i + 1];
 			}
