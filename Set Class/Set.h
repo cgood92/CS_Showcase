@@ -19,6 +19,7 @@ using namespace std;
 //early declaration of the "SetIterator" class for the "Vector" class
 template <class T>
 class SetIterator;
+
 /**********************************************************************
 * Set
 * //creating the class for sets
@@ -56,48 +57,45 @@ public:
 			delete[] data;
 		}
 	}
+
+	//Return the Setsize
+	int size()        const{ return current_size; }
+	//Test whether the set is empty
+	bool empty()      const { return current_size == 0; }
+	//returns the Capacity size
+	int capacity()    const{ return capacity_size; }
+	// remove all the items from the container
+	void clear()      { current_size = 0; }
+
 	//operator=
 	Set<T> & operator = (const Set<T> & rhs) throw (bad_alloc);
-
 	//operator[]
 	Set<T> & operator [] (const Set<T> & rhs) throw (bool);
-
 	//operator()//return-by-value
 	T operator () (int index) throw (bool)
 	{
 		return (*this)[index];
 	}
-
-	//Return the Setsize
-	int size()        const{ return current_size; }
-
-	//Test whether the set is empty
-	bool empty()      const { return current_size == 0; }
-
-	//returns the capacity_size size
-	int capacity()    const{ return capacity_size; }
-
-	// remove all the items from the container
-	void clear()      { current_size = 0; }
+	Set<T> operator || (const Set<T> & rhs);
+	Set<T> operator && (const Set<T> & rhs);
 
 	// return an iterator to the beginning of the list
 	SetIterator <T> begin()   { return SetIterator<T>(data); }
-
 	// return an iterator to the end of the list
 	SetIterator <T> end()     { return SetIterator<T>(data + current_size); }
+	//return the iterator if it exists in the list
+	SetIterator <T> find(T element);
 
-	//not int, but return the type of variable being used (char, int, float..)
-	SetIterator<T> find(T element);
-
+	//inserts a value into the set
 	void insert(const T & item);
-	void erase(const SetIterator <T> & tIterator);
-
-	Set<T> operator || (const Set<T> & rhs);
-	Set<T> operator && (const Set<T> & rhs);
+	//remove a value from the set
+	//void erase(const SetIterator <T> & tIterator);
+	void erase(const T & item);
 };
 
-
 /**********************************************************************
+* Set-insert
+* //creating the steps for inserting a unit/value to a certain spot
 ***********************************************************************/
 template <class T>
 void Set<T> ::insert(const T & item)
@@ -110,9 +108,7 @@ void Set<T> ::insert(const T & item)
 		current_size++;
 		return;
 	}
-
 	SetIterator<T> iter_find = find(item);
-
 	/* If iterator returned is the same as the end, but the item is not the last,
 	this means that the item was not found, so we can insert it */
 	if (*iter_find == data[current_size - 1] && data[current_size - 1] != item)
@@ -124,17 +120,18 @@ void Set<T> ::insert(const T & item)
 		}
 		//"i" is pulled out to this scope so we can use it a few lines down
 		int i;
-		for (i = this->current_size - 1; data[i] > item; i--)
+		for (i = this->current_size; data[i] > item; i--)
 		{
-			data[i + 1] = data[i];
+			data[i] = data[i + 1];
 		}
-		data[i + 1] = item;
+		data[i] = item;
 		this->current_size++;
 	}
 }
 
-
 /**********************************************************************
+* Set-find
+* //creating the steps for finding a certain value and location
 ***********************************************************************/
 template <class T>
 SetIterator<T> Set<T> ::find(T element)
@@ -160,35 +157,6 @@ SetIterator<T> Set<T> ::find(T element)
 	return SetIterator<T>(data, current_size - 1);
 }
 
-
-
-/**********************************************************************
-***********************************************************************/
-template <class T>
-void Set<T> ::erase(const SetIterator<T> & tIterator)
-{
-
-}
-
-/**********************************************************************
-***********************************************************************/
-template <class T>
-Set<T> Set<T> ::operator && (const Set<T> & rhs)
-{
-	//TODO
-	return rhs;
-}
-
-/**********************************************************************
-
-***********************************************************************/
-template <class T>
-Set<T> Set<T> ::operator || (const Set<T> & rhs)
-{
-	//TODO
-	return rhs;
-}
-
 /**********************************************************************
 * Set-resize
 * //creating the steps for resizing the Set
@@ -209,7 +177,6 @@ void Set<T> ::resize(int newCapacity) throw (bad_alloc)
 	data = pNew;
 	capacity_size = newCapacity;
 }
-
 /**********************************************************************
 * Set-operator equals
 * //creating the steps for equaling the Set
@@ -248,6 +215,51 @@ Set<T> & Set<T> :: operator [] (const Set<T> & rhs) throw (bool)
 	return data[rhs]; //return-by-reference
 }
 /**********************************************************************
+***********************************************************************/
+template <class T>
+void Set<T> ::erase(const T & item)
+{
+
+	//   for (int n = 1; (n == Size); n++)
+	//   {
+	//      if (element == data[n])
+	//      {
+	//         data[n] = data[n-1];
+	//      }
+	//   }
+
+	int indexForErase = find(item);
+	if (data[indexForErase] == item)
+	{
+		for (int i = this->current_size + 1; i > indexForErase; i--)
+		{
+			data[i] = data[i + 1];
+		}
+		this->current_size--;
+	}
+
+}
+
+/**********************************************************************
+***********************************************************************/
+template <class T>
+Set<T> Set<T> ::operator && (const Set<T> & rhs)
+{
+	//TODO
+	return rhs;
+}
+
+/**********************************************************************
+
+***********************************************************************/
+template <class T>
+Set<T> Set<T> ::operator || (const Set<T> & rhs)
+{
+	//TODO
+	return rhs;
+}
+
+/**********************************************************************
 * SetIterator
 * //creating the class of the SetIterator
 ***********************************************************************/
@@ -264,7 +276,7 @@ public:
 	SetIterator(T * pInput, int index)
 	{
 		this->p = pInput;
-		for (int i = 0; i < index; i++)
+		for (int i = 0; i<index; i++)
 			p++;
 	}
 	//copy constructor
@@ -273,7 +285,6 @@ public:
 		*this = rhs;
 	}
 	// assignment operator
-
 	SetIterator & operator = (const SetIterator & rhs)
 	{
 		this->p = rhs.p;
@@ -301,7 +312,7 @@ public:
 		return *this;
 	}
 	// postfix decrement
-	SetIterator <T> & operator--(int prefix)
+	SetIterator <T> operator--(int prefix)
 	{
 		SetIterator tmp(*this);
 		p--;
@@ -314,7 +325,7 @@ public:
 		return *this;
 	}
 	// postfix increment
-	SetIterator <T> & operator++(int postfix)
+	SetIterator <T> operator++(int postfix)
 	{
 		SetIterator tmp(*this);
 		p++;
@@ -322,3 +333,5 @@ public:
 	}
 };
 #endif
+
+
