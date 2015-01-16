@@ -323,12 +323,6 @@ public:
 	SetIterator() : p(0x00000000)  {}
 	// initialize to direct the private variable "t" to some item
 	SetIterator(T * p) : p(p)      {}
-	SetIterator(T * pInput, int index)
-	{
-		this->p = pInput;
-		for (int i = 0; i<index; i++)
-			p++;
-	}
 	//copy constructor
 	SetIterator(const SetIterator & rhs)
 	{
