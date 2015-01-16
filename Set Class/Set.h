@@ -124,11 +124,11 @@ void Set<T> ::insert(const T & item)
 		}
 		//"i" is pulled out to this scope so we can use it a few lines down
 		int i;
-		for (i = this->current_size; data[i] > item; i--)
+		for (i = this->current_size - 1; data[i] > item; i--)
 		{
-			data[i] = data[i + 1];
+			data[i + 1] = data[i];
 		}
-		data[i] = item;
+		data[i + 1] = item;
 		this->current_size++;
 	}
 }
@@ -158,7 +158,6 @@ SetIterator<T> Set<T> ::find(T element)
 		}
 	}
 	return SetIterator<T>(data, current_size - 1);
-
 }
 
 
