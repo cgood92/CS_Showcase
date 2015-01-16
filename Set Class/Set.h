@@ -90,7 +90,7 @@ public:
 	void insert(const T & item);
 	//remove a value from the set
 	//void erase(const SetIterator <T> & tIterator);
-	void erase(const T & item);
+	void Set<T> ::erase(SetIterator<T> & iteratorInput);
 };
 
 /**********************************************************************
@@ -216,30 +216,29 @@ Set<T> & Set<T> :: operator [] (const Set<T> & rhs) throw (bool)
 	}
 	return data[rhs]; //return-by-reference
 }
+
 /**********************************************************************
 ***********************************************************************/
 template <class T>
-void Set<T> ::erase(const T & item)
+void Set<T> ::erase(SetIterator<T> & iteratorInput)
 {
-
-	//   for (int n = 1; (n == Size); n++)
-	//   {
-	//      if (element == data[n])
-	//      {
-	//         data[n] = data[n-1];
-	//      }
-	//   }
-
-	int indexForErase = find(item);
-	if (data[indexForErase] == item)
+	/* If iterator returned is the same as the end, but the item is not the last,
+	this means that the item was not found, so we can't delete it - it does
+	not exist */
+	int i = this->current_size - 1;
+	for (; ; i--)
 	{
-		for (int i = this->current_size + 1; i > indexForErase; i--)
+		if (data[i] == *iteratorInput)
 		{
-			data[i] = data[i + 1];
+			i++;
+			for (; i < current_size; i++)
+			{
+				data[i] = data[i + 1];
+			}
+			this->current_size--;
+			return;
 		}
-		this->current_size--;
 	}
-
 }
 
 /**********************************************************************
