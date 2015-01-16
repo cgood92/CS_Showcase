@@ -77,7 +77,7 @@ public:
 		return (*this)[index];
 	}
 	Set<T> operator || (const Set<T> & rhs);
-	Set<T> operator && (const Set<T> & rhs);
+	Set<T> operator && (Set<T> & rhs);
 
 	// return an iterator to the beginning of the list
 	SetIterator <T> begin()   { return SetIterator<T>(data); }
@@ -244,10 +244,37 @@ void Set<T> ::erase(SetIterator<T> & iteratorInput)
 /**********************************************************************
 ***********************************************************************/
 template <class T>
-Set<T> Set<T> ::operator && (const Set<T> & rhs)
+Set<T> Set<T> ::operator && (Set<T> & rhs)
 {
-	//TODO
-	return rhs;
+	Set<T> setUnion;
+	SetIterator<T> iSet1 = this->begin();
+	SetIterator<T> iSet2 = rhs.begin();
+	while (*iSet1 != *this->end() || *iSet2 != *rhs.end())
+	{
+		if (*iSet1 == *this->end())
+		{
+			setUnion.insert(*iSet2++);
+		}
+		else if (*iSet2 == *rhs.end())
+		{
+			setUnion.insert(*iSet1++);
+		}
+		else if (*iSet1 == *iSet2)
+		{
+			setUnion.insert(*iSet1);
+			iSet1++;
+			iSet2++;
+		}
+		else if (*iSet1 < *iSet2)
+		{
+			setUnion.insert(*iSet1++);
+		}
+		else
+		{
+			setUnion.insert(*iSet2++);
+		}
+	}
+	return setUnion;
 }
 
 /**********************************************************************
