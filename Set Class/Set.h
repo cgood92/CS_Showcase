@@ -76,7 +76,7 @@ public:
 	{
 		return (*this)[index];
 	}
-	Set<T> operator || (const Set<T> & rhs);
+	Set<T> operator || (Set<T> & rhs);
 	Set<T> operator && (Set<T> & rhs);
 
 	// return an iterator to the beginning of the list
@@ -281,10 +281,33 @@ Set<T> Set<T> ::operator && (Set<T> & rhs)
 
 ***********************************************************************/
 template <class T>
-Set<T> Set<T> ::operator || (const Set<T> & rhs)
+Set<T> Set<T> ::operator || (Set<T> & rhs)
 {
-	//TODO
-	return rhs;
+	Set<T> setIntersect;
+	SetIterator<T> iSet1 = this->begin();
+	SetIterator<T> iSet2 = rhs.begin();
+	while (*iSet1 != *this->end() || *iSet2 != *rhs.end())
+	{
+		if (*iSet1 == *this->end() || *iSet2 == *rhs.end())
+		{
+			return setIntersect;
+		}
+		else if (*iSet1 == *iSet2)
+		{
+			setIntersect.insert(*iSet1);
+			iSet1++;
+			iSet2++;
+		}
+		else if (*iSet1 < *iSet2)
+		{
+			iSet1++;
+		}
+		else
+		{
+			iSet2++;
+		}
+	}
+	return setIntersect;
 }
 
 /**********************************************************************
