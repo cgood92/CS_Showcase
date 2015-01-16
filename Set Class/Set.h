@@ -243,7 +243,7 @@ void Set<T> ::erase(SetIterator<T> & iteratorInput)
 /**********************************************************************
 ***********************************************************************/
 template <class T>
-Set<T> Set<T> ::operator && (Set<T> & rhs)
+Set<T> Set<T> ::operator || (Set<T> & rhs)
 {
 	Set<T> setUnion;
 	SetIterator<T> iSet1 = this->begin();
@@ -280,7 +280,7 @@ Set<T> Set<T> ::operator && (Set<T> & rhs)
 
 ***********************************************************************/
 template <class T>
-Set<T> Set<T> ::operator || (Set<T> & rhs)
+Set<T> Set<T> ::operator && (Set<T> & rhs)
 {
 	Set<T> setIntersect;
 	SetIterator<T> iSet1 = this->begin();
