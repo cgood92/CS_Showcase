@@ -90,7 +90,7 @@ public:
 	void insert(const T & item);
 	//remove a value from the set
 	//void erase(const SetIterator <T> & tIterator);
-	void Set<T> ::erase(SetIterator<T> & iteratorInput);
+	void erase(SetIterator<T> & iteratorInput);
 };
 
 /**********************************************************************
