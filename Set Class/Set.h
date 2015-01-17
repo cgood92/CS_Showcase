@@ -122,7 +122,7 @@ void Set<T> ::insert(const T & item)
 		}
 		//"i" is pulled out to this scope so we can use it a few lines down
 		int i;
-		for (i = this->current_size - 1; data[i] > item; i--)
+		for (i = this->current_size - 1; i >= 0 && data[i] > item; i--)
 		{
 			data[i + 1] = data[i];
 		}
