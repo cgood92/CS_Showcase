@@ -1,22 +1,33 @@
-/***********************************************************************
-* Header:
-*    Go Fish
-* Summary:
-*    This will contain just the prototype for the goFish() function
-* Author
-*     Clint Goodman and Parker Hubbard
-************************************************************************/
+/*
+  THE REST BELONGS TO THE goFish.h THEN goFish.cpp
+* Program :
+* Lesson 01, Sets
+*    Brother Sloan, CS 235
+* Author :
+*Clint Goodman and Parker Hubbard
+* Summary :
+*********************************************************************** */
+#ifndef GOFISH_H
+#define GOFISH_H
 
-#ifndef GO_FISH_H
-#define GO_FISH_H
+#include <cassert>
+#include <iostream>
+#include <string>
 
-/**************************************************
- * GO FISH
- * Play the game of "Go Fish"
- *************************************************/
-void goFish();
+#include "set.h"
+//#include <set>
+#include "card.h"
+using namespace std;
+#include <fstream>
 
-
-
-#endif // GO_FISH_H
-
+//template <class TT>
+class goFish
+{
+public:
+	goFish()
+	{
+		play();
+	}
+	void play();
+};
+#endif
