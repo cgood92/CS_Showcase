@@ -32,8 +32,8 @@ void testDifference();
 #define TEST2   // for testFill()
 #define TEST3   // for testFind()
 #define TEST4   // for testUnionItersection()
-#define TEST5   // for testConstIterator()
-#define TEST6   // for testDifference()
+//#define TEST5   // for testConstIterator()
+//#define TEST6   // for testDifference()
 
 /**********************************************************************
  * MAIN
@@ -87,6 +87,9 @@ int main()
       default:
          cout << "Unrecognized command, exiting...\n";
    }
+
+   int quit;
+   cin >> quit;
    
    return 0;
 }
