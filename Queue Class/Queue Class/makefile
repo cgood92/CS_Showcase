@@ -9,7 +9,7 @@
 #     <put a description here>
 # Time:
 #     Clint:  XXX hours so far
-#     Parker: 1.0 hours so far
+#     Parker: 4.0 hours so far
 ###############################################################
 
 ##############################################################
