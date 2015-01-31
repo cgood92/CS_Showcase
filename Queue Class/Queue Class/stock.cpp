@@ -19,7 +19,6 @@ using namespace std;
 struct Transaction
 {
 	string action;
-	string msg;
 	Dollars amt;
 	int qty;
 	Dollars profit;
@@ -58,7 +57,6 @@ void stocksBuySell()
 			   trans.action = "Buy";
 			   trans.amt = price;
 			   trans.qty = qty;
-			   trans.msg = "Bought " + to_string(qty) + " shares at ";
 			   buyHistory.push(trans);
 		   }
 		   else if (action == "sell")
@@ -88,7 +86,6 @@ void stocksBuySell()
 			   trans.action = "Sell";
 			   trans.amt = price;
 			   trans.qty = qty;
-			   trans.msg = string("Sold " + to_string(qty) + " shares at $2.00 for a profit of ");
 			   trans.profit = proceeds - temp;
 
 			   sellHistory.push(trans);
@@ -102,14 +99,14 @@ void stocksBuySell()
 			   for (; !tempBuy.empty(); tempBuy.pop())
 			   {
 				   cout << "\n\t";
-				   cout << tempBuy.front().msg << tempBuy.front().amt;
+				   cout << "Bought " << qty << " shares at " << tempBuy.front().amt;
 			   }
 			   if (!tempSell.empty())
 				   cout << "\nSell History:";
 			   for (; !tempSell.empty(); tempSell.pop())
 			   {
 				   cout << "\n\t";
-				   cout << tempSell.front().msg << tempSell.front().profit;
+				   cout << "Sold " << qty << " shares at $2.00 for a profit of " << tempSell.front().profit;
 			   }
 			   cout << "\nProceeds: " << proceeds << endl;
 		   }
