@@ -34,10 +34,15 @@ class Queue
      Queue() : data(NULL), current_size(0), capacity_size(0),
         frontSpot(-1), backSpot(-1){}
      // copy constructor : copy details of another indicated
-     Queue(const Queue<T> & rhs) : data(NULL), current_size(0),
-        capacity_size(0), frontSpot(-1), backSpot(-1)
+	 Queue(const Queue<T> & rhs) : current_size(0)
      {
-        if (rhs.size())   { *this = rhs; }
+		 resize(rhs.capacity_size);
+		 current_size = rhs.current_size;
+		 capacity_size = rhs.capacity_size;
+		 frontSpot = rhs.frontSpot;
+		 backSpot = rhs.backSpot;
+		 for (int i = 0; i <= rhs.backSpot; i++)
+			 data[i] = rhs.data[i];
      }
      // non-default constructor : pre-allocate
      Queue(int capacity) : data(NULL), current_size(0),
@@ -84,7 +89,7 @@ void Queue<T> ::resize(int newCapacity) throw (bad_alloc)
    T * pNew;
    pNew = new T[newCapacity];
    //copy data from old array
-   for (int i = 0; current_size > 0 && i < capacity_size; i++)
+   for (int i = 0; current_size > 0 && i < current_size; i++)
    {
       pNew[i] = data[i];
    }
@@ -182,13 +187,7 @@ void Queue<T> ::pop() throw(const char *)
 template <class T>
 Queue<T> & Queue<T> :: operator = (const Queue<T> & rhs) throw (bad_alloc)
 {
-   current_size = 0;
-   if (rhs.current_size > capacity_size)
-   {
-      resize(rhs.current_size);
-   }
-   assert(capacity_size >= rhs.current_size);
-
+   resize(rhs.current_size);
 
    //copy the data from the other size
    current_size = rhs.current_size;
