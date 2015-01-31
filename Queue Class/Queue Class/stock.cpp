@@ -44,13 +44,35 @@ void stocksBuySell()
 	   Queue <Transaction> buyHistory;
 	   Queue <Transaction> sellHistory;
 	   string action;
+	   string line;
+	   int qty;
+	   Dollars price(0);
 	   Dollars proceeds(0);
-	   while (action != "quit")
+	   while (true)
 	   {
+
+		   //Get inputs
 		   cout << "> ";
-		   cin >> action;
-		   int qty = 20;
-		   Dollars price(20.50);
+		   getline(std::cin, line);
+		   std::stringstream  linestream(line);
+		   string lineTemp;
+		   for (int i = 0; linestream >> lineTemp; i++)
+		   {
+			   switch (i)
+			   {
+			   case 0:
+				   action = lineTemp;
+				   break;
+			   case 1:
+				   istringstream(lineTemp) >> qty;
+				   break;
+			   case 2:
+				   istringstream(lineTemp) >> price;
+				   break;
+			   }
+		   }
+
+		   //Determine actions
 		   if (action == "buy")
 		   {
 			   Transaction trans;
@@ -72,12 +94,12 @@ void stocksBuySell()
 				   if (buyHistory.front().qty > tempQty)
 				   {
 					   buyHistory.front().qty -= tempQty;
-					   proceeds += buyHistory.front().amt * tempQty;
+					   proceeds += (price - buyHistory.front().amt) * tempQty;
 					   tempQty = 0;
 				   }
 				   else
 				   {
-					   proceeds += buyHistory.front().amt * buyHistory.front().qty;
+					   proceeds += (price - buyHistory.front().amt) * buyHistory.front().qty;
 					   tempQty -= buyHistory.front().qty;
 					   buyHistory.pop();
 				   }
@@ -99,14 +121,14 @@ void stocksBuySell()
 			   for (; !tempBuy.empty(); tempBuy.pop())
 			   {
 				   cout << "\n\t";
-				   cout << "Bought " << qty << " shares at " << tempBuy.front().amt;
+				   cout << "Bought " << tempBuy.front().qty << " shares at " << tempBuy.front().amt;
 			   }
 			   if (!tempSell.empty())
 				   cout << "\nSell History:";
 			   for (; !tempSell.empty(); tempSell.pop())
 			   {
 				   cout << "\n\t";
-				   cout << "Sold " << qty << " shares at $2.00 for a profit of " << tempSell.front().profit;
+				   cout << "Sold " << tempSell.front().qty << " shares at " << tempSell.front().amt << " for a profit of " << tempSell.front().profit;
 			   }
 			   cout << "\nProceeds: " << proceeds << endl;
 		   }
