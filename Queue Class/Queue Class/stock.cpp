@@ -41,6 +41,7 @@ void stocksBuySell()
 
    try
    {
+	   //Temp Variables
 	   Queue <Transaction> buyHistory;
 	   Queue <Transaction> sellHistory;
 	   string action;
@@ -48,12 +49,16 @@ void stocksBuySell()
 	   int qty;
 	   Dollars price(0);
 	   Dollars proceeds(0);
+	   double myDouble;
+	   
+	   //Clear buffer
+	   cin.ignore(1000, '\n');
 	   while (true)
 	   {
-
 		   //Get inputs
 		   cout << "> ";
 		   getline(std::cin, line);
+
 		   std::stringstream  linestream(line);
 		   string lineTemp;
 		   for (int i = 0; linestream >> lineTemp; i++)
@@ -67,7 +72,9 @@ void stocksBuySell()
 				   istringstream(lineTemp) >> qty;
 				   break;
 			   case 2:
-				   istringstream(lineTemp) >> price;
+				   string prepToMove = lineTemp.substr(lineTemp.find("$")+1);
+				   istringstream(prepToMove) >> myDouble;
+				   price = myDouble;
 				   break;
 			   }
 		   }
@@ -89,28 +96,38 @@ void stocksBuySell()
 			   {
 				   if (buyHistory.empty())
 				   {
-					   throw "Big problem";
+					   throw "Selling more stocks than you currently own!";
 				   }
 				   if (buyHistory.front().qty > tempQty)
 				   {
 					   buyHistory.front().qty -= tempQty;
 					   proceeds += (price - buyHistory.front().amt) * tempQty;
+
+					   Transaction trans;
+					   trans.action = "Sell";
+					   trans.amt = price;
+					   trans.qty = tempQty;
+					   trans.profit = (price - buyHistory.front().amt) * tempQty;
+
+					   sellHistory.push(trans);
+
 					   tempQty = 0;
 				   }
 				   else
 				   {
 					   proceeds += (price - buyHistory.front().amt) * buyHistory.front().qty;
 					   tempQty -= buyHistory.front().qty;
+
+					   Transaction trans;
+					   trans.action = "Sell";
+					   trans.amt = price;
+					   trans.qty = buyHistory.front().qty;
+					   trans.profit = (price - buyHistory.front().amt) * buyHistory.front().qty;
+
+					   sellHistory.push(trans);
 					   buyHistory.pop();
 				   }
 			   }
-			   Transaction trans;
-			   trans.action = "Sell";
-			   trans.amt = price;
-			   trans.qty = qty;
-			   trans.profit = proceeds - temp;
-
-			   sellHistory.push(trans);
 		   }
 		   else if (action == "display")
 		   {
@@ -141,7 +158,8 @@ void stocksBuySell()
 
 		   }
 	   }
-
+	   string quit;
+	   cin >> quit;
    }
    catch (const char * error)
    {
