@@ -89,7 +89,7 @@ void Queue<T> ::resize(int newCapacity) throw (bad_alloc)
    T * pNew;
    pNew = new T[newCapacity];
    //copy data from old array
-   for (int i = 0; current_size > 0 && i < current_size; i++)
+   for (int i = 0; current_size > 0 && i <= backSpot; i++)
    {
       pNew[i] = data[i];
    }

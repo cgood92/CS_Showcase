@@ -134,20 +134,20 @@ void stocksBuySell()
 			   Queue <Transaction> tempBuy(buyHistory);
 			   Queue <Transaction> tempSell(sellHistory);
 			   if (!tempBuy.empty())
-				   cout << "Currently held:";
+				   cout << "Currently held:\n";
 			   for (; !tempBuy.empty(); tempBuy.pop())
 			   {
-				   cout << "\n\t";
-				   cout << "Bought " << tempBuy.front().qty << " shares at " << tempBuy.front().amt;
+				   cout << "\t";
+				   cout << "Bought " << tempBuy.front().qty << " shares at " << tempBuy.front().amt << endl;
 			   }
 			   if (!tempSell.empty())
-				   cout << "\nSell History:";
+				   cout << "Sell History:\n";
 			   for (; !tempSell.empty(); tempSell.pop())
 			   {
-				   cout << "\n\t";
-				   cout << "Sold " << tempSell.front().qty << " shares at " << tempSell.front().amt << " for a profit of " << tempSell.front().profit;
+				   cout << "\t";
+				   cout << "Sold " << tempSell.front().qty << " shares at " << tempSell.front().amt << " for a profit of " << tempSell.front().profit << endl;
 			   }
-			   cout << "\nProceeds: " << proceeds << endl;
+			   cout << "Proceeds: " << proceeds << endl;
 		   }
 		   else if (action == "quit")
 		   {
