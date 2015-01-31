@@ -34,7 +34,7 @@ class Queue
      Queue() : data(NULL), current_size(0), capacity_size(0),
         frontSpot(-1), backSpot(-1){}
      // copy constructor : copy details of another indicated
-	 Queue(const Queue<T> & rhs) : current_size(0)
+	 Queue(const Queue<T> & rhs) : current_size(0), data(NULL)
      {
 		 resize(rhs.capacity_size);
 		 current_size = rhs.current_size;
