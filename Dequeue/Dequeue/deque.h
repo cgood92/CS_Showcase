@@ -67,23 +67,24 @@ class Deque
      //capacity:Return the capacity_size of the Deque
      int capacity()    const{ return capacity_size; }
      //clear:   Removes all items from Deque
-     void clear(){}
+     void clear(){ cout << "";}
 
      Deque<T> & operator = (const Deque<T> & rhs) throw (bad_alloc);
 
-     //push_front():  Adds an item to the top/back of the Deque.
+     //from 0 to 10 items
+     //push_front():  Adds an item to the front/bottom of the Deque. //0///
      void push_front(const T & item);
-     //push_back():  Adds an item to the back/top of the Deque
-     void push_back(const T & item){}
+     //push_back():  Adds an item to the back/top of the Deque       //10//
+     void push_back(const T & item);
 
      //front(): Returns the item currently at the bottom/front of the Deque
      T & front()  throw(const char *);
      //back():  Returns the item currently at the top/back of the Deque
      T & back()   throw(const char *);
 
-     //pop(): Removes an item from the front/bottom of the Deque
+     //pop(): Removes an item from the front/bottom of the Deque   //0///
      void pop_front()   throw(const char *);
-     //pop(): Removes an item from the back/top of the Deque
+     //pop(): Removes an item from the back/top of the Deque       //10//
      void pop_back()   throw(const char *){}
 };
 
@@ -108,14 +109,18 @@ void Deque<T> ::resize(int newCapacity) throw (bad_alloc)
 }
 
 /**********************************************************************
- * (2)Deque-push_back
- *  -Adds an item to the top of the stack.
+ * (2)Deque-push_front
+ *  -Adds an item to the front/bottom of the stack. //0//
  ***********************************************************************/
 template <class T>
 void Deque<T> ::push_front(const T & item)
 {
+   /*////////////origonal go/////////////
    //Note that if the stack is full, then the capacity will be doubled.
-   if (backSpot == (capacity_size - 1))
+   //back-front = current size
+   //if current size equals capacity size
+   //if ((capacity_size - current_size) == 0)
+   if ((capacity_size - current_size) == 0)
    {
       if (capacity_size == 0)
       {
@@ -132,7 +137,115 @@ void Deque<T> ::push_front(const T & item)
       current_size++;
       data[++backSpot] = item;
    }
+   */
+
+   if (((capacity_size - current_size) == 0) && (capacity_size == 0))
+   {
+      //both barriers start at 0 and converted to 1
+      capacity_size = 1;
+      resize(capacity_size * 1);
+      //add 1 to current number of items/positions, then place an item
+      //at that spot
+      current_size = 1;
+      //current_size++;
+
+      //add an item to the end of the Deque
+      data[--frontSpot] = item;
+   }
+   else if (((capacity_size - current_size) == 0) && (capacity_size != 0))
+   {
+      resize(capacity_size * 2);
+      //add 1 to current number of items/positions, then place an item
+      //at that spot
+      current_size++;
+      data[--frontSpot] = item;
+   }
+   else
+   {
+      current_size++;
+      data[--frontSpot] = item;
+   }
+   
 }
+
+/**********************************************************************
+ * (2)Deque-push_back
+ *  -Adds an item to the top/back of the stack.  //10//
+ ***********************************************************************/
+template <class T>
+void Deque<T> ::push_back(const T & item)
+{
+/*   
+   if ((capacity_size - current_size) == 0)
+   {
+      if (capacity_size == 0)
+      {
+         capacity_size = 1;
+      }
+      resize(capacity_size * 2);
+      //add 1 to current number of items/positions, then place an item
+      //at that spot
+      ++current_size;
+      data[backSpot++] = item;
+   }
+   else
+   {
+      ++current_size;
+      data[backSpot++] = item;
+   }
+*/
+   
+   /*
+   //50 and 50   
+   /////////////origonal///////////////////////
+   if ((capacity_size - current_size) == 0)
+   {
+      if (capacity_size == 0)
+      {
+         capacity_size = 1;
+      }
+      resize(capacity_size * 2);
+      //add 1 to current number of items/positions, then place an item
+      //at that spot
+      current_size++;
+      data[++backSpot] = item;
+   }
+   else
+   {
+      current_size++;
+      data[++backSpot] = item;
+   }
+   */
+
+   
+   if (((capacity_size - current_size) == 0) && (capacity_size == 0))
+   {
+      //both barriers start at 0 and converted to 1
+      capacity_size = 1;
+      resize(capacity_size * 1);
+      //add 1 to current number of items/positions, then place an item
+      //at that spot
+      current_size = 1;
+      //current_size++;
+
+      //add an item to the end of the Deque
+      data[++backSpot] = item;
+   }
+   else if (((capacity_size - current_size) == 0) && (capacity_size != 0))
+   {
+      resize(capacity_size * 2);
+      //add 1 to current number of items/positions, then place an item
+      //at that spot
+      current_size++;
+      data[++backSpot] = item;
+   }
+   else
+   {
+      current_size++;
+      data[++backSpot] = item;
+   }
+}
+
 /**********************************************************************
  * (4)Deque-front
  *  -Returns the item currently at the front/bottom of the Deque.

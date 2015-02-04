@@ -8,8 +8,8 @@
 # Summary:
 #     <put a description here>
 # Time:
-#     Clint:  X hours so far
-#     Parker: 1 hours so far
+#     Clint:  XXX hours so far
+#     Parker: 2.5 hours so far
 ###############################################################
 
 ##############################################################
