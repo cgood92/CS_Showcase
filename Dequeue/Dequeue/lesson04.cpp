@@ -29,7 +29,7 @@ void testErrors();
 // TEST1.  Then, when TEST1 works, try TEST2 and so on.
 #define TEST1   // for testSimple()
 #define TEST2   // for testPush()
-//#define TEST3   // for testPop()
+#define TEST3   // for testPop()
 //#define TEST4   // for testErrors()
 
 /**********************************************************************
@@ -74,6 +74,10 @@ int main()
       default:
          cout << "Unrecognized command, exiting...\n";
    }
+
+   //cout << "Quiting...";
+   //string quit;
+   //cin >> quit;
 
    return 0;
 }
