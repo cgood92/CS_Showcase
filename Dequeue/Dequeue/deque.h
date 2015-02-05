@@ -208,7 +208,7 @@ T & Deque<T> ::front()throw(const char *)
    }
    else
    {
-      throw "ERROR: attempting to access an item in an empty Deque";
+	   throw "ERROR: unable to access data from an empty deque";
    }
 }
 
@@ -235,7 +235,7 @@ T & Deque<T> ::back()throw(const char *)
 	}
    else
    {
-      throw "ERROR: attempting to access an item in an empty Deque";
+	   throw "ERROR: unable to access data from an empty deque";
    }
 }
 
@@ -263,7 +263,7 @@ void Deque<T> ::pop_front() throw(const char *)
 	{
 		//if the stack is already empty, the
 		//following c-string exception will be thrown:
-		throw "ERROR: attempting to pop from an empty Deque";
+		throw "ERROR: unable to pop from the front of empty deque";
 	}
 }
 
@@ -292,7 +292,7 @@ void Deque<T> ::pop_back() throw(const char *)
 	{
 		//if the stack is already empty, the
 		//following c-string exception will be thrown:
-		throw "ERROR: attempting to pop from an empty Deque";
+		throw "ERROR: unable to pop from the back of empty deque";
 	}
 }
 
