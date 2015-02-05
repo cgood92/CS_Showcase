@@ -103,19 +103,23 @@ void Deque<T> ::resize(int newCapacity) throw (bad_alloc)
    T * pNew;
    pNew = new T[newCapacity];
    //This will copy everything starting from the back of the array (frontSpot) until the frontish of the array (backSpot)
-   //Note: this only works because current_size has not been changed yet
+   //Note: this works because current_size has not been changed yet
+   //
    if (current_size > 0)
    {
-	   bool firstTime = true; // The logic in the for loops could possibly give bad results if this is the first time through.  If this is first time through loop, we want to run no matter what.
-	   for (int i = frontSpot; (i != backSpot + 1 || firstTime); i++)
+	   // The logic in the for loops could possibly give bad results if this is the first time through.  If this is first time through loop, we want to run no matter what.
+	   bool firstTime = true;
+	   for (int i = frontSpot, buffer = capacity_size; (i != backSpot + 1 || firstTime); i++)
 	   {
+		   //Loop back towards the beginning
 		   if (i == capacity_size)
 		   {
 			   i = -1;
+			   buffer = 0; //From here on out put things at the beginning, not at the tail end
 		   }
 		   else
 		   {
-			   pNew[i + capacity_size] = data[i]; //Put at back
+			   pNew[i + buffer] = data[i]; //Put at back
 		   }
 		   firstTime = false;
 	   }
@@ -134,7 +138,6 @@ void Deque<T> ::resize(int newCapacity) throw (bad_alloc)
 template <class T>
 void Deque<T> ::push_front(const T & item)
 {
-	//cout << "current_size: " << current_size << "; capacity_size: " << capacity_size << "; frontSpot: " << frontSpot << "; backSpot: " << backSpot << "\n";
 	//First resize, let's allocate default 1's
    if (current_size == 0 && capacity_size == 0)
    {
@@ -146,7 +149,8 @@ void Deque<T> ::push_front(const T & item)
    {
 	   resize(capacity_size * 2);
    }
-   else if (frontSpot <= 0) //At the beginning, let's loop towards the back of the array
+   //At the beginning, let's loop towards the back of the array
+   else if (frontSpot <= 0)
    {
 	   frontSpot = capacity_size;
    }
@@ -162,25 +166,23 @@ void Deque<T> ::push_front(const T & item)
 template <class T>
 void Deque<T> ::push_back(const T & item)
 { 
-	//cout << "current_size: " << current_size << "; capacity_size: " << capacity_size << "; frontSpot: " << frontSpot << "; backSpot: " << backSpot << "\n";
 	//First resize, let's allocate default 1's
 	if (current_size == 0 && capacity_size == 0)
 	{
-		//both barriers start at 0 and converted to 1
 		resize(1);
 	}
 	else if (((capacity_size - current_size) == 0) && (capacity_size != 0))
 	{
 		resize(capacity_size * 2);
 	}
-	else if (backSpot >= (capacity_size - 1)) //At the beginning, let's loop towards the back of the array
+	//We're now at the end, let's loop towards the front of the array
+	else if (backSpot >= (capacity_size - 1)) 
 	{
 		backSpot = -1;
 	}
 
 	data[++backSpot] = item;
 	current_size++;
-	//cout << "Inserted";
 }
 
 /**********************************************************************
@@ -190,7 +192,7 @@ void Deque<T> ::push_back(const T & item)
 template <class T>
 T & Deque<T> ::front()throw(const char *)
 {
-	//cout << "current_size: " << current_size << "; capacity_size: " << capacity_size << "; frontSpot: " << frontSpot << "; backSpot: " << backSpot << "\n";
+	//tempFrontSpot is for a special case for the loop around of the array 
 	int tempFrontSpot;
 	if (frontSpot == -1)
 	{
@@ -217,7 +219,7 @@ T & Deque<T> ::front()throw(const char *)
 template <class T>
 T & Deque<T> ::back()throw(const char *)
 {
-	//cout << "current_size: " << current_size << "; capacity_size: " << capacity_size << "; frontSpot: " << frontSpot << "; backSpot: " << backSpot << "\n";
+	//tempBackSpot is for a special case for the loop around of the array 
 	int tempBackSpot;
 	if (frontSpot == capacity_size)
 	{
@@ -244,9 +246,9 @@ T & Deque<T> ::back()throw(const char *)
 template <class T>
 void Deque<T> ::pop_front() throw(const char *)
 {
-	//cout << "current_size: " << current_size << "; capacity_size: " << capacity_size << "; frontSpot: " << frontSpot << "; backSpot: " << backSpot << "\n";
 	if (!empty())
 	{
+		//Loop around
 		if (frontSpot == capacity_size - 1)
 		{
 			frontSpot = 0;
@@ -275,6 +277,7 @@ void Deque<T> ::pop_back() throw(const char *)
 	//cout << "current_size: " << current_size << "; capacity_size: " << capacity_size << "; frontSpot: " << frontSpot << "; backSpot: " << backSpot << "\n";
 	if (!empty())
 	{
+		//Loop around
 		if (backSpot == 0)
 		{
 			backSpot = capacity_size;
