@@ -274,7 +274,6 @@ void Deque<T> ::pop_front() throw(const char *)
 template <class T>
 void Deque<T> ::pop_back() throw(const char *)
 {
-	//cout << "current_size: " << current_size << "; capacity_size: " << capacity_size << "; frontSpot: " << frontSpot << "; backSpot: " << backSpot << "\n";
 	if (!empty())
 	{
 		//Loop around

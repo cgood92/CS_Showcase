@@ -30,7 +30,7 @@ void testErrors();
 #define TEST1   // for testSimple()
 #define TEST2   // for testPush()
 #define TEST3   // for testPop()
-//#define TEST4   // for testErrors()
+#define TEST4   // for testErrors()
 
 /**********************************************************************
  * MAIN
