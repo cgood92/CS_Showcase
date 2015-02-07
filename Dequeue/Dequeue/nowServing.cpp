@@ -20,8 +20,9 @@ using namespace std;
 struct Student
 {
 	string className;
-   string name;
-   int minutes;
+	string name;
+	int minutes;
+	bool emergency;
 };
 
 /************************************************
@@ -31,102 +32,145 @@ struct Student
  ***********************************************/
 void nowServing()
 {
-   // instructions
-   cout << "Every prompt is one minute.  The following input is accepted:\n";
-   cout << "\t<class> <name> <#minutes>    : a normal help request\n";
-   cout << "\t!! <class> <name> <#minutes> : an emergency help request\n";
-   cout << "\tnone                         : no new request this minute\n";
-   cout << "\tfinished                     : end simulation\n";
+	// instructions
+	cout << "Every prompt is one minute.  The following input is accepted:\n";
+	cout << "\t<class> <name> <#minutes>    : a normal help request\n";
+	cout << "\t!! <class> <name> <#minutes> : an emergency help request\n";
+	cout << "\tnone                         : no new request this minute\n";
+	cout << "\tfinished                     : end simulation\n";
 
-   // your code here
+	try
+	{
+		Deque<Student> helpDequeue(8);
+		string line;
+		string className;
+		string name;
+		string action;
+		int timeNeeded;
+		Student currentHelpedStudent;
+		currentHelpedStudent.className = "";
+		currentHelpedStudent.name = "";
+		currentHelpedStudent.minutes = 0;
+		currentHelpedStudent.emergency = false;
 
-   try
-   {
-      Deque<Student> helpDequeue;
-      string line;
-      string className;
-	  string name;
-	  string action;
-	  int timeNeeded;
-      
-      //Clear buffer (from previous cin's)
-      cin.ignore(1000, '\n');
-      getInput:while (true)
-      {
-         //get user input
-         cout << "> ";
-         getline(std::cin, line);
+		//Clear buffer (from previous cin's)
+		cin.ignore(1000, '\n');
+		for (int index = 0; true; index++)
+		{
+			//get user input
+			cout << "<" << index << "> ";
+			getline(std::cin, line);
 
-         //get the individual pieces from the line
-         std::stringstream  linestream(line);
-         string lineTemp;
-		 action = "push"; //No action defined yet (default push).  Only action possible is pop
-         for (int i = 0; i <= 2; i++)
-         {
-            linestream >> lineTemp;
-			if (i == 0 && lineTemp == "!!")
+			//get the individual pieces from the line
+			std::stringstream  linestream(line);
+			string lineTemp;
+			action = "push"; //No action defined yet (default push).  Only action possible is pop
+			for (int i = 0; i <= 2; i++)
 			{
-				action = "pushToFront";
-				i--;
-				continue; //Skip this pass through the foor loop and jump ahead
+				linestream >> lineTemp;
+				if (i == 0 && lineTemp == "!!")
+				{
+					action = "pushToFront";
+					i--;
+					continue; //Skip this pass through the foor loop and jump ahead
+				}
+				else if (i == 0 && lineTemp == "none")
+				{
+					goto afterPushes; //Skip this for loop for getting more info
+				}
+				else if (i == 0 && lineTemp == "finished")
+				{
+					cout << "End of simulation\n";
+					return; //Return will end the entire function (aka close the function)
+				}
+				//This works for both pop and push
+				switch (i)
+				{
+				case 0:
+					className = lineTemp;
+					break;
+				case 1:
+					name = lineTemp;
+					break;
+				case 2:
+					istringstream(lineTemp) >> timeNeeded;
+					break;
+				}
 			}
-			else if (i == 0 && lineTemp == "none")
+			if (action == "push")
 			{
-				break; //Skip this for loop for getting more info
+				Student newHomework;
+				newHomework.className = className;
+				newHomework.minutes = timeNeeded;
+				newHomework.name = name;
+				newHomework.emergency = false;
+				if (currentHelpedStudent.name == "")
+				{
+					currentHelpedStudent = newHomework;
+				}
+				else
+				{
+					helpDequeue.push_back(newHomework);
+				}
 			}
-			else if (i == 0 && lineTemp == "finished")
+			else if (action == "pushToFront")
 			{
-				cout << "End of simulation\n";
-				return; //Return will end the entire function (aka close the function)
+				Student newHomework;
+				newHomework.className = className;
+				newHomework.minutes = timeNeeded;
+				newHomework.name = name;
+				newHomework.emergency = true;
+				if (currentHelpedStudent.name == "")
+				{
+					currentHelpedStudent = newHomework;
+				}
+				else
+				{
+					helpDequeue.push_front(newHomework);
+				}
 			}
-			//This works for both pop and push
-            switch (i)
-            {
-               case 0:
-                  className = lineTemp;
-                  break;
-			   case 1:
-				   name = lineTemp;
-				   break;
-               case 2:
-                  istringstream(lineTemp) >> timeNeeded;
-                  break;
-            }
-         }
-         if (action == "push")
-         {
-			 //For testing only.  We don't want to output anything here, but down below
-            cout << "push:" << className << ":" << name << ":" << timeNeeded << endl;
-         }
-         else if (action == "pushToFront")
-         {
-			 //For testing only.  We don't want to output anything here, but down below
-			 cout << "pushToFront:" << className << ":" << name << ":" << timeNeeded << endl;
-         }
-		 else if (!helpDequeue.empty() && helpDequeue.front().minutes <= 0) //possibly pop whoever is next if time is up
-		 {
-			helpDequeue.pop_front();
-		 }
-
-		 //Here is where we want to output
-		 if (!helpDequeue.empty()) //change to real conditional statement
-		 {
-			 //Minus the time
-			 helpDequeue.front().minutes--;
-			 cout << "\tCurrently serving " << helpDequeue.front().name << "for class " << helpDequeue.front().className << ".  Time left: " << helpDequeue.front().minutes << "\n";
-		 }
-		 else
-		 {
-			 cout << "None";
-		 }
-      }
-   }
-   // finished!
-   catch (const char * error)
-   {
-      //Catch errors
-      cout << error << endl;
-   }
+		afterPushes:
+			{
+				if (currentHelpedStudent.minutes <= 0) //possibly pop whoever is next if time is up
+				{
+					if (!helpDequeue.empty())
+					{
+						currentHelpedStudent = helpDequeue.front();
+						helpDequeue.pop_front();
+					}
+					else
+					{
+						currentHelpedStudent.name = "";
+						currentHelpedStudent.className = "";
+						currentHelpedStudent.minutes = 0;
+						currentHelpedStudent.emergency = false;
+					}
+				}
+				//Here is where we want to output
+				if (currentHelpedStudent.name != "") //change to real conditional statement
+				{
+					if (currentHelpedStudent.emergency)
+					{
+						cout << "\tEmergency for ";
+					}
+					else
+					{
+						cout << "\tCurrently serving ";
+					}
+					cout << currentHelpedStudent.name << " for class "
+						<< currentHelpedStudent.className << ". Time left: "
+						<< currentHelpedStudent.minutes << "\n";
+					currentHelpedStudent.minutes--;
+				}
+			}
+		}
+	}
+	// finished!
+	catch (const char * error)
+	{
+		//Catch errors
+		cout << error << endl;
+	}
 }
 
 
