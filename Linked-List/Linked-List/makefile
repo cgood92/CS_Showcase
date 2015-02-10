@@ -11,7 +11,7 @@
 ##############################################################
 # The main rule
 ##############################################################
-a.out: linkedList.h lesson05.o 
+a.out: node.h lesson05.o 
 	g++ -o a.out lesson05.o 
 	tar -cf lesson05.tar *.h *.cpp makefile
 
@@ -20,5 +20,5 @@ a.out: linkedList.h lesson05.o
 #      lesson05.o      : the driver program
 #      <anything else?>
 ##############################################################
-lesson05.o: linkedList.h lesson05.cpp sortInsertion.h
+lesson05.o: node.h lesson05.cpp sortInsertion.h
 	g++ -c lesson05.cpp

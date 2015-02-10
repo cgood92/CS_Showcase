@@ -15,7 +15,7 @@
 #include <string>          // for the String class
 #include <fstream>         // for IFSTREAM
 #include <iomanip>         // for SETW
-#include "linkedList.h"          // your Node class should be in node.h
+#include "node.h"          // your Node class should be in node.h
 #include "sortInsertion.h" // your insertionSort() function
 using namespace std;
 
