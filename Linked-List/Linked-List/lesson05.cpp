@@ -32,9 +32,9 @@ void testInsertionSort();
 // I suggest first commenting out all of these tests, then try to use only
 // TEST1.  Then, when TEST1 works, try TEST2 and so on.
 #define TEST1   // for testSimple()
-#define TEST2   // for testInsert()
-#define TEST3   // for testLoop()
-#define TEST4   // for testInteractive()
+//#define TEST2   // for testInsert()
+//#define TEST3   // for testLoop()
+//#define TEST4   // for testInteractive()
 
 /**********************************************************************
  * MAIN
@@ -78,6 +78,9 @@ int main()
       default:
          cout << "Unrecognized command, exiting...\n";
    }
+
+   string quit;
+   cin >> quit;
 
    return 0;
 }
@@ -125,7 +128,7 @@ void testSimple()
    cout << "\tn3->pNext->pNext: "
         << (n3->pNext->pNext ?  "address" : "NULL") << endl;
 
-   // free up the remaining linked lists
+    //free up the remaining linked lists
    freeData(n3);
    freeData(n2);
    cout << "Destroying the second and third linked list\n";   
