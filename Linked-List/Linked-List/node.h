@@ -82,12 +82,28 @@ Node <T> * copy(Node <T> * rhs)
  * parameter is a pointer to the head of the list
  ***********************************************************************/
 template <class T>
-void freeData(Node <T> * rhs)
+void freeData(Node <T> * & rhs)
 {
-
-   //We'll need to imrpvoe this function later to actually
-   //release all memory
-   delete rhs;
+	rhs = NULL;
+	delete rhs;
+	/*
+	Node <T> * current = new Node<T>();
+	Node <T> * pHead = current;
+	for (Node <T> * p = rhs; p; p = p->pNext)
+	{
+		Node <T> * prev = current;
+		prev->data = NULL;
+		if (p->pNext != NULL)
+		{
+			Node <T> * next = new Node<T>();
+			prev->pNext = NULL;
+			delete prev;
+			current = next;
+		}
+		p = NULL;
+		delete p;
+	}
+	*/
 }
 
 /**********************************************************************
@@ -100,7 +116,7 @@ void freeData(Node <T> * rhs)
 //   Node <int> * n = NULL;
 //   insert(10, n);
 template <class T>
-void insert(T data, Node<T> * & pPrev)
+void insert(const T & data, Node<T> * & pPrev)
 {
    if (pPrev != NULL)
    {
@@ -124,7 +140,7 @@ void insert(T data, Node<T> * & pPrev)
 }
 
 template <class T>
-void insert(T data, Node<T> * & pHead, bool head)
+void insert(const T & data, Node<T> * & pHead, bool head)
 {
 	if (head)
 	{
@@ -149,12 +165,41 @@ void insert(T data, Node<T> * & pHead, bool head)
  * Display the contents of a linked list
  ****************************************/
 template <class T>
-ostream & operator << (ostream & out, const Node<T> * pHead)
+ostream & operator << (ostream & out, Node<T> * pHead)
 {
-   for (const Node<T> * p = pHead; p; p = p->pNext)
-      out << p->data << ' ';
+	for (Node <T> * p = pHead; p; p = p->pNext)
+	{
+		out << p->data;
+		if (p->pNext)
+		{
+			out << ", ";
+		}
+	}
    return out;
 }
+
+/**********************************************
+* FIND NODE
+* Looking for a node based on the index.  Note
+* that the index is 1's based.  If there are
+* six items, then the valid indicies are 1..6.
+* Return pHead if no node exists there
+**********************************************/
+template <class T>
+Node<T> * find(Node<T> * & pHead, const T & data)
+{
+	// search through the linked list
+	for (Node<T> * p = pHead; p; p = p->pNext)
+	{
+		if (p->data == data)
+		{
+			return p;
+		}
+	}
+
+	return pHead;                         // return pHead if no node exists
+}
+
 
 
 #endif
