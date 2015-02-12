@@ -118,12 +118,11 @@ void freeData(Node <T> * & rhs)
 template <class T>
 void insert(const T & data, Node<T> * & pPrev)
 {
+	// 1. allocate and initialize create a new nod
+	Node<T> * pNew = new Node<T>(data);   // allocate the node
+
    if (pPrev != NULL)
    {
-	   // 1. allocate and initialize create a new nod
-	   Node<T> * pNew = new Node<T>;   // allocate the node
-	   pNew->data = data;        // set the data member variable
-
 	   // 2. fix the pNext pointer from pNew to the spot after it in the list
 	   pNew->pNext = pPrev->pNext;
 
@@ -133,8 +132,6 @@ void insert(const T & data, Node<T> * & pPrev)
    //New linked list - empty
    else
    {
-	   Node<T> * pNew = new Node<T>;
-	   pNew->data = data;
 	   pPrev = pNew;
    }
 }
@@ -145,14 +142,20 @@ void insert(const T & data, Node<T> * & pHead, bool head)
 	if (head)
 	{
 		// 1. allocate and initialize create a new node
-		Node<T> * pNew = new Node<T>;               // allocate the node
-		pNew->data = data;                    // set the data member variable
+		Node<T> * pNew = new Node<T>(data);               // allocate the node
 
-		// 2. put pHead in line after the new node
-		pNew->pNext = pHead;                  // set pNext, the old head of the list
+		if (pHead != NULL)
+		{
+			// 2. put pHead in line after the new node
+			pNew->pNext = pHead;                  // set pNext, the old head of the list
 
-		// 3. finally, pNew is the new head
-		pHead = pNew;                         // pNew is the new head.  Note that
+			// 3. finally, pNew is the new head
+			pHead = pNew;                         // pNew is the new head.  Note that
+		}
+		else
+		{
+			pHead = pNew;
+		}
 	}
 	else
 	{
@@ -197,7 +200,7 @@ Node<T> * find(Node<T> * & pHead, const T & data)
 		}
 	}
 
-	return pHead;                         // return pHead if no node exists
+	return NULL;                         // return pHead if no node exists
 }
 
 
