@@ -5,7 +5,7 @@
 # Author:
 #     Clint Goodman and Parker Hubbard
 # Summary:
-#     <put a description here>
+#     Clint Gooodman - 5 hours
 ###############################################################
 
 ##############################################################
