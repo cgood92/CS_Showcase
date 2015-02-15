@@ -19,32 +19,37 @@
  **********************************************/
 template <class T>
 void sortInsertion(T array[], int num)
-{   
-   Node <T> * n = NULL;
+{  
+	Node <T> * unsortedList = NULL;
+	for (int i = 0; i < num; i++)
+	{
+		insert(array[i], unsortedList);
+	}
+   Node <T> * sortedList = NULL;
 /***********************************************
  * 1) add all items unto the list from the array (back to front)
  **********************************************/
-   for (int i = num - 1; i >= 0; i--)
+   for (Node <T> * pu = unsortedList; pu; pu = pu->pNext)
    {
 	   //first time throug - no need to sort, just put in front
-	   if (i == num - 1)
+	   if (!sortedList)
 	   {
-		   insert(array[i], n, true);
+		   insert(pu->data, sortedList, true);
 		   continue;
 	   }
 	   //Check to see if this value is less than something in the array (if so, place it where it fits)
-	   for (Node <T> * ph = n; ph; ph = ph->pNext)
+	   for (Node <T> * ps = sortedList; ps; ps = ps->pNext)
 	   {
 		   //If this is going to replace the head...
-		   if (ph->data == n->data && array[i] < ph->data)
+		   if (ps->data == sortedList->data && pu->data < ps->data)
 		   {
-			   insert(array[i], n, true);
+			   insert(pu->data, sortedList, true);
 			   break;
 		   }
 		   //If this is next up, or this is the end of the list ...
-		   if (ph->pNext && array[i] < ph->pNext->data || !ph->pNext)
+		   if (ps->pNext && pu->data < ps->pNext->data || !ps->pNext)
 		   {
-			   insert(array[i], ph);
+			   insert(pu->data, ps);
 			   break;
 		   }
 	   }
@@ -55,7 +60,7 @@ void sortInsertion(T array[], int num)
  * to the previous array
  **********************************************/
    int jj = 0;
-   for (Node <T> * ph = n; ph; ph = ph->pNext)
+   for (Node <T> * ph = sortedList; ph; ph = ph->pNext)
    {
       array[jj] = ph->data;
       jj = jj + 1;
