@@ -1,7 +1,7 @@
 ###############################################################
 # Program:
 #     Lesson 05, NODE
-#     Brother Helfrich, CS235
+#     Brother Sloan, CS235
 # Author:
 #     Clint Goodman and Parker Hubbard
 # Summary:
