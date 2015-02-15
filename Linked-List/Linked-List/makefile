@@ -1,11 +1,12 @@
 ###############################################################
 # Program:
 #     Lesson 05, NODE
-#     Brother Helfrich, CS235
+#     Brother Sloan, CS235
 # Author:
 #     Clint Goodman and Parker Hubbard
 # Summary:
-#     Clint Gooodman - 5 hours
+#     Clint Gooodman - 7 hours
+#     Parker Hubbard - 9.5 hours
 ###############################################################
 
 ##############################################################
