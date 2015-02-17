@@ -80,12 +80,12 @@ public:
 	}
 
 	// return an iterator to the beginning of the list
-	ListIterator <T> begin()   { return ListIterator <T>(pHead); }
+	ListIterator <T> begin()   { return ListIterator <T>(pHead->pNext); }
 	// return an iterator to the end of the list
 	ListIterator <T> end()     { return ListIterator <T>(pTail); }
 
 	// return an iterator to the beginning of the list
-	ListIterator <T> rbegin()   { return ListIterator <T>(pTail); }
+	ListIterator <T> rbegin()   { return ListIterator <T>(pTail->pPrev); }
 	// return an iterator to the end of the list
 	ListIterator <T> rend()     { return ListIterator <T>(pHead); }
 
