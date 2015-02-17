@@ -50,6 +50,38 @@ class List
 public:
 	List()
 	{
+		emptyListInit();
+	}
+	// copy constructor
+	List(const List<T> & rhs);
+	~List()
+	{
+
+	}
+	bool empty()
+	{
+		return pHead->pNext->data == NULL;
+	}
+	void push_back(const T & data);
+	void push_front(const T & data);
+	T & front()
+	{
+		return pHead->pNext->data;
+	}
+	T & back()
+	{
+		return pTail->pPrev->data;
+	}
+	void clear()
+	{
+		emptyListInit();
+	}
+private:
+	Node<T> * pHead;
+	Node<T> * pTail;
+
+	void emptyListInit()
+	{
 		//Head
 		this->pHead = new Node<T>();
 		pHead->data = NULL;
@@ -64,28 +96,6 @@ public:
 		pTail->pPrev = pHead;
 		pHead->pNext = pTail;
 	}
-	// copy constructor
-	List(const List<T> & rhs);
-	~List()
-	{
-
-	}
-	bool empty()
-	{
-		return pHead->pNext->data == NULL;
-	}
-	void push_back(const T & data);
-	T & front()
-	{
-		return pHead->pNext->data;
-	}
-	T & back()
-	{
-		return pTail->pPrev->data;
-	}
-private:
-	Node<T> * pHead;
-	Node<T> * pTail;
 };
 
 
@@ -133,6 +143,16 @@ void List<T>::push_back(const T & data)
 	newNode->pNext = pTail;
 	pTail->pPrev->pNext = newNode;
 	pTail->pPrev = newNode;
+}
+
+template <class T>
+void List<T>::push_front(const T & data)
+{
+	Node <T> * newNode = new Node<T>(data);
+	newNode->pNext = pHead->pNext;
+	newNode->pPrev = pHead;
+	pHead->pNext->pPrev = newNode;
+	pHead->pNext = newNode;
 }
 
 
