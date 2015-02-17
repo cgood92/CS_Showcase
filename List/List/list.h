@@ -14,9 +14,11 @@
 #include <string>
 using namespace std;
 
+template <class T>
+class ListIterator;
+
 /**********************************************************************
  * Node
- * //creating the class for Node
  ***********************************************************************/
 template <class T>
 class Node
@@ -27,7 +29,7 @@ public:
 	Node <T> * pNext;
 	Node <T> * pPrev;
 	//default constructor
-	Node() : data(NULL), pNext(NULL), pPrev(NULL)
+	Node() : pNext(NULL), pPrev(NULL)
 	{
 	}
 	// Non-default
@@ -60,7 +62,7 @@ public:
 	}
 	bool empty()
 	{
-		return pHead->pNext->data == NULL;
+		return pHead->pNext->pNext == NULL;
 	}
 	void push_back(const T & data);
 	void push_front(const T & data);
@@ -76,6 +78,17 @@ public:
 	{
 		emptyListInit();
 	}
+
+	// return an iterator to the beginning of the list
+	ListIterator <T> begin()   { return ListIterator <T>(pHead); }
+	// return an iterator to the end of the list
+	ListIterator <T> end()     { return ListIterator <T>(pTail); }
+
+	// return an iterator to the beginning of the list
+	ListIterator <T> rbegin()   { return ListIterator <T>(pTail); }
+	// return an iterator to the end of the list
+	ListIterator <T> rend()     { return ListIterator <T>(pHead); }
+
 private:
 	Node<T> * pHead;
 	Node<T> * pTail;
@@ -84,12 +97,10 @@ private:
 	{
 		//Head
 		this->pHead = new Node<T>();
-		pHead->data = NULL;
 		pHead->pPrev = NULL;
 
 		//Tail
 		this->pTail = new Node<T>();
-		pTail->data = NULL;
 		pTail->pNext = NULL;
 
 		//Link them together
@@ -154,6 +165,74 @@ void List<T>::push_front(const T & data)
 	pHead->pNext->pPrev = newNode;
 	pHead->pNext = newNode;
 }
+
+/**********************************************************************
+* ListIterator
+* //creating the class of the ListIterator
+***********************************************************************/
+template <class T>
+class ListIterator
+{
+private:
+	Node<T> * p;
+public:
+	// default constructor - set value to "0"?
+	ListIterator() : p(NULL)  {}
+	// initialize to direct the private variable "t" to some item
+	ListIterator(Node<T> * p) : p(p)      {}
+	//copy constructor
+	ListIterator(const ListIterator & rhs)
+	{
+		*this = rhs;
+	}
+	// assignment operator
+	ListIterator & operator = (const ListIterator & rhs)
+	{
+		this->p = rhs.p;
+		return *this;
+	}
+	// not equals operator
+	bool operator != (const ListIterator & rhs) const
+	{
+		return rhs.p != this->p;
+	}
+	// equals operator
+	bool operator == (const ListIterator & rhs) const
+	{
+		return rhs.p == this->p;
+	}
+	// dereference operator
+	T & operator * ()
+	{
+		return p->data;
+	}
+	// prefix decrement
+	ListIterator <T> & operator -- ()
+	{
+		p = p->pPrev;
+		return *this;
+	}
+	// postfix decrement
+	ListIterator <T> operator--(int prefix)
+	{
+		ListIterator tmp(*this);
+		p = p->pPrev;
+		return tmp;
+	}
+	// prefix increment
+	ListIterator <T> & operator ++ ()
+	{
+		p = p->pNext;
+		return *this;
+	}
+	// postfix increment
+	ListIterator <T> operator++(int postfix)
+	{
+		ListIterator tmp(*this);
+		p = p->pNext;
+		return tmp;
+	}
+};
 
 
 #endif
