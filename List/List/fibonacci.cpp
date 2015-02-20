@@ -26,7 +26,18 @@ void fibonacci()
    cout << "How many Fibonacci numbers would you like to see? ";
    cin  >> number;
 
-   // your code to display the first <number> Fibonacci numbers
+   for (int i = 1, a = 0, b = 1, temp = 0; i <= number; i++)
+   {
+	   if (i == 1)
+	   {
+		  cout << "1" << endl;
+		  continue;
+	   }
+	   temp = a + b;
+	   a = b;
+	   b = temp;
+	   cout << b << endl;
+   }
 
    // prompt for a single large Fibonacci
    cout << "Which Fibonacci number would you like to display? ";
