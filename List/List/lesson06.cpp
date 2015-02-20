@@ -31,7 +31,7 @@ void testInsertRemove();
 #define TEST1   // for testSimple()
 #define TEST2   // for testPush()
 #define TEST3   // for testIterate()
-//#define TEST4   // for testInsertRemove()
+#define TEST4   // for testInsertRemove()
 
 /**********************************************************************
  * MAIN
@@ -75,9 +75,6 @@ int main()
       default:
          cout << "Unrecognized command, exiting...\n";
    }
-
-   string quit;
-   cin >> quit;
 
    return 0;
 }
