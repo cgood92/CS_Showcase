@@ -26,17 +26,24 @@ void fibonacci()
    cout << "How many Fibonacci numbers would you like to see? ";
    cin  >> number;
 
-   for (int i = 1, a = 0, b = 1, temp = 0; i <= number; i++)
+   WholeNumber a;
+   WholeNumber b;
+   WholeNumber temp;
+   a = 0;
+   b = 1;
+   temp = 0;
+
+   for (int i = 1; i <= number; i++)
    {
 	   if (i == 1)
 	   {
-		  cout << "\t1" << endl;
-		  continue;
+		   cout << "\t1\n";
+		   continue;
 	   }
 	   temp = a + b;
 	   a = b;
 	   b = temp;
-	   cout << "\t" << b << endl;
+	   cout << "\t" << b << "\n";
    }
 
 
