@@ -34,20 +34,8 @@ public:
 	WholeNumber & operator = (const WholeNumber & rhs)
 	{
 		data = new List <int>;
-		cout << "Assigning via copy\n";
-		List<int> newData(*rhs.data);
-		//this->data = &newData;
-		WholeNumber test;
-		//test.data = new List <int> ;
-		for (ListIterator<int> it = rhs.data->begin(); *it && it != rhs.data->end(); ++it)
-		{
-			//test.data->push_back(*it);
-			cout << "\n\t-" << *it;
-		}
 		this->data = new List < int > ;
 		this->data->copyFromPointer(rhs.data->head());
-		cout << *this;
-		cout << "done assigning\n";
 		return *this;
 	}
 
@@ -55,10 +43,8 @@ public:
 	WholeNumber operator + (WholeNumber & rhs)
 	{
 		int carryOver = 0;
-		cout << "\nAdding\n";
 		WholeNumber sum;
-		sum = 0;
-		for (ListIterator<int> rhsIt = rhs.data->rbegin(), lhsIt = this->data->rbegin(); (*rhsIt && rhsIt != rhs.data->rend()) || (*lhsIt && lhsIt != this->data->rend()) || carryOver; --rhsIt)
+		for (ListIterator<int> rhsIt = rhs.data->rbegin(), lhsIt = this->data->rbegin(); (*rhsIt && rhsIt != rhs.data->rend()) || (*lhsIt && lhsIt != this->data->rend()) || carryOver;)
 		{
 			cout << " Stop 1" << endl;
 			if (lhsIt == this->data->rend() && rhsIt != rhs.data->rend())
@@ -88,19 +74,15 @@ public:
 				sum.data->push_front(newInt);
 				cout << ":" << *lhsIt << endl;
 			}
-			if (lhsIt != this->data->end())
+			if (lhsIt != this->data->rend())
 			{
 				--lhsIt;
 			}
+			if (rhsIt != rhs.data->rend())
+			{
+				--rhsIt;
+			}
 		}
-
-		cout << "\n=================\n";
-		for (ListIterator<int> it = sum.data->begin(); *it && it != sum.data->end(); ++it)
-		{
-			cout << *it << endl;
-		}
-		cout << "\n================= \n";
-		
 		return sum;
 	}
 

@@ -141,7 +141,6 @@ class List
 		 //pNext is pointing to
 		 for (Node <int> * p = pParam; p; p = p->pNext)
 		 {
-			 cout << "\nCopying the data in list (" << p->data << ")";
 			 //1)first carry out these attaching steps for the "pPrev" of each
 			 //"prev" points to where "current" currently points
 			 Node <int> * prev = current;
@@ -230,7 +229,6 @@ List<T>::List(const List <T> & rhs)
    //pNext is pointing to
    for (Node <T> * p = rhs.pHead; p; p = p->pNext)
    {
-	   cout << "\nCopying the data in list (" << p->data << ")";
       //1)first carry out these attaching steps for the "pPrev" of each
       //"prev" points to where "current" currently points
       Node <T> * prev = current;

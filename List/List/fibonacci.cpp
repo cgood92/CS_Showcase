@@ -46,39 +46,22 @@ void fibonacci()
    WholeNumber aa; 
    WholeNumber bb;
    WholeNumber temptemp;
-   WholeNumber cc;
    aa = 3;
    bb = 3;
-   cc = 3;
    temptemp = 0;
-   cout << "Got here";
-   //cout << a << b << c << endl;
-   //cout << a + b << endl;
-   cout << "Got here2" << endl;
-   temptemp = aa + bb;
 
-   cout << temptemp;
-   cout << "next!\n";
-   temptemp = temptemp + cc;
-   cout << temptemp;
-   //cout << "\nNumber1: " << temp << endl;
-   //temp = b + b;
-   //cout << "\nNumber2:" << temp << endl;
-   //c = b + a;
-   //cout << "\nNumberb:" << c << endl;
-   //temp = c + b;
-   //cout << "\nNumber3:" << temp << endl;
-   /*for (int i = 1; i <= number; i++)
+   for (int i = 1; i <= number; i++)
    {
 	   if (i == 1)
 	   {
+		   cout << "1" << endl;
 		   continue;
 	   }
-	   temp = a + b;
-	   a = b;
-	   b = temp;
-	   cout << b << endl;
-   }*/
+	   temptemp = aa + bb;
+	   aa = bb;
+	   bb = temptemp;
+	   cout << bb << endl;
+   }
 }
 
 
