@@ -46,17 +46,17 @@ public:
 		WholeNumber sum;
 		for (ListIterator<int> rhsIt = rhs.data->rbegin(), lhsIt = this->data->rbegin(); (*rhsIt && rhsIt != rhs.data->rend()) || (*lhsIt && lhsIt != this->data->rend()) || carryOver;)
 		{
-			cout << " Stop 1" << endl;
-			if (lhsIt == this->data->rend() && rhsIt != rhs.data->rend())
+			if ((rhsIt.isBegin() && !lhsIt.isBegin()) || (!rhsIt.isBegin() && lhsIt.isBegin()))
 			{
-				cout << " Stop 2" << endl;
-				sum.data->push_front(*rhsIt + carryOver);
-				continue;
+				int coeff = (*rhsIt) ? *rhsIt : *lhsIt;
+				sum.data->push_front(carryOver + coeff);
+				carryOver = 0;
+				break;
 			}
-			if (carryOver && (rhsIt == rhs.data->rend() && lhsIt == this->data->rend()))
-			if (carryOver && !(*rhsIt && *lhsIt))
+
+			//No more in either list, so add 1 to the front
+			if (carryOver && (rhsIt.isBegin() && lhsIt.isBegin()))
 			{
-				cout << " Stop 5" << endl;
 				sum.data->push_front(1);
 				break;
 			}
@@ -65,21 +65,18 @@ public:
 			{
 				*lhsIt = newInt - 1000;
 				sum.data->push_front(newInt - 1000);
-				cout << " Stop 3 :" << *lhsIt << endl;
 				carryOver = 1;
 			}
 			else
 			{
-				cout << " Stop 4 " << *lhsIt << ":" << newInt;
 				carryOver = 0;
 				sum.data->push_front(newInt);
-				cout << ":" << *lhsIt << endl;
 			}
-			if (lhsIt != this->data->rend())
+			if (!lhsIt.isBegin())
 			{
 				--lhsIt;
 			}
-			if (rhsIt != rhs.data->rend())
+			if (!rhsIt.isBegin())
 			{
 				--rhsIt;
 			}
@@ -91,7 +88,7 @@ public:
 	// input and output
 	friend std::ostream & operator << (std::ostream & out, WholeNumber & rhs)
 	{
-		for (ListIterator<int> it = rhs.data->begin(); *it && it != rhs.data->end(); ++it)
+		for (ListIterator<int> it = rhs.data->begin(); !it.isEnd(); ++it)
 		{
 			if (it != rhs.data->begin())
 			{

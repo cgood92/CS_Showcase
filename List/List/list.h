@@ -366,6 +366,14 @@ class ListIterator
      {
         return rhs.p == this->p;
      }
+	 bool isBegin() const
+	 {
+		 return (p->pPrev == NULL);
+	 }
+	 bool isEnd() const
+	 {
+		 return (p->pNext == NULL);
+	 }
      // dereference operator
      T & operator * ()
      {

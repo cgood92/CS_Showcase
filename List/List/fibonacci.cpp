@@ -30,20 +30,20 @@ void fibonacci()
    {
 	   if (i == 1)
 	   {
-		  cout << "1" << endl;
+		  cout << "\t1" << endl;
 		  continue;
 	   }
 	   temp = a + b;
 	   a = b;
 	   b = temp;
-	   cout << b << endl;
+	   cout << "\t" << b << endl;
    }
 
 
    //prompt for a single large Fibonacci
    cout << "Which Fibonacci number would you like to display? ";
    cin  >> number;
-   WholeNumber aa; 
+   WholeNumber aa;
    WholeNumber bb;
    WholeNumber temptemp;
    aa = 0;
@@ -54,14 +54,13 @@ void fibonacci()
    {
 	   if (i == 1)
 	   {
-		   cout << "1" << endl;
 		   continue;
 	   }
 	   temptemp = aa + bb;
 	   aa = bb;
 	   bb = temptemp;
-	   cout << bb << endl;
    }
+   cout << "\t" << bb << endl;
 }
 
 
