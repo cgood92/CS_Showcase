@@ -76,6 +76,9 @@ int main()
          cout << "Unrecognized command, exiting...\n";
    }
 
+   string quit;
+   cin >> quit;
+
    return 0;
 }
 

@@ -104,20 +104,80 @@ class List
      void push_back(const T & data);
      void push_front(const T & data);
      //returns the item currently at the front/back of the list
-     T & front()
-     {
-        return pHead->pNext->data;
-     }
+	 T & front()
+	 {
+		 return pHead->pNext->data;
+	 }
      T & back()
      {
         //the spot where the pTail's pPrev is pointing
         return pTail->pPrev->data;
      }
+	 Node<T> * head()
+	 {
+		 return pHead;
+	 }
      //Empties the list of all items
      void clear()
      {
         emptyListInit();
      }
+
+	 List<T> operator = (const List & rhs)
+	 {
+		 List <T> newList(rhs);
+		 return newList;
+	 }
+
+	 void copyFromPointer(Node <int> * pParam)
+	 {
+		 //a node pointer "current" points to a new node
+		 Node <int> * current = new Node<int>();
+		 //a node pointer "pHead" points to where "current" points, currently
+		 //the new node
+		 Node <int> * pHead = current;
+		 //pointer "p" points to where pointer "rhs" is at. continues while "p"
+		 //is true, or doesnt equal NULL. "p" now points to where "p's" current
+		 //pNext is pointing to
+		 for (Node <int> * p = pParam; p; p = p->pNext)
+		 {
+			 cout << "\nCopying the data in list (" << p->data << ")";
+			 //1)first carry out these attaching steps for the "pPrev" of each
+			 //"prev" points to where "current" currently points
+			 Node <int> * prev = current;
+			 //the value/data at "prev" equals the value/data at "p"
+			 prev->data = p->data;
+			 //if the pointer the "pPrev" that "p" points to doesnt equal NULL...
+			 if (p->pPrev != NULL)
+			 {
+				 //the node pointer "pPrev" that "prev" is pointing to, now points to
+				 //the node "current" is pointing to
+				 prev->pPrev = current;
+			 }
+			 else
+			 {
+				 //the pointer "pPrev" that "prev" is pointing to, points/equals NULL
+				 prev->pPrev = NULL;
+			 }
+			 //2)now carry out the same steps for "pNext" of each
+			 //if the pointer the "pNext" that "p" points to doesnt equal NULL...
+			 if (p->pNext != NULL)
+			 {
+				 //the pointer "next" points to a new node
+				 Node <int> * next = new Node<int>();
+				 //the node pointer "pNext" that "prev" is pointing to, now points to
+				 //the node "next" is pointing to
+				 prev->pNext = next;
+				 //the pointer "current" points currently to what "next" is pointing to
+				 current = next;
+			 }
+			 else
+			 {
+				 this->pTail = p;
+			 }
+		 }
+		 this->pHead = pHead;
+	 }
    
      // return an iterator to the beginning of the list
      ListIterator <T> begin()   { return ListIterator <T>(pHead->pNext); }
@@ -170,6 +230,7 @@ List<T>::List(const List <T> & rhs)
    //pNext is pointing to
    for (Node <T> * p = rhs.pHead; p; p = p->pNext)
    {
+	   cout << "\nCopying the data in list (" << p->data << ")";
       //1)first carry out these attaching steps for the "pPrev" of each
       //"prev" points to where "current" currently points
       Node <T> * prev = current;

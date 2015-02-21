@@ -40,29 +40,45 @@ void fibonacci()
    }
 
 
-   // prompt for a single large Fibonacci
+   //prompt for a single large Fibonacci
    cout << "Which Fibonacci number would you like to display? ";
    cin  >> number;
-   WholeNumber a, b, temp;
-   a = 999;
-   b = 32;
-   temp = 0;
-   cout << a << endl;
-   cout << b << endl;
-   cout << temp << endl;
-   a = a + b;
-   cout << a << endl;
-   //for (int i = 1; i <= number; i++)
-   //{
-	  // if (i == 1)
-	  // {
-		 //  continue;
-	  // }
-	  // temp = a + b;
-	  // a = b;
-	  // b = temp;
-	  // cout << b << endl;
-   //}
+   WholeNumber aa; 
+   WholeNumber bb;
+   WholeNumber temptemp;
+   WholeNumber cc;
+   aa = 3;
+   bb = 3;
+   cc = 3;
+   temptemp = 0;
+   cout << "Got here";
+   //cout << a << b << c << endl;
+   //cout << a + b << endl;
+   cout << "Got here2" << endl;
+   temptemp = aa + bb;
+
+   cout << temptemp;
+   cout << "next!\n";
+   temptemp = temptemp + cc;
+   cout << temptemp;
+   //cout << "\nNumber1: " << temp << endl;
+   //temp = b + b;
+   //cout << "\nNumber2:" << temp << endl;
+   //c = b + a;
+   //cout << "\nNumberb:" << c << endl;
+   //temp = c + b;
+   //cout << "\nNumber3:" << temp << endl;
+   /*for (int i = 1; i <= number; i++)
+   {
+	   if (i == 1)
+	   {
+		   continue;
+	   }
+	   temp = a + b;
+	   a = b;
+	   b = temp;
+	   cout << b << endl;
+   }*/
 }
 
 
