@@ -136,28 +136,29 @@ class List
 		 //a node pointer "pHead" points to where "current" points, currently
 		 //the new node
 		 Node <int> * pHead = current;
+		 Node <int> * prev = NULL;
 		 //pointer "p" points to where pointer "rhs" is at. continues while "p"
 		 //is true, or doesnt equal NULL. "p" now points to where "p's" current
 		 //pNext is pointing to
 		 for (Node <int> * p = pParam; p; p = p->pNext)
 		 {
-			 //1)first carry out these attaching steps for the "pPrev" of each
-			 //"prev" points to where "current" currently points
-			 Node <int> * prev = current;
-			 //the value/data at "prev" equals the value/data at "p"
-			 prev->data = p->data;
-			 //if the pointer the "pPrev" that "p" points to doesnt equal NULL...
 			 if (p->pPrev != NULL)
 			 {
 				 //the node pointer "pPrev" that "prev" is pointing to, now points to
 				 //the node "current" is pointing to
-				 prev->pPrev = current;
+				 current->pPrev = prev;
 			 }
 			 else
 			 {
 				 //the pointer "pPrev" that "prev" is pointing to, points/equals NULL
-				 prev->pPrev = NULL;
+				 current->pPrev = NULL;
 			 }
+			 //1)first carry out these attaching steps for the "pPrev" of each
+			 //"prev" points to where "current" currently points
+			 prev = current;
+			 //the value/data at "prev" equals the value/data at "p"
+			 prev->data = p->data;
+			 //if the pointer the "pPrev" that "p" points to doesnt equal NULL...
 			 //2)now carry out the same steps for "pNext" of each
 			 //if the pointer the "pNext" that "p" points to doesnt equal NULL...
 			 if (p->pNext != NULL)

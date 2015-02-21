@@ -46,8 +46,8 @@ void fibonacci()
    WholeNumber aa; 
    WholeNumber bb;
    WholeNumber temptemp;
-   aa = 3;
-   bb = 3;
+   aa = 0;
+   bb = 1;
    temptemp = 0;
 
    for (int i = 1; i <= number; i++)
