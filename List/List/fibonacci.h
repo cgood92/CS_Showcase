@@ -54,6 +54,7 @@ public:
 				continue;
 			}
 			if (carryOver && (rhsIt == rhs.data->rend() && lhsIt == this->data->rend()))
+			if (carryOver && !(*rhsIt && *lhsIt))
 			{
 				cout << " Stop 5" << endl;
 				sum.data->push_front(1);
