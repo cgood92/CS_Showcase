@@ -7,7 +7,8 @@
 # Summary:
 #     <put a description here>
 # Time:
-#     <how long did it take to complete this program>?
+#     Clint
+#     Parker 2.5 hours
 ###############################################################
 
 ##############################################################

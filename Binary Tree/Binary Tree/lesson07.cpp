@@ -30,7 +30,7 @@ void testMerge();
 #define TEST1   // for testSimple()
 #define TEST2   // for testAdd()
 #define TEST3   // for testDisplay()
-//#define TEST4   // for testMerge()
+#define TEST4   // for testMerge()
 
 /**********************************************************************
  * MAIN
