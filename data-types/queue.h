@@ -1,11 +1,8 @@
 /***********************************************************************
- * Program:
- *    Lesson 3, Queue
- *    Brother Sloan, CS 235
- * Author:
- *      Clint Goodman and Parker Hubbard
- * Summary:
+ * Program: Queue
+ * Authors: Clint Goodman and Parker Hubbard
  ************************************************************************/
+
 #ifndef QUEUE_H
 #define QUEUE_H
 
@@ -14,26 +11,21 @@
 #include <string>
 using namespace std;
 
-/**********************************************************************
- * Stack
- * //creating the class for Stacks
- ***********************************************************************/
 template <class T>
 class Queue
 {
   private:
-     T * data;      //dynamically allocated array of T
-     int frontSpot; //the "X" value of where the bottom/front item is found
-     int backSpot;  //the "X" value of where the top/back item is found
-     int current_size;  //the current Set size, or number of items
-     int capacity_size; //how many items can I put on the Set before full?
+     T * data;
+     int frontSpot;
+     int backSpot;
+     int current_size;
+     int capacity_size;
      void resize(int newCapacity) throw (bad_alloc);
   public:
-     ////////////CLASS CONSTRUCTORS///////////////////
-     // default constructor :
+     // default constructor
      Queue() : data(NULL), current_size(0), capacity_size(0),
         frontSpot(-1), backSpot(-1){}
-     // copy constructor : copy details of another indicated
+     // copy constructor
 	 Queue(const Queue<T> & rhs) : current_size(0), data(NULL)
      {
 		 resize(rhs.capacity_size);
@@ -50,38 +42,28 @@ class Queue
      {
         if (capacity > 0) { resize(capacity); }
      }
-     // destructor : free everything that was previously used
+     // destructor
      ~Queue()
      {
-        if (NULL != data)//(capacity)
-        {  //assert(capacity);
+        if (NULL != data)
+        {
            delete[] data;
         }
      }
      
-     /////////COMMANDS///////////////////
-     //empty(): Test whether the set is empty
      bool empty() const { return backSpot == frontSpot; }
-     //size:    Return the current_size of the Queue
      int size()        const{ return current_size; }
-     //capacity:Return the capacity_size of the Queue
      int capacity()    const{ return capacity_size; }
      
      Queue<T> & operator = (const Queue<T> & rhs) throw (bad_alloc);
 
-     //push():  Adds an item to the top/back of the container.
      void push(const T & item);
-     //back():  Returns the item currently at the top/back of the stack.
      T & back()   throw(const char *);
-     //front(): Returns the item currently at the bottom/front of the stack.
      T & front()  throw(const char *);
-     //pop(): Removes an item from the front/bottom of the stack
      void pop()   throw(const char *);
      
 };
-/**********************************************************************
- * (1)//creating the steps for resizing the Queue
- ***********************************************************************/
+
 template <class T>
 void Queue<T> ::resize(int newCapacity) throw (bad_alloc)
 {
@@ -99,10 +81,6 @@ void Queue<T> ::resize(int newCapacity) throw (bad_alloc)
    capacity_size = newCapacity;
 }
 
-/**********************************************************************
- * (2)Stack-push
- *  -Adds an item to the top of the stack.
- ***********************************************************************/
 template <class T>
 void Queue<T> ::push(const T & item)
 {
@@ -126,10 +104,6 @@ void Queue<T> ::push(const T & item)
    }
 }
 
-/**********************************************************************
- * (3)Queue-front
- *  -Returns the item currently at the back/top of the stack.
- ***********************************************************************/
 template <class T>
 T & Queue<T> ::back()throw(const char *)
 {
@@ -143,10 +117,6 @@ T & Queue<T> ::back()throw(const char *)
    }
 }
 
-/**********************************************************************
- * (4)Queue-front
- *  -Returns the item currently at the front/bottom of the Queue.
- ***********************************************************************/
 template <class T>
 T & Queue<T> ::front()throw(const char *)
 {
@@ -160,10 +130,6 @@ T & Queue<T> ::front()throw(const char *)
    }
 }
 
-/**********************************************************************
- * (5)Stack-pop
- *  -Removes the item from the head
- ***********************************************************************/
 template <class T>
 void Queue<T> ::pop() throw(const char *)
 {
@@ -180,10 +146,6 @@ void Queue<T> ::pop() throw(const char *)
    }
 }
 
-/**********************************************************************
- * Queue-operator equals
- * //creating the steps for equaling the Queue
- ***********************************************************************/
 template <class T>
 Queue<T> & Queue<T> :: operator = (const Queue<T> & rhs) throw (bad_alloc)
 {
