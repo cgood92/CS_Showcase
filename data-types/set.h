@@ -1,45 +1,33 @@
 ﻿/***********************************************************************
-* Program:
-*    Lesson 01, Sets
-*    Brother Sloan, CS 235
-* Author:
-*	Clint Goodman and Parker Hubbard
-* Summary:
-************************************************************************/
+ * Program: Set
+ * Authors: Clint Goodman and Parker Hubbard
+ ************************************************************************/
+
 
 #ifndef SET_H
 #define SET_H
 #include <cassert>
 
-//#include <vector>
 #include <iostream>
 #include <string>
 using namespace std;
 
-//early declaration of the "SetIterator" class for the "Vector" class
 template <class T>
 class SetIterator;
 
-/**********************************************************************
-* Set
-* //creating the class for sets
-***********************************************************************/
 template <class T>
 class Set
 {
 private:
-	T * data;          // dynamically allocated array of T
-	//I switched "size" for "numItems"
-	int current_size;          //the current Set size, or number of items
-	//currently within the vector
-	int capacity_size;      // how many items can I put on the Set before full?
+	T * data;
+	int current_size;
+	int capacity_size;
 	void resize(int newCapacity) throw (bad_alloc);
 
 public:
-	/////////constructors///////////////////
-	// default constructor : empty and kinda useless
+	// default constructor
 	Set() : data(NULL), current_size(0), capacity_size(0) {}
-	// copy constructor : copy it
+	// copy constructor
 	Set(const Set<T> & rhs) : data(NULL), current_size(0), capacity_size(0)
 	{
 		if (rhs.size())   { *this = rhs; }
@@ -49,29 +37,22 @@ public:
 	{
 		if (capacity > 0) { resize(capacity); }
 	}
-	// destructor : free everything that was previously used
+	// destructor
 	~Set()
 	{
-		if (NULL != data)//(capacity)
-		{  //assert(capacity);
+		if (NULL != data)
+		{
 			delete[] data;
 		}
 	}
 
-	//Return the Setsize
 	int size()        const{ return current_size; }
-	//Test whether the set is empty
 	bool empty()      const { return current_size == 0; }
-	//returns the Capacity size
 	int capacity()    const{ return capacity_size; }
-	// remove all the items from the container
 	void clear()      { current_size = 0; }
 
-	//operator=
 	Set<T> & operator = (const Set<T> & rhs) throw (bad_alloc);
-	//operator[]
 	Set<T> & operator [] (const Set<T> & rhs) throw (bool);
-	//operator()//return-by-value
 	T operator () (int index) throw (bool)
 	{
 		return (*this)[index];
@@ -79,28 +60,17 @@ public:
 	Set<T> operator || (Set<T> & rhs);
 	Set<T> operator && (Set<T> & rhs);
 
-	// return an iterator to the beginning of the list
 	SetIterator <T> begin()   { return SetIterator<T>(data); }
-	// return an iterator to the end of the list
 	SetIterator <T> end()     { return SetIterator<T>(data + current_size); }
-	//return the iterator if it exists in the list
 	SetIterator <T> find(T element);
 
-	//inserts a value into the set
 	void insert(const T & item);
-	//remove a value from the set
-	//void erase(const SetIterator <T> & tIterator);
 	void erase(SetIterator<T> & iteratorInput);
 };
 
-/**********************************************************************
-* Set-insert
-* //creating the steps for inserting a unit/value to a certain spot
-***********************************************************************/
 template <class T>
 void Set<T> ::insert(const T & item)
 {
-	//If this is first insert, allocate some space, insert it, and quit
 	if (current_size == 0)
 	{
 		resize(1);
@@ -111,7 +81,7 @@ void Set<T> ::insert(const T & item)
 
 	SetIterator<T> iter_find = find(item);
 
-	/* If iterator returned is the same as the end, but the item is not the last,
+	/* if iterator returned is the same as the end, but the item is not the last,
 	this means that the item was not found, so we can insert it */
 	if (iter_find == this->end())
 	{
@@ -131,10 +101,6 @@ void Set<T> ::insert(const T & item)
 	}
 }
 
-/**********************************************************************
-* Set-find
-* //creating the steps for finding a certain value and location
-***********************************************************************/
 template <class T>
 SetIterator<T> Set<T> ::find(T element)
 {
@@ -159,10 +125,6 @@ SetIterator<T> Set<T> ::find(T element)
 	return this->end();
 }
 
-/**********************************************************************
-* Set-resize
-* //creating the steps for resizing the Set
-***********************************************************************/
 template <class T>
 void Set<T> ::resize(int newCapacity) throw (bad_alloc)
 {
@@ -179,10 +141,7 @@ void Set<T> ::resize(int newCapacity) throw (bad_alloc)
 	data = pNew;
 	capacity_size = newCapacity;
 }
-/**********************************************************************
-* Set-operator equals
-* //creating the steps for equaling the Set
-***********************************************************************/
+
 template <class T>
 Set<T> & Set<T> :: operator = (const Set<T> & rhs) throw (bad_alloc)
 {
@@ -200,13 +159,9 @@ Set<T> & Set<T> :: operator = (const Set<T> & rhs) throw (bad_alloc)
 	{
 		data[i] = rhs.data[i];
 	}
-	//return itself
 	return *this;
 }
-/**********************************************************************
-* Set-operator brackets
-* //creating the steps for partitioning the Set
-***********************************************************************/
+
 template <class T>
 Set<T> & Set<T> :: operator [] (const Set<T> & rhs) throw (bool)
 {
@@ -214,11 +169,9 @@ Set<T> & Set<T> :: operator [] (const Set<T> & rhs) throw (bool)
 	{
 		throw true;
 	}
-	return data[rhs]; //return-by-reference
+	return data[rhs];
 }
 
-/**********************************************************************
-***********************************************************************/
 template <class T>
 void Set<T> ::erase(SetIterator<T> & iteratorInput)
 {
@@ -240,8 +193,6 @@ void Set<T> ::erase(SetIterator<T> & iteratorInput)
 	}
 }
 
-/**********************************************************************
-***********************************************************************/
 template <class T>
 Set<T> Set<T> ::operator || (Set<T> & rhs)
 {
@@ -276,9 +227,6 @@ Set<T> Set<T> ::operator || (Set<T> & rhs)
 	return setUnion;
 }
 
-/**********************************************************************
-
-***********************************************************************/
 template <class T>
 Set<T> Set<T> ::operator && (Set<T> & rhs)
 {
@@ -309,66 +257,51 @@ Set<T> Set<T> ::operator && (Set<T> & rhs)
 	return setIntersect;
 }
 
-/**********************************************************************
-* SetIterator
-* //creating the class of the SetIterator
-***********************************************************************/
 template <class T>
 class SetIterator
 {
 private:
 	T * p;
 public:
-	// default constructor - set value to "0"?
 	SetIterator() : p(0x00000000)  {}
-	// initialize to direct the private variable "t" to some item
 	SetIterator(T * p) : p(p)      {}
-	//copy constructor
 	SetIterator(const SetIterator & rhs)
 	{
 		*this = rhs;
 	}
-	// assignment operator
 	SetIterator & operator = (const SetIterator & rhs)
 	{
 		this->p = rhs.p;
 		return *this;
 	}
-	// not equals operator
 	bool operator != (const SetIterator & rhs) const
 	{
 		return rhs.p != this->p;
 	}
-	// equals operator
 	bool operator == (const SetIterator & rhs) const
 	{
 		return rhs.p == this->p;
 	}
-	// dereference operator
 	T & operator * ()
 	{
 		return *p;
 	}
-	// prefix decrement
 	SetIterator <T> & operator -- ()
 	{
 		p--;
 		return *this;
 	}
-	// postfix decrement
 	SetIterator <T> operator--(int prefix)
 	{
 		SetIterator tmp(*this);
 		p--;
 		return tmp;
 	}
-	// prefix increment
 	SetIterator <T> & operator ++ ()
 	{
 		p++;
 		return *this;
 	}
-	// postfix increment
 	SetIterator <T> operator++(int postfix)
 	{
 		SetIterator tmp(*this);

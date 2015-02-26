@@ -1,17 +1,10 @@
 /***********************************************************************
-* Program:
-*    Lesson 00, Vector
-*    Brother Sloan, CS 235
-* Author:
-*    Clint Goodman
-* Summary:
-*    This is a header file that implements a data structure acting
-*	just like a vector.  
-************************************************************************/
+ * Program: Vector
+ * Authors: Clint Goodman and Parker Hubbard
+ ************************************************************************/
 
-#include <iostream>       // for CIN and COUT
+#include <iostream>
 
-// declare prototype
 template <class T>
 class VectorIterator;
 
@@ -155,6 +148,5 @@ public:
 		return tmp;
 	}
 private:
-	//Pointer of generic type
 	T * pVector;
 };
