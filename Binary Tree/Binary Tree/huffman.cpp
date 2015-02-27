@@ -24,7 +24,6 @@ using namespace std;
  * HUFFMAN
  * Driver program to exercise the huffman generation code
  *******************************************/
-//template <typename T>
 void huffman()
 {
    char fileName[256];
@@ -52,10 +51,35 @@ void huffman()
 	   cout << "Error opening file";
    }
 
+   int num_items_to_visit = huffCodes.size() - 1;
+
+   bool exchange_made = false;
+   do
+   {
+	   int last_marker = num_items_to_visit - 1;
+	   for (int i = 0; i <= last_marker; i++)
+
+		   if (huffCodes[i].getSecond() > huffCodes[i + 1].getSecond())
+		   {
+			   Pair<string, float> temp = huffCodes[i];
+			   huffCodes[i] = huffCodes[i + 1];
+			   huffCodes[i + 1] = temp;
+			   exchange_made = true;
+		   }
+	   num_items_to_visit--;
+
+   } while (exchange_made && (num_items_to_visit > 0));
+
    VectorIterator <Pair<string, float>> it;
+   cout << "Sorted:\n";
    for (it = huffCodes.begin(); it != huffCodes.end(); ++it)
 	   cout << "\t" << *it << endl;
-   
+
+   HuffmanTree current;
+   current.miniTree.addLeft(huffCodes[0]);
+   current.miniTree.addRight(huffCodes[1]);
+   current.miniTree.data = Pair<string, float>("", huffCodes[0].getSecond() + huffCodes[1].getSecond());
+
    return;
 }
 
