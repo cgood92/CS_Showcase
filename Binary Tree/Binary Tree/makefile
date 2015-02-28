@@ -7,7 +7,7 @@
 # Summary:
 #     <put a description here>
 # Time:
-#     Clint
+#     Clint 13 hours
 #     Parker 2.5 hours
 ###############################################################
 

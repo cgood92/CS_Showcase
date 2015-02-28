@@ -25,8 +25,8 @@ using namespace std;
  * Driver program to exercise the huffman generation code
  *******************************************/
 
-string findInTree(HuffmanTree * master, string searchedFor, string encode);
 string findInTree(BinaryNode< Pair<string, float> > * pTree, string searchedFor, string encode);
+int getSizeOfTree(BinaryNode< Pair<string, float> > * pTree, int count);
 
 void huffman()
 {
@@ -126,5 +126,26 @@ string findInTree(BinaryNode< Pair<string, float> > * pTree, string searchedFor,
 		toReturn += findInTree(pLeft, searchedFor, encode + "0");
 	}
 
-	return string("") + toReturn;
+	return toReturn;
+}
+
+int getSizeOfTree(BinaryNode< Pair<string, float> > * pTree, int count)
+{
+	int toReturn = 0;
+	BinaryNode < Pair<string, float> > * pLeft = pTree->pLeft;
+	BinaryNode < Pair<string, float> > * pRight = pTree->pRight;
+	if (pRight)
+	{
+		toReturn += getSizeOfTree(pRight, count + 1);
+	}
+	if (pLeft)
+	{
+		toReturn += getSizeOfTree(pLeft, count + 1);
+	}
+	if (!pLeft && !pRight)
+	{
+		return count;
+	}
+
+	return toReturn;
 }
