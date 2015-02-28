@@ -10,7 +10,11 @@
 
 #include "huffman.h"       // for HUFFMAN() prototype
 #include "pair.h"
+#include <vector>
 #include "vector.h"
+#include "list.h"
+#include "set.h"
+#include "deque.h"      // your Deque class should be in deque.h
 #include <cassert>
 #include <iostream>
 #include <sstream>
@@ -28,7 +32,7 @@ void huffman()
 {
    char fileName[256];
    //create the tree
-   Vector <Pair<string, float>> huffCodes;
+   vector <Pair<string, float>> huffCodes;
 
    //get the filename
    cout << "Enter the filename containing the value frequencies: ";
@@ -42,6 +46,7 @@ void huffman()
 	   {
 		   Pair<string, float> thisPair; //String: token, float: frequency
 		   istringstream(line) >> thisPair;
+		   //HuffmanTree thisHuffTree(thisPair);
 		   huffCodes.push_back(thisPair);
 	   }
 	   myfile.close();
@@ -58,7 +63,6 @@ void huffman()
    {
 	   int last_marker = num_items_to_visit - 1;
 	   for (int i = 0; i <= last_marker; i++)
-
 		   if (huffCodes[i].getSecond() > huffCodes[i + 1].getSecond())
 		   {
 			   Pair<string, float> temp = huffCodes[i];
@@ -66,19 +70,58 @@ void huffman()
 			   huffCodes[i + 1] = temp;
 			   exchange_made = true;
 		   }
-	   num_items_to_visit--;
+		   num_items_to_visit--;
 
    } while (exchange_made && (num_items_to_visit > 0));
 
-   VectorIterator <Pair<string, float>> it;
    cout << "Sorted:\n";
-   for (it = huffCodes.begin(); it != huffCodes.end(); ++it)
-	   cout << "\t" << *it << endl;
 
-   HuffmanTree current;
-   current.miniTree.addLeft(huffCodes[0]);
-   current.miniTree.addRight(huffCodes[1]);
-   current.miniTree.data = Pair<string, float>("", huffCodes[0].getSecond() + huffCodes[1].getSecond());
+   HuffmanTree master;
+   HuffmanTree * current = &master;
+   Vector <HuffmanTree> dTreesUnused;
+   for (int i = 0; i < huffCodes.size(); ++i)
+   {
+	   dTreesUnused.push_back(HuffmanTree(huffCodes[i]));
+	   //cout << dTreesUnused(i).miniTree.data;
+   }
+
+   for (VectorIterator<HuffmanTree> it = dTreesUnused.begin(); it != dTreesUnused.end(); ++it)
+   {
+	   cout << (*it).miniTree.data << endl;
+   }
+
+   while(dTreesUnused.size() > 1)
+   {
+	   HuffmanTree lowest;
+	   lowest = dTreesUnused[0];
+	   HuffmanTree secondLowest;
+	   secondLowest = dTreesUnused[0];
+	   VectorIterator <HuffmanTree> delOne = dTreesUnused.begin();
+	   VectorIterator <HuffmanTree> delTwo = dTreesUnused.begin();
+	   for (VectorIterator <HuffmanTree> it = dTreesUnused.begin(); it != dTreesUnused.end(); ++it)
+	   {
+		   cout << "Checking to see if " << (*it).miniTree.data.getSecond() << " < " << lowest.miniTree.data.getSecond() << endl;
+		   if ((*it).miniTree.data.getSecond() < lowest.miniTree.data.getSecond())
+		   {
+			   lowest = *it;
+			   delOne = VectorIterator <HuffmanTree>(it);
+		   }
+		   else if ((*it).miniTree.data.getSecond() < secondLowest.miniTree.data.getSecond())
+		   {
+			   secondLowest = *it;
+			   delTwo = VectorIterator <HuffmanTree> (it);
+		   }
+	   }
+	   HuffmanTree * combined = new HuffmanTree();
+	   combined->miniTree.addLeft(lowest.miniTree.data);
+	   combined->miniTree.addRight(secondLowest.miniTree.data);
+	   combined->miniTree.data = Pair<string, float>("", lowest.miniTree.data.getSecond() + secondLowest.miniTree.data.getSecond());
+	   (*delTwo) = *combined;
+	   master = dTreesUnused[0];
+	   dTreesUnused.erase(delOne);
+   }
+
+   cout << &master.miniTree;
 
    return;
 }

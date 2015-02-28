@@ -93,6 +93,20 @@ public:
 	{
 		return VectorIterator <T>(data + current_size);
 	}
+	void erase(VectorIterator <T> & toErase)
+	{
+		if (toErase != this->end())
+		{
+			(*toErase) = this->data[current_size - 1];
+		}
+		else if (toErase != this->begin())
+		{
+			(*toErase) = this->data[current_size];
+		}
+		current_size--;
+		return;
+	}
+
 private:
 	T * data;
 	int current_size;
