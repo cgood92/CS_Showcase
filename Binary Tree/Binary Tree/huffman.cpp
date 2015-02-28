@@ -56,23 +56,23 @@ void huffman()
 	   cout << "Error opening file";
    }
 
-   int num_items_to_visit = huffCodes.size() - 1;
+   //int num_items_to_visit = huffCodes.size() - 1;
 
-   bool exchange_made = false;
-   do
-   {
-	   int last_marker = num_items_to_visit - 1;
-	   for (int i = 0; i <= last_marker; i++)
-		   if (huffCodes[i].getSecond() > huffCodes[i + 1].getSecond())
-		   {
-			   Pair<string, float> temp = huffCodes[i];
-			   huffCodes[i] = huffCodes[i + 1];
-			   huffCodes[i + 1] = temp;
-			   exchange_made = true;
-		   }
-		   num_items_to_visit--;
+   //bool exchange_made = false;
+   //do
+   //{
+	  // int last_marker = num_items_to_visit - 1;
+	  // for (int i = 0; i <= last_marker; i++)
+		 //  if (huffCodes[i].getSecond() > huffCodes[i + 1].getSecond())
+		 //  {
+			//   Pair<string, float> temp = huffCodes[i];
+			//   huffCodes[i] = huffCodes[i + 1];
+			//   huffCodes[i + 1] = temp;
+			//   exchange_made = true;
+		 //  }
+		 //  num_items_to_visit--;
 
-   } while (exchange_made && (num_items_to_visit > 0));
+   //} while (exchange_made && (num_items_to_visit > 0));
 
    cout << "Sorted:\n";
 
@@ -89,26 +89,46 @@ void huffman()
    {
 	   cout << (*it).miniTree.data << endl;
    }
-
+   bool firstTime = true;
    while(dTreesUnused.size() > 1)
    {
 	   HuffmanTree lowest;
-	   lowest = dTreesUnused[0];
+	   lowest = HuffmanTree();
+	   lowest.miniTree.data = Pair<string, float>("", 10000);
 	   HuffmanTree secondLowest;
-	   secondLowest = dTreesUnused[0];
-	   VectorIterator <HuffmanTree> delOne = dTreesUnused.begin();
-	   VectorIterator <HuffmanTree> delTwo = dTreesUnused.begin();
+	   secondLowest = HuffmanTree();
+	   secondLowest.miniTree.data = Pair<string, float>("", 10001);
+	   VectorIterator <HuffmanTree> delOne;
+	   VectorIterator <HuffmanTree> delTwo;
+	   int i = 0;
 	   for (VectorIterator <HuffmanTree> it = dTreesUnused.begin(); it != dTreesUnused.end(); ++it)
 	   {
-		   cout << "Checking to see if " << (*it).miniTree.data.getSecond() << " < " << lowest.miniTree.data.getSecond() << endl;
+		   cout << "[" << i++ << "] " << &((*it).miniTree) << endl;
+	   }
+	   cout << "====================\n";
+	   for (VectorIterator <HuffmanTree> it = dTreesUnused.begin(); it != dTreesUnused.end(); ++it)
+	   {
+		   //cout << "Checking to see if " << (*it).miniTree.data.getSecond() << " < " << lowest.miniTree.data.getSecond() << "()" << endl;
 		   if ((*it).miniTree.data.getSecond() < lowest.miniTree.data.getSecond())
 		   {
+			   if (secondLowest.miniTree.data.getSecond() == lowest.miniTree.data.getSecond())
+			   {
+				   secondLowest = lowest;
+				   delTwo = delOne;
+			   }
+			   else
+			   {
+				   secondLowest = lowest;
+				   delTwo = delOne;
+			   }
 			   lowest = *it;
+			   cout << "<" << (*it).miniTree.data.getFirst() << ", " << (*it).miniTree.data.getSecond() << "> just got chosen as lowest\n";
 			   delOne = VectorIterator <HuffmanTree>(it);
 		   }
 		   else if ((*it).miniTree.data.getSecond() < secondLowest.miniTree.data.getSecond())
 		   {
 			   secondLowest = *it;
+			   cout << "<" << (*it).miniTree.data.getFirst() << ", " << (*it).miniTree.data.getSecond() << "> just got chosen as secondLowest\n";
 			   delTwo = VectorIterator <HuffmanTree> (it);
 		   }
 	   }
@@ -116,10 +136,29 @@ void huffman()
 	   combined->miniTree.addLeft(lowest.miniTree.data);
 	   combined->miniTree.addRight(secondLowest.miniTree.data);
 	   combined->miniTree.data = Pair<string, float>("", lowest.miniTree.data.getSecond() + secondLowest.miniTree.data.getSecond());
-	   (*delTwo) = *combined;
-	   master = dTreesUnused[0];
-	   dTreesUnused.erase(delOne);
+	   if (firstTime)
+	   {
+		   //combined->miniTree.pParent = &master.miniTree;
+	   }
+
+	   cout << &(combined->miniTree) << endl;
+	   cout << "====================\n";
+
+	   (*delOne) = *combined;
+	   HuffmanTree test;
+	   //test.miniTree.data = Pair<string, float>("TEST", 10000);
+	   test = (*dTreesUnused.end());
+	   (*delTwo) = (*(--(dTreesUnused.end())));
+	   //(*delTwo) = *(dTreesUnused.end());
+	   dTreesUnused.erase(dTreesUnused.end());
+	   i = 0;
+	   for (VectorIterator <HuffmanTree> it = dTreesUnused.begin(); it != dTreesUnused.end(); ++it)
+	   {
+		   cout << "[" << i++ << "] " << &((*it).miniTree) << endl;
+	   }
+	   firstTime = false;
    }
+   master = dTreesUnused[0];
 
    cout << &master.miniTree;
 
