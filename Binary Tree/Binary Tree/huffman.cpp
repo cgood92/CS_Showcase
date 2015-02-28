@@ -74,18 +74,10 @@ void huffman()
 	   {
 		   if ((*it).miniTree.data.getSecond() < lowest->miniTree.data.getSecond())
 		   {
-			   if (secondLowest->miniTree.data.getSecond() == lowest->miniTree.data.getSecond())
-			   {
-				   *secondLowest = *lowest;
-				   delTwo = delOne;
-			   }
-			   else
-			   {
-				   *secondLowest = *lowest;
-				   delTwo = delOne;
-			   }
-			   *lowest = *it;
-			   delOne = VectorIterator <HuffmanTree>(it);
+				*secondLowest = *lowest;
+				delTwo = delOne;
+				*lowest = *it;
+				delOne = VectorIterator <HuffmanTree>(it);
 		   }
 		   else if ((*it).miniTree.data.getSecond() < secondLowest->miniTree.data.getSecond())
 		   {
@@ -99,8 +91,6 @@ void huffman()
 	   combined->miniTree.data = Pair<string, float>("", lowest->miniTree.data.getSecond() + secondLowest->miniTree.data.getSecond());
 
 	   (*delOne) = *combined;
-	   HuffmanTree test;
-	   test = (*dTreesUnused.end());
 	   (*delTwo) = (*(--(dTreesUnused.end())));
 	   dTreesUnused.erase(dTreesUnused.end());
    }
@@ -108,36 +98,11 @@ void huffman()
 
    for (VectorIterator < Pair<string, float> > it = huffCodes.begin(); it != huffCodes.end(); ++it)
 	{
-		cout << (*it).getFirst() << " = " << findInTree(&master, (*it).getFirst(), "") << endl;
+		cout << (*it).getFirst() << " = " << findInTree(&(master.miniTree), (*it).getFirst(), "") << endl;
 	}
    return;
 }
 
-
-string findInTree(HuffmanTree * master, string searchedFor, string encode)
-{
-	string toReturn = "";
-	BinaryNode < Pair<string, float> > * pLeft = master->miniTree.pLeft;
-	BinaryNode < Pair<string, float> > * pRight = master->miniTree.pRight;
-	if (pRight)
-	{
-		if (pRight->data.getFirst() == searchedFor)
-		{
-			return encode + string("1");
-		}
-		toReturn += findInTree(pRight, searchedFor, encode + "1");
-	}
-	if (pLeft)
-	{
-		if (pLeft->data.getFirst() == searchedFor)
-		{
-			return encode + string("0");
-		}
-		toReturn += findInTree(pLeft, searchedFor, encode + "0");
-	}
-	
-	return string("") + toReturn;
-}
 
 string findInTree(BinaryNode< Pair<string, float> > * pTree, string searchedFor, string encode)
 {
