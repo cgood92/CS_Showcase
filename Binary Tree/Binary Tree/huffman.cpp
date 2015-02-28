@@ -28,11 +28,15 @@ using namespace std;
  * HUFFMAN
  * Driver program to exercise the huffman generation code
  *******************************************/
+
+string findInTree(HuffmanTree * master, string searchedFor, string encode);
+string findInTree(BinaryNode<Pair<string, float>> * pTree, string searchedFor, string encode);
+
 void huffman()
 {
    char fileName[256];
    //create the tree
-   vector <Pair<string, float>> huffCodes;
+   Vector <Pair<string, float>> huffCodes;
 
    //get the filename
    cout << "Enter the filename containing the value frequencies: ";
@@ -157,10 +161,85 @@ void huffman()
 	   firstTime = false;
    }
    master = dTreesUnused[0];
-
    cout << &master.miniTree;
 
+   string testEncode = "";
+   testEncode += "1";
+   testEncode += "2";
+   testEncode += "3";
+   testEncode += "4";
+   //Now encode
+   cout << endl << endl;
+   string something = findInTree(&master, "C", "");
+   for (VectorIterator <Pair<string, float>> it = huffCodes.begin(); it != huffCodes.end(); ++it)
+	{
+		cout << "\n" << (*it).getFirst() << " = " << findInTree(&master, (*it).getFirst(), "");
+	}
    return;
 }
 
+//string findInTree(HuffmanTree * master)
+//{
+//	HuffmanTree * pLeft = master->miniTree.pLeft->;
+//	HuffmanTree * pRight = master;
+//	if (pLeft->miniTree.pLeft)
+//	{
+//		findInTree(pLeft);
+//	}
+//	cout << master->miniTree.data << " ";
+//	if (pRight->miniTree.pRight)
+//	{
+//		findInTree(pRight);
+//	}
+//	return "test";
+//}
 
+string findInTree(HuffmanTree * master, string searchedFor, string encode)
+{
+	string toReturn = "";
+	BinaryNode <Pair<string, float>> * pLeft = master->miniTree.pLeft;
+	BinaryNode <Pair<string, float>> * pRight = master->miniTree.pRight;
+	if (pRight)
+	{
+		if (pRight->data.getFirst() == searchedFor)
+		{
+			return encode + string("1");
+		}
+		toReturn += findInTree(pRight, searchedFor, encode + "1");
+	}
+	if (pLeft)
+	{
+		if (pLeft->data.getFirst() == searchedFor)
+		{
+			return encode + string("0");
+		}
+		toReturn += findInTree(pLeft, searchedFor, encode + "0");
+	}
+	
+	return string("") + toReturn;
+}
+
+string findInTree(BinaryNode<Pair<string, float>> * pTree, string searchedFor, string encode)
+{
+	string toReturn = "";
+	BinaryNode <Pair<string, float>> * pLeft = pTree->pLeft;
+	BinaryNode <Pair<string, float>> * pRight = pTree->pRight;
+	if (pRight)
+	{
+		if (pRight->data.getFirst() == searchedFor)
+		{
+			return encode + string("1");
+		}
+		toReturn += findInTree(pRight, searchedFor, encode + "1");
+	}
+	if (pLeft)
+	{
+		if (pLeft->data.getFirst() == searchedFor)
+		{
+			return encode + string("0");
+		}
+		toReturn += findInTree(pLeft, searchedFor, encode + "0");
+	}
+
+	return string("") + toReturn;
+}
