@@ -93,7 +93,7 @@ public:
 	{
 		return VectorIterator <T>(data + current_size);
 	}
-	void erase(VectorIterator <T> & toErase)
+	void erase(VectorIterator <T> toErase)
 	{
 		if (toErase != this->end())
 		{
