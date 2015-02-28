@@ -92,12 +92,10 @@ void huffman()
    bool firstTime = true;
    while(dTreesUnused.size() > 1)
    {
-	   HuffmanTree lowest;
-	   lowest = HuffmanTree();
-	   lowest.miniTree.data = Pair<string, float>("", 10000);
-	   HuffmanTree secondLowest;
-	   secondLowest = HuffmanTree();
-	   secondLowest.miniTree.data = Pair<string, float>("", 10001);
+	   HuffmanTree * lowest = new  HuffmanTree();
+	   lowest->miniTree.data = Pair<string, float>("", 10000);
+	   HuffmanTree * secondLowest = new HuffmanTree();
+	   secondLowest->miniTree.data = Pair<string, float>("", 10001);
 	   VectorIterator <HuffmanTree> delOne;
 	   VectorIterator <HuffmanTree> delTwo;
 	   int i = 0;
@@ -109,33 +107,33 @@ void huffman()
 	   for (VectorIterator <HuffmanTree> it = dTreesUnused.begin(); it != dTreesUnused.end(); ++it)
 	   {
 		   //cout << "Checking to see if " << (*it).miniTree.data.getSecond() << " < " << lowest.miniTree.data.getSecond() << "()" << endl;
-		   if ((*it).miniTree.data.getSecond() < lowest.miniTree.data.getSecond())
+		   if ((*it).miniTree.data.getSecond() < lowest->miniTree.data.getSecond())
 		   {
-			   if (secondLowest.miniTree.data.getSecond() == lowest.miniTree.data.getSecond())
+			   if (secondLowest->miniTree.data.getSecond() == lowest->miniTree.data.getSecond())
 			   {
-				   secondLowest = lowest;
+				   *secondLowest = *lowest;
 				   delTwo = delOne;
 			   }
 			   else
 			   {
-				   secondLowest = lowest;
+				   *secondLowest = *lowest;
 				   delTwo = delOne;
 			   }
-			   lowest = *it;
+			   *lowest = *it;
 			   cout << "<" << (*it).miniTree.data.getFirst() << ", " << (*it).miniTree.data.getSecond() << "> just got chosen as lowest\n";
 			   delOne = VectorIterator <HuffmanTree>(it);
 		   }
-		   else if ((*it).miniTree.data.getSecond() < secondLowest.miniTree.data.getSecond())
+		   else if ((*it).miniTree.data.getSecond() < secondLowest->miniTree.data.getSecond())
 		   {
-			   secondLowest = *it;
+			   *secondLowest = *it;
 			   cout << "<" << (*it).miniTree.data.getFirst() << ", " << (*it).miniTree.data.getSecond() << "> just got chosen as secondLowest\n";
 			   delTwo = VectorIterator <HuffmanTree> (it);
 		   }
 	   }
 	   HuffmanTree * combined = new HuffmanTree();
-	   combined->miniTree.addLeft(lowest.miniTree.data);
-	   combined->miniTree.addRight(secondLowest.miniTree.data);
-	   combined->miniTree.data = Pair<string, float>("", lowest.miniTree.data.getSecond() + secondLowest.miniTree.data.getSecond());
+	   combined->miniTree.addLeft(&lowest->miniTree);
+	   combined->miniTree.addRight(&secondLowest->miniTree);
+	   combined->miniTree.data = Pair<string, float>("", lowest->miniTree.data.getSecond() + secondLowest->miniTree.data.getSecond());
 	   if (firstTime)
 	   {
 		   //combined->miniTree.pParent = &master.miniTree;
