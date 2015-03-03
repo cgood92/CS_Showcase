@@ -28,7 +28,7 @@ class BST
   private:
 	  BinaryNode <T> * masterTree;
   public:
-	  BST()
+	  BST() : masterTree(NULL)
 	  {
 	  }
 	  BST(const BST & rhs)
@@ -65,7 +65,10 @@ class BST
 			  return;
 		  }
 		  //Else, find the appropriate spot
-		  insert(data, this->masterTree);
+		  else
+		  {
+			  insert(data, this->masterTree);
+		  }
 	  }
 	  //Recursive function, descending the nodes and inserting where appropriate (pLeft < data < pRight)
 	  void insert(T data, BinaryNode <T> * currentNode)
