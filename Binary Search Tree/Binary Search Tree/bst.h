@@ -28,11 +28,71 @@ class BST
   private:
 	  BinaryNode <T> * masterTree;
   public:
-	  BST() {}
+	  BST()
+	  {
+	  }
+	  BST(const BST & rhs)
+	  {
+		  this->masterTree = new BinaryNode <T>();
+		  BinaryNode <T> * currentNodeRHS = rhs.masterTree;
+		  BinaryNode <T> * currentNodeLHS = this->masterTree;
+		  this->masterTree->data = rhs.masterTree->data;
+		  deepCopy(currentNodeLHS, currentNodeRHS);
+	  }
+	  //Recusive function to copy all nodes in tree
+	  void deepCopy(BinaryNode <T> * currentNodeLHS, BinaryNode <T> * currentNodeRHS)
+	  {
+		  if (currentNodeRHS->pLeft)
+		  {
+			  currentNodeLHS->addLeft(currentNodeRHS->pLeft);
+			  deepCopy(currentNodeLHS->pLeft, currentNodeRHS->pLeft);
+		  }
+		  if (currentNodeRHS->pRight)
+		  {
+			  currentNodeLHS->addRight(currentNodeRHS->pRight);
+			  deepCopy(currentNodeLHS->pRight, currentNodeRHS->pRight);
+		  }
+	  }
 	  ~BST() {}
-	  BST(const BST & rhs) {}
 	  bool empty();
-	  void insert() throw(const char *);
+	  void insert(T data)
+	  {
+		  //If this is the first time inserting into tree, make the root head this data
+		  if (!this->masterTree)
+		  {
+			  this->masterTree = new BinaryNode <T>();
+			  this->masterTree->data = data;
+			  return;
+		  }
+		  //Else, find the appropriate spot
+		  insert(data, this->masterTree);
+	  }
+	  //Recursive function, descending the nodes and inserting where appropriate (pLeft < data < pRight)
+	  void insert(T data, BinaryNode <T> * currentNode)
+	  {
+		  if (data < currentNode->data)
+		  {
+			  if (!currentNode->pLeft)
+			  {
+				  currentNode->addLeft(data);
+			  }
+			  else
+			  {
+				  insert(data, currentNode->pLeft);
+			  }
+		  }
+		  if (data > currentNode->data)
+		  {
+			  if (!currentNode->pRight)
+			  {
+				  currentNode->addRight(data);
+			  }
+			  {
+				  insert(data, currentNode->pRight);
+			  }
+		  }
+
+	  }
 	  void remove();
 	  void clear();
 	  BSTIterator <T> & find();
