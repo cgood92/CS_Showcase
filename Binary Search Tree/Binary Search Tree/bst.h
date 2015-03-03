@@ -15,6 +15,9 @@
 #include "bnode.h"
 using namespace std;
 
+template <class T>
+class BSTIterator;
+
 
 /**********************************************************************
  * Binary Node
@@ -23,7 +26,7 @@ template <class T>
 class BST
 {
   private:
-	  BinaryNode * masterTree;
+	  BinaryNode <T> * masterTree;
   public:
 	  BST() {}
 	  ~BST() {}
@@ -48,7 +51,7 @@ template <class T>
 class BSTIterator
 {
 private:
-	BinaryNode * masterTree;
+	BinaryNode <T> * masterTree;
 public:
 	BSTIterator() {}
 	BSTIterator(const BSTIterator & rhs)
