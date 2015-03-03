@@ -97,11 +97,11 @@ public:
 	{
 		if (toErase != this->end())
 		{
-			toErase.pVector = this->data[current_size - 1];
+			(*toErase) = this->data[current_size - 1];
 		}
 		else if (toErase != this->begin())
 		{
-			toErase.pVector = this->data[current_size];
+			(*toErase) = this->data[current_size];
 		}
 		current_size--;
 		return;
