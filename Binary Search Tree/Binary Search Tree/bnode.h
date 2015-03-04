@@ -42,12 +42,6 @@ class BinaryNode
      // destructor : free everything that was previously used
      ~BinaryNode()
      {
-        //pRight = NULL;
-        //pLeft = NULL;
-        //pParent = NULL;
-        //delete pRight;
-        //delete pLeft;
-        //delete pParent;
      }
      BinaryNode <T> * addLeft(BinaryNode <T> * pBNode)
      {
@@ -140,12 +134,8 @@ void deleteBinaryTree(BinaryNode <T> * pBNode)
    
    //last we delete the foundation root of the tree
    delete root;
-   /*
-   time = time + 1;
-   cout << "number removed = " << time << endl;
-   cout << "RPH currently in tree: " << pBNode<< endl;
-   */
 }
+
 /*****************************************
 * DISPLAY
 * Display the contents of a binary tree

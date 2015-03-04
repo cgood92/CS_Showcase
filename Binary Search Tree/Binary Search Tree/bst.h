@@ -111,30 +111,31 @@ class BST
 	  //}
 	  BSTIterator <T> begin()
 	  {
-		  BSTIterator <T> test;
-		  test = BSTIterator <T>(this->masterTree);
-		  return test;
+		  BSTIterator <T> myIt;
+		  myIt = BSTIterator <T>(this->masterTree);
+		  return myIt;
 	  }
 	  BSTIterator <T> end()
 	  {
-		  BSTIterator <T> test;
-		  test = BSTIterator <T>(this->masterTree);
-		  BSTIterator <T> test2;
-		  test2 = test;
-		  while (test.stackOfNodes->size() > 1)
-		  {
-			  test2.stackOfNodes->pop();
-		  }
-		  return test2;
+		  BSTIterator <T> myIt;
+		  myIt = BSTIterator <T>(this->masterTree);
+		  myIt.stackOfNodes = NULL;
+		  return myIt;
 	  }
-	  //BSTIterator <T> & rbegin()
-	  //{
-
-	  //}
-	  //BSTIterator <T> & rend()
-	  //{
-
-	  //}
+	  BSTIterator <T> rbegin()
+	  {
+		  BSTIterator <T> myIt;
+		  myIt = BSTIterator <T>(this->masterTree);
+		  myIt.reverse();
+		  return myIt;
+	  }
+	  BSTIterator <T> rend()
+	  {
+		  BSTIterator <T> myIt;
+		  myIt = BSTIterator <T>(this->masterTree);
+		  myIt.stackOfNodes = NULL;
+		  return myIt;
+	  }
 };
 
 
@@ -162,6 +163,16 @@ private:
 			fillStack(pRight);
 		}
 	}
+	void reverse()
+	{
+		stack <T> * stackOfNodesNew = new stack <T>();
+		while (stackOfNodes->size() > 0)
+		{
+			stackOfNodesNew->push(stackOfNodes->top());
+			stackOfNodes->pop();
+		}
+		stackOfNodes = stackOfNodesNew;
+	}
 public:
 	BSTIterator() : masterTree(NULL), stackOfNodes(NULL)
 	{
@@ -187,11 +198,11 @@ public:
 	}
 	bool operator != (const BSTIterator & rhs) const
 	{
-		return rhs.stackOfNodes->top() != this->stackOfNodes->top();
+		return rhs.stackOfNodes != this->stackOfNodes;
 	}
 	bool operator == (const BSTIterator & rhs) const
 	{
-		return rhs.stackOfNodes->top() == this->stackOfNodes->top();
+		return rhs.stackOfNodes == this->stackOfNodes;
 	}
 	T & operator * ()
 	{
@@ -199,24 +210,52 @@ public:
 	}
 	BSTIterator <T> & operator -- ()
 	{
-		//masterTree = masterTree->pPrev;
+		if (this->stackOfNodes->size() > 1)
+		{
+			this->stackOfNodes->pop();
+		}
+		else
+		{
+			this->stackOfNodes = NULL;
+		}
 		return *this;
 	}
 	BSTIterator <T> operator--(int prefix)
 	{
 		BSTIterator tmp(*this);
-		//masterTree = masterTree->pPrev;
+		if (this->stackOfNodes->size() > 0)
+		{
+			this->stackOfNodes->pop();
+		}
+		else
+		{
+			this->stackOfNodes = NULL;
+		}
 		return tmp;
 	}
 	BSTIterator <T> & operator ++ ()
 	{
-		this->stackOfNodes->pop();
+		if (this->stackOfNodes->size() > 1)
+		{
+			this->stackOfNodes->pop();
+		}
+		else
+		{
+			this->stackOfNodes = NULL;
+		}
 		return *this;
 	}
 	BSTIterator <T> operator++(int postfix)
 	{
 		BSTIterator tmp(*this);
-		this->stackOfNodes->pop();
+		if (this->stackOfNodes->size() > 0)
+		{
+			this->stackOfNodes->pop();
+		}
+		else
+		{
+			this->stackOfNodes = NULL;
+		}
 		return tmp;
 	}
 	template <class TT>
