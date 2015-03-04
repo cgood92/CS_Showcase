@@ -148,7 +148,7 @@ class BSTIterator
 {
 private:
 	BinaryNode <T> * masterTree;
-	stack <T> * stackOfNodes;
+	stack < BinaryNode <T> * > * stackOfNodes;
 	//Goes through the tree in RVL order, and creates a stack containing all values in the tree
 	void fillStack(BinaryNode <T> * pTree)
 	{
@@ -158,7 +158,7 @@ private:
 		{
 			fillStack(pRight);
 		}
-		stackOfNodes->push(pTree->data);
+		stackOfNodes->push(pTree);
 		if (pLeft)
 		{
 			fillStack(pLeft);
@@ -167,7 +167,7 @@ private:
 	//This is for reverse iterators - reverse the stack
 	void reverse()
 	{
-		stack <T> * stackOfNodesNew = new stack <T>();
+		stack < BinaryNode <T> * > * stackOfNodesNew = new stack < BinaryNode <T> * >();
 		while (stackOfNodes->size() > 0)
 		{
 			stackOfNodesNew->push(stackOfNodes->top());
@@ -184,7 +184,7 @@ public:
 	{
 		if (masterTree)
 		{
-			this->stackOfNodes = new stack <T>();
+			this->stackOfNodes = new stack < BinaryNode <T> * >();
 			this->masterTree = masterTree;
 			if (masterTree)
 			{
@@ -215,7 +215,7 @@ public:
 	//Return what is next on the stack
 	T & operator * ()
 	{
-		return this->stackOfNodes->top();
+		return this->stackOfNodes->top()->data;
 	}
 	//Pop the stack by one
 	BSTIterator <T> & operator -- ()
