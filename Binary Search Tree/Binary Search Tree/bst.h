@@ -13,6 +13,7 @@
 #include <iostream>
 #include <string>
 #include "bnode.h"
+#include <stack>
 using namespace std;
 
 template <class T>
@@ -96,13 +97,44 @@ class BST
 		  }
 
 	  }
-	  void remove();
-	  void clear();
-	  BSTIterator <T> & find();
-	  BSTIterator <T> & begin();
-	  BSTIterator <T> & end();
-	  BSTIterator <T> & rbegin();
-	  BSTIterator <T> & rend();
+	  void remove()
+	  {
+
+	  }
+	  void clear()
+	  {
+
+	  }
+	  //BSTIterator <T> & find()
+	  //{
+
+	  //}
+	  BSTIterator <T> begin()
+	  {
+		  BSTIterator <T> test;
+		  test = BSTIterator <T>(this->masterTree);
+		  return test;
+	  }
+	  BSTIterator <T> end()
+	  {
+		  BSTIterator <T> test;
+		  test = BSTIterator <T>(this->masterTree);
+		  BSTIterator <T> test2;
+		  test2 = test;
+		  while (test.stackOfNodes->size() > 1)
+		  {
+			  test2.stackOfNodes->pop();
+		  }
+		  return test2;
+	  }
+	  //BSTIterator <T> & rbegin()
+	  //{
+
+	  //}
+	  //BSTIterator <T> & rend()
+	  //{
+
+	  //}
 };
 
 
@@ -115,28 +147,55 @@ class BSTIterator
 {
 private:
 	BinaryNode <T> * masterTree;
+	stack <T> * stackOfNodes;
+	void fillStack(BinaryNode <T> * pTree)
+	{
+		BinaryNode <T> * pLeft = pTree->pLeft;
+		BinaryNode <T> * pRight = pTree->pRight;
+		if (pLeft)
+		{
+			fillStack(pLeft);
+		}
+		stackOfNodes->push(pTree->data);
+		if (pRight)
+		{
+			fillStack(pRight);
+		}
+	}
 public:
-	BSTIterator() {}
-	BSTIterator(const BSTIterator & rhs)
+	BSTIterator() : masterTree(NULL), stackOfNodes(NULL)
+	{
+	}
+	BSTIterator(BinaryNode <T> * masterTree)
+	{
+		this->stackOfNodes = new stack <T>();
+		this->masterTree = masterTree;
+		if (masterTree)
+		{
+			fillStack(masterTree);
+		}
+	}
+	BSTIterator(const BSTIterator & rhs) : masterTree(NULL), stackOfNodes(NULL)
 	{
 		*this = rhs;
 	}
 	BSTIterator & operator = (const BSTIterator & rhs)
 	{
 		this->masterTree = rhs.masterTree;
+		this->stackOfNodes = rhs.stackOfNodes;
 		return *this;
 	}
 	bool operator != (const BSTIterator & rhs) const
 	{
-		return rhs.masterTree != this->masterTree;
+		return rhs.stackOfNodes->top() != this->stackOfNodes->top();
 	}
 	bool operator == (const BSTIterator & rhs) const
 	{
-		return rhs.masterTree == this->masterTree;
+		return rhs.stackOfNodes->top() == this->stackOfNodes->top();
 	}
 	T & operator * ()
 	{
-		return masterTree->data;
+		return this->stackOfNodes->top();
 	}
 	BSTIterator <T> & operator -- ()
 	{
@@ -151,13 +210,13 @@ public:
 	}
 	BSTIterator <T> & operator ++ ()
 	{
-		//masterTree = masterTree->pNext;
+		this->stackOfNodes->pop();
 		return *this;
 	}
 	BSTIterator <T> operator++(int postfix)
 	{
 		BSTIterator tmp(*this);
-		//masterTree = masterTree->pNext;
+		this->stackOfNodes->pop();
 		return tmp;
 	}
 	template <class TT>
