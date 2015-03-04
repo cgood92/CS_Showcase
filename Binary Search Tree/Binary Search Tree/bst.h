@@ -149,20 +149,22 @@ class BSTIterator
 private:
 	BinaryNode <T> * masterTree;
 	stack <T> * stackOfNodes;
+	//Goes through the tree in RVL order, and creates a stack containing all values in the tree
 	void fillStack(BinaryNode <T> * pTree)
 	{
 		BinaryNode <T> * pLeft = pTree->pLeft;
 		BinaryNode <T> * pRight = pTree->pRight;
-		if (pLeft)
-		{
-			fillStack(pLeft);
-		}
-		stackOfNodes->push(pTree->data);
 		if (pRight)
 		{
 			fillStack(pRight);
 		}
+		stackOfNodes->push(pTree->data);
+		if (pLeft)
+		{
+			fillStack(pLeft);
+		}
 	}
+	//This is for reverse iterators - reverse the stack
 	void reverse()
 	{
 		stack <T> * stackOfNodesNew = new stack <T>();
@@ -177,13 +179,17 @@ public:
 	BSTIterator() : masterTree(NULL), stackOfNodes(NULL)
 	{
 	}
-	BSTIterator(BinaryNode <T> * masterTree)
+	//Non-default constructor - accept a masterTree as argument, and construct a stack from the node values
+	BSTIterator(BinaryNode <T> * masterTree) : masterTree(NULL), stackOfNodes(NULL)
 	{
-		this->stackOfNodes = new stack <T>();
-		this->masterTree = masterTree;
 		if (masterTree)
 		{
-			fillStack(masterTree);
+			this->stackOfNodes = new stack <T>();
+			this->masterTree = masterTree;
+			if (masterTree)
+			{
+				fillStack(masterTree);
+			}
 		}
 	}
 	BSTIterator(const BSTIterator & rhs) : masterTree(NULL), stackOfNodes(NULL)
@@ -196,18 +202,22 @@ public:
 		this->stackOfNodes = rhs.stackOfNodes;
 		return *this;
 	}
+	//In the end, this will result in a pointerLocation vs. NULL condition
 	bool operator != (const BSTIterator & rhs) const
 	{
 		return rhs.stackOfNodes != this->stackOfNodes;
 	}
+	//In the end, this will result in a pointerLocation vs. NULL condition
 	bool operator == (const BSTIterator & rhs) const
 	{
 		return rhs.stackOfNodes == this->stackOfNodes;
 	}
+	//Return what is next on the stack
 	T & operator * ()
 	{
 		return this->stackOfNodes->top();
 	}
+	//Pop the stack by one
 	BSTIterator <T> & operator -- ()
 	{
 		if (this->stackOfNodes->size() > 1)
@@ -220,6 +230,7 @@ public:
 		}
 		return *this;
 	}
+	//Pop the stack by one
 	BSTIterator <T> operator--(int prefix)
 	{
 		BSTIterator tmp(*this);
@@ -233,6 +244,7 @@ public:
 		}
 		return tmp;
 	}
+	//Pop the stack by one
 	BSTIterator <T> & operator ++ ()
 	{
 		if (this->stackOfNodes->size() > 1)
@@ -245,6 +257,7 @@ public:
 		}
 		return *this;
 	}
+	//Pop the stack by one
 	BSTIterator <T> operator++(int postfix)
 	{
 		BSTIterator tmp(*this);
