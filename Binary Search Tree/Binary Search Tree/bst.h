@@ -236,7 +236,6 @@ void BST<T>::insert(T data)
    //Else, find the appropriate spot
    else
    {
-      //cout << "HERE";
       insert(data, this->masterTree);
    }
 }
@@ -262,7 +261,7 @@ void BST<T>::insert(T data, BinaryNode <T> * currentNode)
       }
    }
    //if "data" is more then the current spots data
-   else if (data > currentNode->data)
+   else if (data >= currentNode->data)
    {
       if (!currentNode->pRight)
       {
