@@ -69,6 +69,9 @@ class BinaryNode
         newNode->pParent = this;
         return this;
      }
+	 int findDepth() const;
+	 void verifyRedBlack(int depth) const;
+	 void verifyBTree() const;
 };
 
 template <class T>
