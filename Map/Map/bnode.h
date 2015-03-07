@@ -22,6 +22,7 @@ template <class T>
 class BinaryNode
 {
   private:
+	  bool isRed;
   public:   
      T data;
      BinaryNode <T> * pRight;

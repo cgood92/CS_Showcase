@@ -1,11 +1,11 @@
 /***********************************************************************
- * Program:
- *    Lesson 8, Map
- *    Brother Sloan, CS 235
- * Author:
- *      Clint Goodman and Parker Hubbard
- * Summary:
- ************************************************************************/
+* Program:
+*    Lesson 8, Map
+*    Brother Sloan, CS 235
+* Author:
+*      Clint Goodman and Parker Hubbard
+* Summary:
+************************************************************************/
 #ifndef MAP_H
 #define MAP_H
 
@@ -20,8 +20,8 @@ using namespace std;
 template <class T1, class T2>
 class MapIterator;
 /**********************************************************************
- * Map
- ***********************************************************************/
+* Map
+***********************************************************************/
 template <class T1, class T2>
 class Map
 {
@@ -58,15 +58,15 @@ public:
 	}
 	MapIterator<T1, T2> find(const T1 & key)
 	{
-		return MapIterator < T1, T2 >;
+		return MapIterator < T1, T2 >();
 	}
 	MapIterator<T1, T2> begin()
 	{
-		return MapIterator < T1, T2 > ;
+		return MapIterator < T1, T2 >();
 	}
 	MapIterator<T1, T2> end()
 	{
-		return MapIterator < T1, T2 >;
+		return MapIterator < T1, T2 >();
 	}
 };
 
@@ -114,7 +114,7 @@ public:
 		MapIterator tmp(*this);
 		return tmp;
 	}
-	template <class T1, class T2>
+	template <class TT1, class TT2>
 	friend class Map;
 };
 
