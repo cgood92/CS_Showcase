@@ -3,11 +3,12 @@
 #     Lesson 08, Binary Search Tree
 #     Brother Helfrich, CS265
 # Author:
-#     <your name here>
+#     Clint Goodman and Parker Hubbard
 # Summary:
 #     <put a description here>
 # Time:
-#     <how long did it take to complete this program>?
+#     Clint  7 Hours
+#     Parker 6.5 Hours
 ###############################################################
 
 ##############################################################
