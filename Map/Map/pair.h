@@ -34,9 +34,16 @@ public:
    // copy the values
    Pair <T1, T2> & operator = (const Pair <T1, T2> & rhs)
    {
-      first  = rhs.first;
-      second = rhs.second;
-      return *this;
+	   first = rhs.first;
+	   second = rhs.second;
+	   return *this;
+   }
+
+   Pair <T1, T2> & operator = (T2 & data)
+   {
+	   second = data;
+	   first = T1();
+	   return *this;
    }
 
    // constant fetchers

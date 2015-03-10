@@ -26,11 +26,12 @@ template <class T1, class T2>
 class Map
 {
 private:
-	BST < Pair <T1, T2> > masterTree;
+	BST < Pair <T1, T2> > * masterTree;
+	int sizeInt;
 public:
-	Map()
+	Map() : masterTree(NULL), sizeInt(0)
 	{
-
+		masterTree = new BST < Pair <T1, T2> >();
 	}
 	~Map()
 	{
@@ -38,23 +39,37 @@ public:
 	}
 	Map <T1, T2> & operator = (const Map <T1, T2> & rhs)
 	{
+		masterTree = new BST < Pair <T1, T2> >(*rhs.masterTree);
+		sizeInt = rhs.sizeInt;
 		return *this;
 	}
-	T2 & operator [] (const T1 & key)
+	Pair<T1, T2> & operator [] (const T1 & key)
 	{
-		return *this;
+		BSTIterator < Pair<T1, T2> > it = masterTree->find(Pair<T1, T2>(key, T2()));
+		if (it != masterTree->end())
+		{
+			return *it;
+		}
+		else
+		{
+			masterTree->insert(Pair<T1,T2>(key, T2()));
+			it = masterTree->find(Pair<T1, T2>(key, T2()));
+			sizeInt++;
+			return *it;
+		}
 	}
 	bool empty()
 	{
-		return false;
+		return (sizeInt == 0);
 	}
 	int size()
 	{
-		return 0;
+		return sizeInt;
 	}
 	void clear()
 	{
-
+		this->masterTree->clear();
+		sizeInt = 0;
 	}
 	MapIterator<T1, T2> find(const T1 & key)
 	{

@@ -211,7 +211,7 @@ class BST
 	 {
 		 BSTIterator <T> it = BSTIterator <T>(this->masterTree);
 		 for (; it != this->end(); ++it)
-			 if (*it == data)
+			 if ((*it).second == data.second)
 			 {
 				 return it;
 			 }
