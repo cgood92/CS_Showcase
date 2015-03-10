@@ -42,7 +42,6 @@ public:
    Pair <T1, T2> & operator = (const T2 & data)
    {
 	   second = data;
-	   first = T1();
 	   return *this;
    }
 

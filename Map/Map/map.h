@@ -26,12 +26,11 @@ template <class T1, class T2>
 class Map
 {
 private:
-	BST < Pair <T1, T2> > * masterTree;
+	BST < Pair<T1, T2> > * masterTree;
 	int sizeInt;
 public:
 	Map() : masterTree(NULL), sizeInt(0)
 	{
-		masterTree = new BST < Pair <T1, T2> >();
 	}
 	~Map()
 	{
@@ -39,12 +38,16 @@ public:
 	}
 	Map <T1, T2> & operator = (const Map <T1, T2> & rhs)
 	{
-		masterTree = new BST < Pair <T1, T2> >(*rhs.masterTree);
+		masterTree = new BST < Pair<T1, T2> >(*rhs.masterTree);
 		sizeInt = rhs.sizeInt;
 		return *this;
 	}
 	Pair<T1, T2> & operator [] (const T1 & key)
 	{
+		if (!masterTree)
+		{
+			masterTree = new BST < Pair<T1, T2> >();
+		}
 		BSTIterator < Pair<T1, T2> > it = masterTree->find(Pair<T1, T2>(key, T2()));
 		if (it != masterTree->end())
 		{
@@ -71,17 +74,31 @@ public:
 		this->masterTree->clear();
 		sizeInt = 0;
 	}
-	MapIterator<T1, T2> find(const T1 & key)
+	MapIterator < T1, T2 > find(const T1 & key)
 	{
-		return MapIterator < T1, T2 >();
+		return MapIterator < T1 , T2 >();
 	}
-	MapIterator<T1, T2> begin()
+	MapIterator < T1, T2 > begin()
 	{
-		return MapIterator < T1, T2 >();
+		if (this->masterTree)
+		{
+			return MapIterator < T1, T2 >(this->masterTree->begin());
+		}
+		else
+		{
+			return MapIterator < T1, T2 >();
+		}
 	}
-	MapIterator<T1, T2> end()
+	MapIterator < T1, T2 > end()
 	{
-		return MapIterator < T1, T2 >();
+		if (this->masterTree)
+		{
+			return MapIterator < T1, T2 >(this->masterTree->end());
+		}
+		else
+		{
+			return MapIterator < T1, T2 >();
+		}
 	}
 };
 
@@ -92,45 +109,57 @@ template <class T1, class T2>
 class MapIterator
 {
 private:
+	BSTIterator < Pair < T1, T2 > > masterTreeIt;
 public:
 	MapIterator()
 	{
 	}
-	MapIterator(const MapIterator & rhs)
+	MapIterator(BSTIterator < Pair<T1, T2> > masterTreeIt)
+	{
+		this->masterTreeIt = masterTreeIt;
+	}
+	MapIterator(const MapIterator < T1 , T2 > & rhs)
 	{
 	}
-	MapIterator & operator = (const MapIterator & rhs)
+	MapIterator < T1 , T2 > & operator = (const MapIterator < T1 , T2 > & rhs)
 	{
+		masterTreeIt = rhs.masterTreeIt;
 		return *this;
 	}
-	bool operator != (const MapIterator & rhs) const
+	T2 & operator * ()
 	{
-		return false;
+		return (*masterTreeIt).second;
 	}
-	bool operator == (const MapIterator & rhs) const
+	bool operator != (const MapIterator < T1 , T2 > & rhs) const
 	{
-		return false;
+		return masterTreeIt != rhs.masterTreeIt;
 	}
-	MapIterator <T1, T2> & operator -- ()
+	bool operator == (const MapIterator < T1 , T2 > & rhs) const
 	{
+		return !(masterTreeIt != rhs.masterTreeIt);
+	}
+	MapIterator < T1, T2 > & operator -- ()
+	{
+		masterTreeIt--;
 		return *this;
 	}
-	MapIterator <T1, T2> operator--(int prefix)
+	MapIterator < T1, T2 > operator--(int prefix)
 	{
-		MapIterator tmp(*this);
+		MapIterator < T1 , T2 > tmp(*this);
+		masterTreeIt--;
 		return tmp;
 	}
-	MapIterator <T1, T2> & operator ++ ()
+	MapIterator < T1, T2 > & operator ++ ()
 	{
+		masterTreeIt++;
 		return *this;
 	}
-	MapIterator <T1, T2> operator++(int postfix)
+	MapIterator < T1, T2 > operator++(int postfix)
 	{
-		MapIterator tmp(*this);
+		MapIterator < T1 , T2 > tmp(*this);
+		masterTreeIt++;
 		return tmp;
 	}
-	template <class TT1, class TT2>
-	friend class Map;
 };
 
 #endif
