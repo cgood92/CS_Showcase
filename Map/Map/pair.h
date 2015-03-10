@@ -39,7 +39,7 @@ public:
 	   return *this;
    }
 
-   Pair <T1, T2> & operator = (T2 & data)
+   Pair <T1, T2> & operator = (const T2 & data)
    {
 	   second = data;
 	   first = T1();
