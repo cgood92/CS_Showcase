@@ -47,13 +47,13 @@ class BST
         //if left pointer doesnt equal NULL...
         if (currentNodeRHS->pLeft)
         {
-           currentNodeLHS->addLeft(currentNodeRHS->pLeft);
+           currentNodeLHS->addLeft(currentNodeRHS->pLeft->data);
            deepCopy(currentNodeLHS->pLeft, currentNodeRHS->pLeft);
         }
         //if right pointer doesnt equal NULL...
         if (currentNodeRHS->pRight)
         {
-           currentNodeLHS->addRight(currentNodeRHS->pRight);
+           currentNodeLHS->addRight(currentNodeRHS->pRight->data);
            deepCopy(currentNodeLHS->pRight, currentNodeRHS->pRight);
         }
      }
@@ -211,7 +211,7 @@ class BST
 	 {
 		 BSTIterator <T> it = BSTIterator <T>(this->masterTree);
 		 for (; it != this->end(); ++it)
-			 if ((*it).first == data.first)
+			 if (it.stackOfNodes->size() && (*it).first == data.first)
 			 {
 				 return it;
 			 }
@@ -356,7 +356,10 @@ public:
      //Return what is next on the stack
      T & operator * ()
      {
-        return this->stackOfNodes->top()->data;
+		 if (this->stackOfNodes && this->stackOfNodes->size() > 0)
+		 {
+			 return this->stackOfNodes->top()->data;
+		 }
      }
      //Pop the stack by one
      BSTIterator <T> & operator -- ()
@@ -388,7 +391,7 @@ public:
      //Pop the stack by one
      BSTIterator <T> & operator ++ ()
      {
-        if (this->stackOfNodes->size() > 1)
+		 if (this->stackOfNodes && this->stackOfNodes->size() > 1)
         {
            this->stackOfNodes->pop();
         }
@@ -402,7 +405,7 @@ public:
      BSTIterator <T> operator++(int postfix)
      {
         BSTIterator tmp(*this);
-        if (this->stackOfNodes->size() > 0)
+		if (this->stackOfNodes && this->stackOfNodes->size() > 1)
         {
            this->stackOfNodes->pop();
         }

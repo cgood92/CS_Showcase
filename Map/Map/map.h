@@ -36,10 +36,15 @@ public:
 	{
 
 	}
+	Map(const Map <T1, T2> & rhs)
+	{
+		this->masterTree = new BST < Pair<T1, T2> >(*rhs.masterTree);
+		this->sizeInt = rhs.sizeInt;
+	}
 	Map <T1, T2> & operator = (const Map <T1, T2> & rhs)
 	{
-		masterTree = new BST < Pair<T1, T2> >(*rhs.masterTree);
-		sizeInt = rhs.sizeInt;
+		this->masterTree = new BST < Pair<T1, T2> >(*rhs.masterTree);
+		this->sizeInt = rhs.sizeInt;
 		return *this;
 	}
 	Pair<T1, T2> & operator [] (const T1 & key)
@@ -49,7 +54,7 @@ public:
 			masterTree = new BST < Pair<T1, T2> >();
 		}
 		BSTIterator < Pair<T1, T2> > it = masterTree->find(Pair<T1, T2>(key, T2()));
-		if (it != masterTree->end())
+		if (it.stackOfNodes && it != masterTree->end())
 		{
 			return *it;
 		}
