@@ -105,6 +105,29 @@ public:
 			return MapIterator < T1, T2 >();
 		}
 	}
+	MapIterator < T1, T2 > rbegin()
+	{
+		if (this->masterTree)
+		{
+			return MapIterator < T1, T2 >(this->masterTree->rbegin());
+		}
+		else
+		{
+			return MapIterator < T1, T2 >();
+		}
+	}
+	MapIterator < T1, T2 > rend()
+	{
+		if (this->masterTree)
+		{
+			return MapIterator < T1, T2 >(this->masterTree->rend());
+		}
+		else
+		{
+			return MapIterator < T1, T2 >();
+		}
+	}
+
 };
 
 /**********************************************************************

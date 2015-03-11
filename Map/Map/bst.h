@@ -364,7 +364,7 @@ public:
      //Pop the stack by one
      BSTIterator <T> & operator -- ()
      {
-        if (this->stackOfNodes->size() > 1)
+		 if (this->stackOfNodes && this->stackOfNodes->size() > 1)
         {
            this->stackOfNodes->pop();
         }
@@ -378,7 +378,7 @@ public:
      BSTIterator <T> operator--(int prefix)
      {
         BSTIterator tmp(*this);
-        if (this->stackOfNodes->size() > 0)
+		if (this->stackOfNodes && this->stackOfNodes->size() > 1)
         {
            this->stackOfNodes->pop();
         }
