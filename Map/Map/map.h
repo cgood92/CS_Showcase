@@ -27,14 +27,13 @@ class Map
 {
 private:
 	BST < Pair<T1, T2> > * masterTree;
-	int sizeInt;
+	int sizeInt;    //number of items currently on the map/tree
 public:
 	Map() : masterTree(NULL), sizeInt(0)
 	{
 	}
 	~Map()
 	{
-
 	}
 	Map(const Map <T1, T2> & rhs)
 	{
@@ -47,20 +46,25 @@ public:
 		this->sizeInt = rhs.sizeInt;
 		return *this;
 	}
+
+
 	Pair<T1, T2> & operator [] (const T1 & key)
 	{
 		if (!masterTree)
 		{
 			masterTree = new BST < Pair<T1, T2> >();
 		}
+		//have the iterator point to where the key variable lies
 		BSTIterator < Pair<T1, T2> > it = masterTree->find(Pair<T1, T2>(key, T2()));
+		//if it does not currently point at the end() pointer
 		if (it.stackOfNodes && it != masterTree->end())
 		{
 			return *it;
 		}
 		else
 		{
-			masterTree->insert(Pair<T1,T2>(key, T2()));
+			//otherwise insert that variable into the tree
+			masterTree->insert(Pair<T1, T2>(key, T2()));
 			it = masterTree->find(Pair<T1, T2>(key, T2()));
 			sizeInt++;
 			return *it;
@@ -81,7 +85,11 @@ public:
 	}
 	MapIterator < T1, T2 > find(const T1 & key)
 	{
-		return MapIterator < T1 , T2 >();
+		MapIterator < T1, T2 > it = this->begin();
+		for (; it != this->end(); ++it)
+			if (it.getKey() == key)
+				return it;
+		return MapIterator < T1, T2 >();
 	}
 	MapIterator < T1, T2 > begin()
 	{
@@ -94,6 +102,7 @@ public:
 			return MapIterator < T1, T2 >();
 		}
 	}
+
 	MapIterator < T1, T2 > end()
 	{
 		if (this->masterTree)
@@ -127,7 +136,6 @@ public:
 			return MapIterator < T1, T2 >();
 		}
 	}
-
 };
 
 /**********************************************************************
@@ -146,10 +154,10 @@ public:
 	{
 		this->masterTreeIt = masterTreeIt;
 	}
-	MapIterator(const MapIterator < T1 , T2 > & rhs)
+	MapIterator(const MapIterator < T1, T2 > & rhs)
 	{
 	}
-	MapIterator < T1 , T2 > & operator = (const MapIterator < T1 , T2 > & rhs)
+	MapIterator < T1, T2 > & operator = (const MapIterator < T1, T2 > & rhs)
 	{
 		masterTreeIt = rhs.masterTreeIt;
 		return *this;
@@ -158,11 +166,15 @@ public:
 	{
 		return (*masterTreeIt).second;
 	}
-	bool operator != (const MapIterator < T1 , T2 > & rhs) const
+	T1 & getKey()
+	{
+		return (*masterTreeIt).first;
+	}
+	bool operator != (const MapIterator < T1, T2 > & rhs) const
 	{
 		return masterTreeIt != rhs.masterTreeIt;
 	}
-	bool operator == (const MapIterator < T1 , T2 > & rhs) const
+	bool operator == (const MapIterator < T1, T2 > & rhs) const
 	{
 		return !(masterTreeIt != rhs.masterTreeIt);
 	}
@@ -173,7 +185,7 @@ public:
 	}
 	MapIterator < T1, T2 > operator--(int prefix)
 	{
-		MapIterator < T1 , T2 > tmp(*this);
+		MapIterator < T1, T2 > tmp(*this);
 		masterTreeIt--;
 		return tmp;
 	}
@@ -184,7 +196,7 @@ public:
 	}
 	MapIterator < T1, T2 > operator++(int postfix)
 	{
-		MapIterator < T1 , T2 > tmp(*this);
+		MapIterator < T1, T2 > tmp(*this);
 		masterTreeIt++;
 		return tmp;
 	}
