@@ -70,7 +70,7 @@ public:
 	//insert a node onto the tree
 	void insert(T data); //throw(const char *);
 	void insert(T data, BinaryNode <T> * currentNode);
-	void handleBalancing(BinaryNode <T> * currentNode);
+	void handleBalancing(BinaryNode <T> * currentNode, bool insertAtLeft);
 	//removes all items from the tree
 	void clear()
 	{
@@ -248,7 +248,7 @@ void BST<T>::insert(T data)
 }
 
 template <class T>
-void BST<T>::handleBalancing(BinaryNode <T> * currentNode)
+void BST<T>::handleBalancing(BinaryNode <T> * currentNode, bool insertAtLeft)
 {
 	//parent is red
 	if (currentNode->isRed)
@@ -256,21 +256,30 @@ void BST<T>::handleBalancing(BinaryNode <T> * currentNode)
 		//grandparent is black
 		if (!currentNode->pParent->isRed)
 		{
-			//Aunt exists
-			if (currentNode->pParent->pParent)
+			//Get aunt
+			BinaryNode <T> * aunt;
+			if (insertAtLeft)
 			{
-				//Aunt is red
-				if (currentNode->pParent->pParent->pRight->isRed)
+				aunt = currentNode->pParent->pRight;
+			}
+			else
+			{
+				aunt = currentNode->pParent->pLeft;
+			}
+			//Aunt is red
+			if (aunt && aunt->isRed)
+			{
+				currentNode->isRed = false; //Parent to black
+				if (currentNode->pParent != masterTree)
 				{
-					currentNode->isRed = false; //Parent to black
 					currentNode->pParent->isRed = true; //Grandparent to red
-					currentNode->pParent->pParent->pRight->isRed = false; //Aunt to black
 				}
-				//Aunt is black
-				else
-				{
-					//Step 4 goes here
-				}
+				aunt->isRed = false; //Aunt to black
+			}
+			//Aunt is black
+			else
+			{
+				//Step 4 goes here
 			}
 		}
 	}
@@ -289,7 +298,7 @@ void BST<T>::insert(T data, BinaryNode <T> * currentNode)
 		{
 			//add to the left
 			currentNode->addLeft(data);
-			handleBalancing(currentNode);
+			handleBalancing(currentNode, true);
 		}
 		else
 		{
@@ -304,7 +313,7 @@ void BST<T>::insert(T data, BinaryNode <T> * currentNode)
 		{
 			//add to the right
 			currentNode->addRight(data);
-			handleBalancing(currentNode);
+			handleBalancing(currentNode, false);
 		}
 		else
 		{
