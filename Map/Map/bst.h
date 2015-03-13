@@ -70,6 +70,7 @@ public:
 	//insert a node onto the tree
 	void insert(T data); //throw(const char *);
 	void insert(T data, BinaryNode <T> * currentNode);
+	void handleBalancing(BinaryNode <T> * currentNode);
 	//removes all items from the tree
 	void clear()
 	{

@@ -21,10 +21,9 @@ using namespace std;
 template <class T>
 class BinaryNode
 {
-  private:
-	  bool isRed;
   public:   
      T data;
+	 bool isRed;
      BinaryNode <T> * pRight;
      BinaryNode <T> * pLeft; 
      BinaryNode <T> * pParent; 
