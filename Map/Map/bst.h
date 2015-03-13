@@ -57,6 +57,11 @@ public:
 			deepCopy(currentNodeLHS->pRight, currentNodeRHS->pRight);
 		}
 	}
+	BinaryNode <T> * getRoot()
+	{
+		return masterTree;
+	}
+
 	//check if the tree is empty...
 	bool empty()
 	{
@@ -231,12 +236,42 @@ void BST<T>::insert(T data)
 	{
 		this->masterTree = new BinaryNode <T>();
 		this->masterTree->data = data;
+		this->masterTree->isRed = false; //Root nodes are black
 		return;
 	}
 	//Else, find the appropriate spot
 	else
 	{
 		insert(data, this->masterTree);
+	}
+}
+
+template <class T>
+void BST<T>::handleBalancing(BinaryNode <T> * currentNode)
+{
+	//parent is red
+	if (currentNode->isRed)
+	{
+		//grandparent is black
+		if (!currentNode->pParent->isRed)
+		{
+			//Aunt exists
+			if (currentNode->pParent->pParent)
+			{
+				//Aunt is red
+				if (currentNode->pParent->pParent->pRight->isRed)
+				{
+					currentNode->isRed = false; //Parent to black
+					currentNode->pParent->isRed = true; //Grandparent to red
+					currentNode->pParent->pParent->pRight->isRed = false; //Aunt to black
+				}
+				//Aunt is black
+				else
+				{
+					//Step 4 goes here
+				}
+			}
+		}
 	}
 }
 
@@ -253,6 +288,7 @@ void BST<T>::insert(T data, BinaryNode <T> * currentNode)
 		{
 			//add to the left
 			currentNode->addLeft(data);
+			handleBalancing(currentNode);
 		}
 		else
 		{
@@ -267,6 +303,7 @@ void BST<T>::insert(T data, BinaryNode <T> * currentNode)
 		{
 			//add to the right
 			currentNode->addRight(data);
+			handleBalancing(currentNode);
 		}
 		else
 		{

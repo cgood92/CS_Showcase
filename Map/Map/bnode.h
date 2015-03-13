@@ -29,11 +29,11 @@ class BinaryNode
      BinaryNode <T> * pLeft; 
      BinaryNode <T> * pParent; 
      //default constructor
-     BinaryNode() : pRight(NULL), pLeft(NULL), pParent(NULL)
+	 BinaryNode() : pRight(NULL), pLeft(NULL), pParent(NULL), isRed(true)
      {
      }
      //non-default constructor
-     BinaryNode(T data) : pRight(NULL), pLeft(NULL), pParent(NULL), data(data)
+	 BinaryNode(T data) : pRight(NULL), pLeft(NULL), pParent(NULL), data(data), isRed(true)
      {
      }
      // copy constructor
