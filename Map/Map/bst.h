@@ -258,7 +258,7 @@ void BST<T>::handleBalancing(BinaryNode <T> * currentNode, bool insertAtLeft)
 		{
 			//Get aunt
 			BinaryNode <T> * aunt;
-			if (insertAtLeft)
+			if (currentNode->pParent->pLeft == currentNode)
 			{
 				aunt = currentNode->pParent->pRight;
 			}
@@ -294,7 +294,73 @@ void BST<T>::handleBalancing(BinaryNode <T> * currentNode, bool insertAtLeft)
 					}
 					grandma->pLeft = currentNode->pRight;
 					currentNode->pRight = grandma;
+					grandma->pParent = currentNode;
+
+					//Change colors
 					currentNode->isRed = false;
+					grandma->isRed = true;
+				}
+				//New node is the right child, parent is the left child 4b
+				else if (!insertAtLeft && currentNode->pParent->pLeft == currentNode)
+				{
+					BinaryNode <T> * grandma = currentNode->pParent;
+					BinaryNode <T> * newNode = currentNode->pRight;
+
+					//Make new node the grandma
+					newNode->pParent = grandma->pParent;
+					if (grandma->pParent->pLeft == grandma)
+					{
+						grandma->pParent->pLeft = newNode;
+					}
+					else
+					{
+						grandma->pParent->pRight = newNode;
+					}
+
+					//Scatt	er new nodes children
+					grandma->pLeft = newNode->pRight;
+					currentNode->pRight = newNode->pLeft;
+
+					//Attach new grandma's children
+					newNode->pRight = grandma;
+					grandma->pParent = newNode;
+					newNode->pLeft = currentNode;
+					currentNode->pParent = newNode;
+
+					//Change colors
+					newNode->isRed = false;
+					grandma->isRed = true;
+				}
+
+				//New node is the left child, parent is the right child 4d
+				else if (insertAtLeft && currentNode->pParent->pRight == currentNode)
+				{
+					BinaryNode <T> * grandma = currentNode->pParent;
+					BinaryNode <T> * newNode = currentNode->pLeft;
+
+					//Make new node the grandma
+					newNode->pParent = grandma->pParent;
+					if (grandma->pParent->pLeft == grandma)
+					{
+						grandma->pParent->pLeft = newNode;
+					}
+					else
+					{
+						grandma->pParent->pRight = newNode;
+					}
+
+					//Scatter new nodes children
+					grandma->pRight = newNode->pLeft;
+					currentNode->pLeft = newNode->pRight;
+
+					//Attach new grandma's children
+					newNode->pLeft = grandma;
+					grandma->pParent = newNode;
+					newNode->pRight = currentNode;
+					currentNode->pParent = newNode;
+
+					//Change colors
+					newNode->isRed = false;
 					grandma->isRed = true;
 				}
 			}
