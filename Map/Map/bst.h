@@ -279,7 +279,24 @@ void BST<T>::handleBalancing(BinaryNode <T> * currentNode, bool insertAtLeft)
 			//Aunt is black
 			else
 			{
-				//Step 4 goes here
+				//New node is left child, and parent is left child (right rotate) 4a
+				if (insertAtLeft && currentNode->pParent->pLeft == currentNode)
+				{
+					BinaryNode <T> * grandma = currentNode->pParent;
+					currentNode->pParent = currentNode->pParent->pParent;
+					if (grandma->pParent->pLeft == grandma)
+					{
+						grandma->pParent->pLeft = currentNode;
+					}
+					else
+					{
+						grandma->pParent->pRight = currentNode;
+					}
+					grandma->pLeft = currentNode->pRight;
+					currentNode->pRight = grandma;
+					currentNode->isRed = false;
+					grandma->isRed = true;
+				}
 			}
 		}
 	}
