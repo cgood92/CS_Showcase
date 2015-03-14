@@ -69,7 +69,8 @@ public:
 template <class T1, class T2>
 inline std::ostream & operator << (std::ostream & out, const Pair <T1, T2> & rhs)
 {
-   out << '(' << rhs.first << ", " << rhs.second << ')';
+   //out << '(' << rhs.first << ", " << rhs.second << ')';
+   out << rhs.second;
    return out;
 }
 
