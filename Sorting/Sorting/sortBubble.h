@@ -3,7 +3,7 @@
  *    Lesson 10, Sort Bubble
  *    Brother Helfrich, CS 235
  * Author:
- *    <your name>
+ *    Clint Goodman and Parker Hubbard
  * Summary:
  *    This program will implement the Bubble Sort
  ************************************************************************/
