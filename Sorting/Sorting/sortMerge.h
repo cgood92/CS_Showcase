@@ -39,7 +39,7 @@ void sortMerge(T array[], int num)
 	string fn1 = "f1.txt";
 	string fn2 = "f2.txt";
 	string fn = "f.txt";
-	ofstream f(fn, ios::trunc);
+	ofstream f(fn.c_str(), ios::trunc);
 	for (int i = 0; i < num; i++)
 	{
 		f << array[i] << " ";
@@ -56,8 +56,8 @@ void sortMerge_split(T array[], int num, string fn1, string fn2)
 	bool isSorted = true;
 	ofstream f1, f2;
 	ofstream * currentFile;
-	f1.open(fn1);
-	f2.open(fn2);
+	f1.open(fn1.c_str(), ios::trunc);
+	f2.open(fn2.c_str(), ios::trunc);
 	
 	ifstream f("f.txt");
 	if (f.is_open())
@@ -127,8 +127,8 @@ void sortMerge_merge(T array[], int num, string fn1, string fn2)
 	bool first = true;
 	T object1, object2;
 	ofstream f("f.txt", ios::trunc);
-	ifstream f1(fn1);
-	ifstream f2(fn2);
+	ifstream f1(fn1.c_str());
+	ifstream f2(fn2.c_str());
 	int counter = 0;
 	if (f1.is_open() && f2.is_open())
 	{
