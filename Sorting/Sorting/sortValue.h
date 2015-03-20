@@ -40,6 +40,15 @@ public:
    {
       return value == rhs.value;
    }
+   //Parkers
+   bool operator < (const SortValue & rhs) const
+   {
+      return value < rhs.value;
+   }
+   bool operator >= (const SortValue & rhs) const
+   {
+      return value >= rhs.value;
+   }
 
    // assignment
    SortValue & operator = (const SortValue & rhs)
@@ -71,8 +80,17 @@ public:
    // display
    friend std::ostream & operator << (std::ostream & out, const SortValue &rhs)
    {
-      out << rhs.value;
-      return out;
+	   out << rhs.value;
+	   return out;
+   }
+
+   // insert
+   friend std::istream & operator >> (std::istream & in, SortValue &rhs)
+   {
+	   int value;
+	   in >> value;
+	   rhs.value = value;
+	   return in;
    }
 
    // get the statistics
