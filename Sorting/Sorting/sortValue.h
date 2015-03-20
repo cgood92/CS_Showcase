@@ -84,12 +84,10 @@ public:
 	   return out;
    }
 
-   // insert
+   // Extraction
    friend std::istream & operator >> (std::istream & in, SortValue &rhs)
    {
-	   int value;
-	   in >> value;
-	   rhs.value = value;
+	   in >> rhs.value;
 	   return in;
    }
 

@@ -11,6 +11,11 @@
 #ifndef SORT_BUBBLE_H
 #define SORT_BUBBLE_H
 
+#include <cassert>
+#include <iostream>
+#include <string>
+using namespace std;
+
 /*****************************************************
  * SORT BUBBLE
  * Perform the bubble sort
@@ -18,6 +23,23 @@
 template <class T>
 void sortBubble(T array[], int num)
 {
+   T sideValue;
+   int numToObserve = num - 1;
+   do
+   {
+      for (int i = 0; i < numToObserve; i++)
+      {
+         if (array[i] > array[i + 1])
+         {
+
+            sideValue = array[i + 1];
+            array[i + 1] = array[i];
+            array[i] = sideValue;
+
+         }
+      }
+      numToObserve = numToObserve - 1;
+   }while (numToObserve > 1);
 }
 
 
