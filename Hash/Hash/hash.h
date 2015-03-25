@@ -12,6 +12,8 @@
 #include <cassert>
 #include <iostream>
 #include <string>
+#include <vector>
+#include "bst.h"
 using namespace std;
 
 /**********************************************************************
@@ -23,12 +25,17 @@ class Hash
 public:
 	Hash()
 	{
-
+		table = new BST<T> *[1];
+		table[0] = NULL;
 	}
 
 	Hash(int buckets)
 	{
-
+		table = new BST<T> *[buckets];
+		for (int i = 0; i < buckets; i++)
+		{
+			table[i] = NULL;
+		}
 	}
 
 	~Hash()
@@ -53,7 +60,7 @@ public:
 
 	int capacity() const
 	{
-		return sizeInt;
+		return sizeInt + 1;
 	}
 
 	//The parameter is the value to be found. Returns true if the value is found, false otherwise.
@@ -63,10 +70,15 @@ public:
 	}
 
 	//Places a new instance of a value in the Hash. The parameter is the item to be inserted; there is no return value.
-	bool insert() const
+	void insert(T value)
 	{
+		int hashValue = hash(value);
+		if (!table[hashValue])
+		{
+			table[hashValue] = new BST<T>;
+		}
+		table[hashValue]->insert(value);
 		sizeInt++;
-		return false;
 	}
 
 	//This is a pure virtual function taking an element as a parameter and returning an index into the underlying array.
@@ -74,6 +86,7 @@ public:
 
 private:
 	int sizeInt;
+	BST<T> ** table;
 };
 
 #endif
