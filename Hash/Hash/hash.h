@@ -13,7 +13,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "bst.h"
+#include "list.h"
 using namespace std;
 
 /**********************************************************************
@@ -25,13 +25,13 @@ class Hash
 public:
 	Hash() : sizeInt(0), bucketSize(0)
 	{
-		table = new BST<T> *[1];
+		table = new List <T> *[1];
 		table[0] = NULL;
 	}
 
 	Hash(int buckets) : sizeInt(0), bucketSize(buckets)
 	{
-		table = new BST<T> *[buckets];
+		table = new List <T> * [buckets];
 		for (int i = 0; i < buckets; i++)
 		{
 			table[i] = NULL;
@@ -75,9 +75,9 @@ public:
 		int hashValue = hash(value);
 		if (!table[hashValue])
 		{
-			table[hashValue] = new BST<T>;
+			table[hashValue] = new List<T>;
 		}
-		table[hashValue]->insert(value);
+		table[hashValue]->push_back(value);
 		sizeInt++;
 	}
 
@@ -87,7 +87,7 @@ public:
 private:
 	int sizeInt;
 	int bucketSize;
-	BST<T> ** table;
+	List<T> ** table;
 };
 
 #endif
