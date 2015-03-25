@@ -23,13 +23,13 @@ template <class T>
 class Hash
 {
 public:
-	Hash()
+	Hash() : sizeInt(0), bucketSize(0)
 	{
 		table = new BST<T> *[1];
 		table[0] = NULL;
 	}
 
-	Hash(int buckets)
+	Hash(int buckets) : sizeInt(0), bucketSize(buckets)
 	{
 		table = new BST<T> *[buckets];
 		for (int i = 0; i < buckets; i++)
@@ -60,7 +60,7 @@ public:
 
 	int capacity() const
 	{
-		return sizeInt + 1;
+		return bucketSize;
 	}
 
 	//The parameter is the value to be found. Returns true if the value is found, false otherwise.
@@ -86,6 +86,7 @@ public:
 
 private:
 	int sizeInt;
+	int bucketSize;
 	BST<T> ** table;
 };
 
