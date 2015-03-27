@@ -45,7 +45,22 @@ public:
 
 	Hash(const Hash & rhs)
 	{
-
+		this->sizeInt = rhs.sizeInt;
+		this->bucketSize = rhs.bucketSize;
+		List<T> ** newTable = new List <T> *[bucketSize];
+		for (int i = 0; i < bucketSize; i++)
+		{
+			if (rhs.table[i])
+			{
+				List<T> * newListPtr = new List < T >(*rhs.table[i]);
+				*newTable[i] = *newListPtr;
+			}
+			else
+			{
+				newTable[i] = NULL;
+			}
+		}
+		this->table = newTable;
 	}
 
 	bool empty() const
@@ -64,8 +79,20 @@ public:
 	}
 
 	//The parameter is the value to be found. Returns true if the value is found, false otherwise.
-	bool find() const
+	bool find(const T & data) const
 	{
+		int arrayLoc = hash(data);
+		if (table[arrayLoc])
+		{
+			ListIterator <T> it = table[arrayLoc]->begin();
+			for (; it != table[arrayLoc]->end(); ++it)
+			{
+				if (*it == data)
+				{
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 
