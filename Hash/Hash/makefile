@@ -1,11 +1,18 @@
 ###############################################################
 # Program:
 #     Lesson 11, Hash
-#     Brother Helfrich, CS235
+#     Brother Sloan, CS235
 # Author:
-#     <your name here>
+#     Clint Goodman and Parker Hubbard
 # Summary:
-#     <put a description here>
+#     This hash table will hold a data type of N items, and will 
+#	  be able to, in some cases in O(1) times, find that item.
+#	  The hardest part was figuring for Clint was to figure out 
+#	  how to work with a pointer to an array of list pointers. This
+#	  included figuring out how to dereference them, initialize them,
+#	  etc.  
+#	  Clint hours - 4 hours
+#	  Parker hours - 7 hours
 ###############################################################
 
 ##############################################################
