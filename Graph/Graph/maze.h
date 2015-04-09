@@ -12,17 +12,17 @@
 #define MAZE_H
 
 #include "graph.h"
-//#include "vector.h"
+#include "vector.h"
 #include "vertex.h"
 
 // solve the maze, the main program function
-//void solveMaze();
+void solveMaze();
 
 // read a maze in from a file
-//Graph readMaze(const char * fileName);
+Graph readMaze(const char * fileName);
 
 
 // display a maze on the screen
-//void drawMaze(const Graph & g, const Vector <Vertex> & path);
+void drawMaze(const Graph & g, const Vector <Vertex> & path);
 
 #endif // MAZE_H

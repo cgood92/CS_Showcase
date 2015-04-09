@@ -18,10 +18,10 @@
 #include "graph.h"
 using namespace std;
 
-/*
+
 void drawMazeRow(const Graph & g, int row, Set <CVertex> & s);
 void drawMazeColumn(const Graph & g, int row, const Set <CVertex> & s);
-*/
+
 /******************************************
  * SOLVE MAZE
  * Read a maze from the file, display it,
@@ -30,11 +30,23 @@ void drawMazeColumn(const Graph & g, int row, const Set <CVertex> & s);
 void solveMaze()
 {
    // your code here
+   string command;
+   //1) read the file
+   cout <<"What is the filename?" << endl;
+   cin >> command;
+   //Graph mazeFile(readMaze(command));
+   Graph mazeFile(readMaze("/home/cs235/lesson12/maze5x5.txt"));
+   int row = 0;
+   //2) display the maze before shortest route is found
+   //drawMazeRow(mazeFile,row, Set <CVertex> & s);
+   //3) find the shortest route
+   //4) display the final route
+   ////drawMazeRow(mazeFile,row, Set <CVertex> & s);
 }
 
 /************************************************
  * DRAW MAZE
- * Draw a given mze represented by the graph 'g'
+ * Draw a given maze represented by the graph 'g'
  * on the screen using ASCII-art. There are two parameters:
  *    g     - the graph containing the maze
  *    path  - the path from the upper left corner to the lower right
@@ -75,7 +87,7 @@ void drawMaze(const Graph & g, const Vector <Vertex> & path)
  * READ MAZE
  * Read a maze from the file
  ********************************************/
- /*
+
 Graph readMaze(const char * fileName)
 {
    // attempt to open the file
@@ -104,12 +116,12 @@ Graph readMaze(const char * fileName)
    return g;
 
 }
- */
+
 /**********************************************
  * DRAW MAZE ROW
  * Draw all the horizontal tunnels on a given row
  *********************************************/
-  /*
+/*
 void drawMazeRow(const Graph & g, int row, Set <CVertex> & s)
 {
    const char * space = NULL;
@@ -141,7 +153,7 @@ void drawMazeRow(const Graph & g, int row, Set <CVertex> & s)
    space = (s.end() == s.find(vTo) ? "  " : "##");
    cout << space << "|\n";
 }
-  */
+*/
 /**********************************************
  * DRAW MAZE COLUMN
  * Draw all the vertical tunnels on a given row
@@ -173,5 +185,5 @@ void drawMazeColumn(const Graph & g, int row, const Set <CVertex> & s)
    // draw the end of row marker
    cout << endl;
 }
-
    */
+
