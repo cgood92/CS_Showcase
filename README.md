@@ -1,4 +1,4 @@
-# CS_Showcase
+# Data-Structures-C++
 
 This is a repository for my computer science data structures class.  All code in this respository is original to myself and my teammate, Parker Hubbard.
 
