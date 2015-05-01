@@ -1,0 +1,173 @@
+(require 'ment "/home/neffr/emacs/ment.el")
+
+(defun whatIsTrue () (list
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true of my experience in general?                              ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; I had fun. (2 points)
+false
+;; I collaborated with one or more classmates. (2 points)
+false
+;; I learned something new. (3 points)
+false
+;; I achieved something meaningful,
+;; or something I can build upon at a later time. (3 points)
+false
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true of my code's command-line interface?                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; It uses *unmodified* the /home/cs237/cool/coolnessCLI.cpp file,
+;; which interface handles the case of no command-line arguments, calling
+;; a function named *learned*, and then a function named *usage*. (3 points)
+false
+;; The *learned* function outputs well-written words reporting
+;; on the learning that happened. (3 points)
+false
+;; The *usage* function gives instructions on how to run WITH command-line
+;; parameters to run the various tests. (3 points)
+false
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true of the mechanical "infelicities" (misspelled words,        ;;
+;; grammatical errors, punctuation errors) in my report of what I learned? ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; There are fewer than four. (2 points)
+false
+;; There are fewer than three. (2 points)
+false
+;; There are fewer than two. (2 points)
+false
+;; There are none. (2 points)
+false
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true of how my code handles command-line arguments              ;;
+;; specifying what is to be tested?                                        ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; It handles TAA independently or in any combination
+;; with the others. (2 points)
+false
+;; It handles FAA independently or in any combination
+;; with the others. (2 points)
+false
+;; It handles TAS independently or in any combination
+;; with the others. (2 points)
+false
+;; It handles FAS independently or in any combination
+;; with the others. (2 points)
+false
+;; It handles TSA independently or in any combination
+;; with the others. (2 points)
+false
+;; It handles FSA independently or in any combination
+;; with the others. (2 points)
+false
+;; It handles TSS independently or in any combination
+;; with the others. (2 points)
+false
+;; It handles FSS independently or in any combination
+;; with the others. (2 points)
+false
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true about the correctness and completeness of my code?         ;;
+;; (Do the four functions, forAllForAll, forAllForSome, forSomeForAll,     ;;
+;;  and forSomeForSome, work correctly?                                    ;;
+;;  As verified specifically by testing? Namely the following:)            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Actual output matches expected output
+;; for at least one *true* case of forAllForAll. (2 points)
+false
+;; Actual output matches expected output
+;; for at least one *false* case of forAllForAll. (2 points)
+false
+;; Actual output matches expected output
+;; for at least one *true* case of forAllForSome. (2 points)
+false
+;; Actual output matches expected output
+;; for at least one *false* case of forAllForSome. (2 points)
+false
+;; Actual output matches expected output
+;; for at least one *true* case of forSomeForAll. (2 points)
+false
+;; Actual output matches expected output
+;; for at least one *false* case of forSomeForAll. (2 points)
+false
+;; Actual output matches expected output
+;; for at least one *true* case of forSomeForSome. (2 points)
+false
+;; Actual output matches expected output
+;; for at least one *false* case of forSomeForSome. (2 points)
+false
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true about the clarity of my test output?
+;; Is it true that my test output is formatted such that
+;; it is crystal clear (at a glance) how for each case below
+;; the expected values match their actual values?
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; true forAllForAll --- test TAA. (2 points)
+false
+;; false forAllForAll --- test FAA. (2 points)
+false
+;; true forAllForSome --- test TAS. (2 points)
+false
+;; false forAllForSome --- test FAS. (2 points)
+false
+;; true forSomeForAll --- test TSA. (2 points)
+false
+;; false forSomeForAll --- test FSA. (2 points)
+false
+;; true forSomeForSome --- test TSS. (2 points)
+false
+;; false forSomeForSome --- test FSS. (2 points)
+false
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true about the elegance of my code?                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; It has some by virtue of its correctness, as first and foremost,
+;; an elegant solution is a correct solution. (2 points)
+false
+;; It increases by using the four functions as intended without
+;; modifying their signatures. (2 points)
+false
+;; It increases by extending without modifying
+;; the given Predicate behaviors. (4 points)
+false
+;; It increases by means of helper functions that increase cohesion,
+;; and minimize the complexity of the logic. (7 points)
+false
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true about the creativity of my code?                           ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; It is minimal,
+;; but at least it shows how the GreaterThan predicate works. (2 points)
+false
+;; It increases by further using LessThan or some similar Predicate
+;; with the same domain as GreaterThan. (2 points)
+false
+;; It increases by further using a Predicate of my own devising
+;; that uses arithmetic and logic, or just numbers related by
+;; a compound relational expression. (3 points)
+false
+;; It increases by including one or more Predicates that relate to my everyday
+;; world or domain of discourse. (3 points)
+false
+))
+
+;;; Local Variables: 
+;;; mode: Emacs-Lisp
+;;; compile-command: "whatIsTrue /home/cs237/cool"
+;;; TeX-master: t
+;;; End: 
