@@ -133,6 +133,7 @@ public:
  * two functions forAll and forSome for the simple Predicates
  * IsEven and IsOdd.
  ***************************************************************/
+/*
 int main()
 {
    IsEven<int> even;
@@ -191,3 +192,5 @@ int main()
 
    return 0;
 }
+
+*/
