@@ -128,7 +128,22 @@ public:
 	}
 	bool isFalse(T1 one, T2 two)
 	{
-		return !(one > two);
+		return !isTrue(one, two);
+	}
+};
+
+
+template<typename T1, typename T2>
+class LessThan : public Predicate<T1, T2>
+{
+public:
+	bool isTrue(T1 one, T2 two)
+	{
+		return (one < two);
+	}
+	bool isFalse(T1 one, T2 two)
+	{
+		return !isTrue(one, two);
 	}
 };
 
@@ -209,7 +224,13 @@ void runAll(GreaterThan<T1, T2> test, vector<T1> v1, vector<T2> v2)
 *************************************************************************/
 void learned()
 {
-	cout << "This is what I learned!" << endl;
+	cout << "I worked with a tutor on this assignment, and we focused on learning on the 4 combinations of 'for all' and 'for some'.  First of all, the order in which the two occur "
+		<< "is important.  ForAllForSome is NOT equivalent to forSomeForAll.The former will go through the entire first set, and all it must need find is at least one truth from the "
+		<< "other set for each time in the first set to be considered true overall.  The latter does not care that every item in the first set has at least one truth in the alternate "
+		<< "set; rather it cares that at least one of the elements in the second set is true when matched against every element in the first set.  Their logic is completely different "
+		<< "in some perspectives.  Yet the code looks remarkably similar, with only the booelans being inverted.  I found that to be interesting.  Again, to sum up, the most important "
+		<< "thing that I learned was that the order in which these two quantifiers occur changes the entire meaning."
+		<< "\nOther things that I learned included templated functions (not just templated classes), vectors, exposure to lisp, etc. " << endl;
 }
 
 /*************************************************************************
