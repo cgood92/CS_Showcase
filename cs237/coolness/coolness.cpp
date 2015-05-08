@@ -166,21 +166,68 @@ public:
 	}
 };
 
+template<typename T1, typename T2>
+class FactorOf : public Predicate<T1, T2>
+{
+public:
+	bool isTrue(T1 one, T2 two)
+	{
+		return (one % two == 0);
+	}
+	bool isFalse(T1 one, T2 two)
+	{
+		return !isTrue(one, two);
+	}
+};
+
+
+/*
+	1 = Hiking
+	2 = Reading
+	3 = Basketball
+	4 = Biking
+	5 = Movies
+	6 = Tennis
+	7 = Piano
+	8 = Cooking
+	9 = Horses
+	10 = Traveling
+*/
+
+template<typename T1, typename T2>
+class HasSimilarInterests : public Predicate<T1, T2>
+{
+public:
+	bool isTrue(T1 one, T2 two)
+	{
+		return (one == two);
+	}
+	bool isFalse(T1 one, T2 two)
+	{
+		return !isTrue(one, two);
+	}
+};
+
 /***************************************************************
  * Reports on what was learned.
  ***************************************************************/
 void learned()
 {
-	cout << "I worked with a tutor on this assignment, and we focused on learning on the 4 combinations of 'for all' and 'for some'.  First of all, the order in which the two occur "
-		<< "is important.  ForAllForSome is NOT equivalent to forSomeForAll.The former will go through the entire first set, and all it must need find is at least one truth from the "
-		<< "other set for each time in the first set to be considered true overall.  The latter does not care that every item in the first set has at least one truth in the alternate "
-		<< "set; rather it cares that at least one of the elements in the second set is true when matched against every element in the first set.  Their logic is completely different "
-		<< "in some perspectives.  Yet the code looks remarkably similar, with only the booelans being inverted.  I found that to be interesting.  Again, to sum up, the most important "
-		<< "thing that I learned was that the order in which these two quantifiers occur changes the entire meaning."
-		<< "\nOther things that I learned included templated functions (not just templated classes), vectors, exposure to lisp, etc. " << endl;
+	cout << "\tI worked with a tutor on this assignment, and we focused on learning on the 4 combinations"
+		<< "\n\tof 'for all' and 'for some'.  First of all, the order in which the two occur is important."
+		<< "\n\tForAllForSome is NOT equivalent to forSomeForAll.The former will go through the entire first"
+		<< "\n\tset, and all it must need find is at least one truth from the other set for each time in the"
+		<< "\n\tfirst set to be considered true overall.  The latter does not care that every item in the first"
+		<< "\n\tset has at least one truth in the alternate set; rather it cares that at least one of the elements"
+		<< "\n\tin the second set is true when matched against every element in the first set.  Their logic is"
+		<< "\n\tcompletely different in some perspectives.  Yet the code looks remarkably similar, with only the"
+		<< "\n\tbooelans being inverted.  I found that to be interesting.  Again, to sum up, the most important"
+		<< "\n\tthing that I learned was that the order in which these two quantifiers occur changes the entire meaning."
+		<< "\n\n\tOther things that I learned included templated functions (not just templated classes), vectors,"
+		<< "\n\texposure to lisp, etc.\n\n" << endl;
 }
 
-void usage()
+void usage(const char * programName)
 {
    cout << "Run the program with the following test keywords in any\n"
         << "combination:\n\n"
@@ -189,32 +236,50 @@ void usage()
 }
 
 /**************************************************************
- * runTrueForAllForAll tests the true return value for the
- * forAllForAll function, with the GreaterThan Predicate subclass.
- ***************************************************************/
-void runTrueForAllForAll()
+* runTrueForAllForAll tests the true return value for the
+* forAllForAll function, with the GreaterThan, LessThan, and FactorOf Predicate subclasses.
+***************************************************************/
+void runForAllForAll(vector<int> d1, vector<int> d2, string booleanExpectedGT, string booleanExpectedLT, string booleanExpectedFO)
 {
-   GreaterThan<int, int> gt;
+	GreaterThan<int, int> gt;
+	LessThan<int, int> lt;
+	FactorOf<int, int> fo;
 
-   vector<int> domain1;
-   domain1.push_back(6);
-   domain1.push_back(7);
-   domain1.push_back(8);
-   domain1.push_back(9);
-   domain1.push_back(10);
+	cout << boolalpha;
+	cout << "gt.forAllForAll(d1, d2)\n"
+		<< "     expected to return " << booleanExpectedGT << "; \n"
+		<< " actual return value is "
+		<< gt.forAllForAll(d1, d2) << ".\n\n";
 
-   vector<int> domain2;
-   domain2.push_back(1);
-   domain2.push_back(2);
-   domain2.push_back(3);
-   domain2.push_back(4);
-   domain2.push_back(5);
+	cout << "lt.forAllForAll(d1, d2)\n"
+		<< "     expected to return " << booleanExpectedLT << "; \n"
+		<< " actual return value is "
+		<< lt.forAllForAll(d1, d2) << ".\n\n";
 
-   cout << boolalpha; // so 1 displays as true, and 0 false.
-   cout << "gt.forAllForAll(domain1, domain2)\n"
-        << "     expected to return true;\n"
-        << " actual return value is "
-        << gt.forAllForAll(domain1, domain2) << ".\n\n";
+	cout << "fo.forAllForAll(d1, d2)\n"
+		<< "     expected to return " << booleanExpectedFO << "; \n"
+		<< " actual return value is "
+		<< fo.forAllForAll(d1, d2) << ".\n\n";
+}
+
+/**************************************************************
+* runTrueForAllForAll tests the true return value for the
+* forAllForAll function, with the HasSimilarInterests Predicate subclass.
+***************************************************************/
+void runForAllForAllSpecial(vector<int> d1, vector<int> d2, string booleanExpectedSpecial)
+{
+	HasSimilarInterests<int, int> interest;
+
+	cout << boolalpha;
+	cout << "interest.forAllForAll(d1, d2)\n"
+		<< "     expected to return " << booleanExpectedSpecial << "; \n"
+		<< " actual return value is "
+		<< interest.forAllForAll(d1, d2) << ".\n";
+	if (interest.forAllForAll(d1, d2))
+	{
+		cout << "Perfect match!\n";
+	}
+	cout << "\n";
 }
 
 /**************************************************************
@@ -227,14 +292,63 @@ void runTrueForAllForAll()
  ***************************************************************/
 void runOne(string test)
 {
+	vector<int> domain1;
+	domain1.push_back(6);
+	domain1.push_back(7);
+	domain1.push_back(8);
+	domain1.push_back(9);
+	domain1.push_back(10);
+
+	vector<int> domain2;
+	domain2.push_back(1);
+	domain2.push_back(2);
+	domain2.push_back(3);
+	domain2.push_back(4);
+	domain2.push_back(5);
+
+	//Simliar, but not exact
+	vector<int> girl1;
+	girl1.push_back(1);
+	girl1.push_back(2);
+	girl1.push_back(7);
+	girl1.push_back(8);
+	girl1.push_back(9);
+
+	//Simliar, but not exact
+	vector<int> guy1;
+	guy1.push_back(3);
+	guy1.push_back(4);
+	guy1.push_back(8);
+	guy1.push_back(10);
+
+	//Perfect Match
+	vector<int> girl2;
+	girl2.push_back(4);
+	girl2.push_back(2);
+	girl2.push_back(5);
+	girl2.push_back(7);
+	girl2.push_back(9);
+
+	//Perfect Match
+	vector<int> guy2;
+	guy2.push_back(5);
+	guy2.push_back(9);
+	guy2.push_back(4);
+	guy2.push_back(2);
+	guy2.push_back(7);
+
    cout << "\nRunning test " << test << endl;
-   if (test == "TAA") // T for True, A for All, A for All
+   if (test == "TAA")
    {
-      runTrueForAllForAll();
+	   runForAllForAll(domain1, domain2, "true", "false", "false");
+	   runForAllForAllSpecial(girl1, guy1, "false");
+	   runForAllForAllSpecial(girl2, guy2, "true");
    }
    else if (test == "FAA")
    {
-      ; // etc.
+	   runForAllForAll(domain1, domain2, "false", "true", "true");
+	   runForAllForAllSpecial(girl1, guy1, "true");
+	   runForAllForAllSpecial(girl2, guy2, "false");
    }
 }
 
