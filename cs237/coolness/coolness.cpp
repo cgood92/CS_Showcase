@@ -182,6 +182,7 @@ public:
 
 
 /*
+	Simliar interests key
 	1 = Hiking
 	2 = Reading
 	3 = Basketball
@@ -191,7 +192,35 @@ public:
 	7 = Piano
 	8 = Cooking
 	9 = Horses
-	10 = Traveling
+	10 = Travelling
+
+	Girl1 likes
+		Hiking (1)
+		Reading (2)
+		Piano (7)
+		Cooking (8)
+		Horses (9)
+
+	Guy1 likes
+		Basketball (3)
+		Biking (4)
+		Cooking (8)
+		1Travelling (0)
+
+	Girl2 likes
+		Biking (4)
+		Reading (2)
+		Movies (5)
+		Piano (7)
+		Horses (9)
+
+	Guy2 likes
+		Movies (5)
+		Horses (9)
+		Biking (4)
+		Reading (2)
+		Piano (7)
+
 */
 
 template<typename T1, typename T2>
@@ -239,7 +268,7 @@ void usage(const char * programName)
 * runTrueForAllForAll tests the true return value for the
 * forAllForAll function, with the GreaterThan, LessThan, and FactorOf Predicate subclasses.
 ***************************************************************/
-void runForAllForAll(vector<int> d1, vector<int> d2, string booleanExpectedGT, string booleanExpectedLT, string booleanExpectedFO)
+void runForAllForAll(vector<int> d1, vector<int> d2, bool trueFalse, string booleanExpectedGT, string booleanExpectedLT, string booleanExpectedFO)
 {
 	GreaterThan<int, int> gt;
 	LessThan<int, int> lt;
@@ -249,24 +278,24 @@ void runForAllForAll(vector<int> d1, vector<int> d2, string booleanExpectedGT, s
 	cout << "gt.forAllForAll(d1, d2)\n"
 		<< "     expected to return " << booleanExpectedGT << "; \n"
 		<< " actual return value is "
-		<< gt.forAllForAll(d1, d2) << ".\n\n";
+		<< ((trueFalse) ? gt.forAllForAll(d1, d2) : !gt.forAllForAll(d1, d2)) << ".\n\n";
 
 	cout << "lt.forAllForAll(d1, d2)\n"
 		<< "     expected to return " << booleanExpectedLT << "; \n"
 		<< " actual return value is "
-		<< lt.forAllForAll(d1, d2) << ".\n\n";
+		<< ((trueFalse) ? lt.forAllForAll(d1, d2) : !lt.forAllForAll(d1, d2)) << ".\n\n";
 
 	cout << "fo.forAllForAll(d1, d2)\n"
 		<< "     expected to return " << booleanExpectedFO << "; \n"
 		<< " actual return value is "
-		<< fo.forAllForAll(d1, d2) << ".\n\n";
+		<< ((trueFalse) ? fo.forAllForAll(d1, d2) : !fo.forAllForAll(d1, d2)) << ".\n\n";
 }
 
 /**************************************************************
 * runTrueForAllForAll tests the true return value for the
 * forAllForAll function, with the HasSimilarInterests Predicate subclass.
 ***************************************************************/
-void runForAllForAllSpecial(vector<int> d1, vector<int> d2, string booleanExpectedSpecial)
+void runForAllForAllSpecial(vector<int> d1, vector<int> d2, bool trueFalse, string booleanExpectedSpecial)
 {
 	HasSimilarInterests<int, int> interest;
 
@@ -274,8 +303,8 @@ void runForAllForAllSpecial(vector<int> d1, vector<int> d2, string booleanExpect
 	cout << "interest.forAllForAll(d1, d2)\n"
 		<< "     expected to return " << booleanExpectedSpecial << "; \n"
 		<< " actual return value is "
-		<< interest.forAllForAll(d1, d2) << ".\n";
-	if (interest.forAllForAll(d1, d2))
+		<< ((trueFalse) ? interest.forAllForAll(d1, d2) : !interest.forAllForAll(d1, d2)) << ".\n";
+	if (interest.forAllForAll(d1, d2) && trueFalse)
 	{
 		cout << "Perfect match!\n";
 	}
@@ -340,15 +369,15 @@ void runOne(string test)
    cout << "\nRunning test " << test << endl;
    if (test == "TAA")
    {
-	   runForAllForAll(domain1, domain2, "true", "false", "false");
-	   runForAllForAllSpecial(girl1, guy1, "false");
-	   runForAllForAllSpecial(girl2, guy2, "true");
+	   runForAllForAll(domain1, domain2, true, "true", "false", "false");
+	   runForAllForAllSpecial(girl1, guy1, true, "false");
+	   runForAllForAllSpecial(girl2, guy2, true, "true");
    }
    else if (test == "FAA")
    {
-	   runForAllForAll(domain1, domain2, "false", "true", "true");
-	   runForAllForAllSpecial(girl1, guy1, "true");
-	   runForAllForAllSpecial(girl2, guy2, "false");
+	   runForAllForAll(domain1, domain2, false, "true", "false", "false");
+	   runForAllForAllSpecial(girl1, guy1, false, "false");
+	   runForAllForAllSpecial(girl2, guy2, false, "true");
    }
 }
 
