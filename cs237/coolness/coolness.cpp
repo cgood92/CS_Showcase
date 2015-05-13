@@ -205,7 +205,7 @@ public:
 		Basketball (3)
 		Biking (4)
 		Cooking (8)
-		1Travelling (0)
+		Travelling (0)
 
 	Girl2 likes
 		Biking (4)
@@ -265,57 +265,203 @@ void usage(const char * programName)
 }
 
 /**************************************************************
-* runTrueForAllForAll tests the true return value for the
-* forAllForAll function, with the GreaterThan, LessThan, and FactorOf Predicate subclasses.
+* runForAllForAll tests the return value for the
+* forAllForAll function, with the GreaterThan, LessThan, and 
+* FactorOf, and special Predicate subclasses.
 ***************************************************************/
-void runForAllForAll(vector<int> d1, vector<int> d2, bool trueFalse, string booleanExpectedGT, string booleanExpectedLT, string booleanExpectedFO)
+void runForAllForAll(string test, vector<int> d1, vector<int> d2, bool booleanExpected)
 {
-	GreaterThan<int, int> gt;
-	LessThan<int, int> lt;
-	FactorOf<int, int> fo;
-
 	cout << boolalpha;
+	cout << test << ".forAllForAll(d1, d2)\n"
+		<< "     expected to return " << booleanExpected << "; \n"
+		<< " actual return value is ";
 
+	//run the predicate test specified
 	//Greater than
-	cout << "gt.forAllForAll(d1, d2)\n"
-		<< "     expected to return " << booleanExpectedGT << "; \n"
-		<< " actual return value is "
-		<< ((trueFalse) ? gt.forAllForAll(d1, d2) : !gt.forAllForAll(d1, d2)) << ".\n\n";
-
+	if (test == "gt")
+	{
+		GreaterThan<int, int> gt;
+		cout << gt.forAllForAll(d1, d2) << ".";
+	}
 	//Less than
-	cout << "lt.forAllForAll(d1, d2)\n"
-		<< "     expected to return " << booleanExpectedLT << "; \n"
-		<< " actual return value is "
-		<< ((trueFalse) ? lt.forAllForAll(d1, d2) : !lt.forAllForAll(d1, d2)) << ".\n\n";
-
+	else if (test == "lt")
+	{
+		LessThan<int, int> lt;
+		cout << lt.forAllForAll(d1, d2) << ".";
+	}
 	//Factor of
-	cout << "fo.forAllForAll(d1, d2)\n"
-		<< "     expected to return " << booleanExpectedFO << "; \n"
-		<< " actual return value is "
-		<< ((trueFalse) ? fo.forAllForAll(d1, d2) : !fo.forAllForAll(d1, d2)) << ".\n\n";
+	else if (test == "fo")
+	{
+		FactorOf<int, int> fo;
+		cout << fo.forAllForAll(d1, d2) << ".";
+	}
+	//Special
+	else if (test == "sp")
+	{
+		HasSimilarInterests<int, int> interest;
+		cout << interest.forAllForAll(d1, d2) << ".";
+
+		//Special comments (for fun)
+		if (interest.forAllForAll(d1, d2))
+		{
+			cout << "\nPerfect match!\n";
+		}
+	}
+	else
+	{
+		cout << "Bad test\n";
+	}
+	cout << "\n\n";
+}	
+
+/**************************************************************
+* runForAllForSome tests the return value for the
+* forAllForSome function, with the GreaterThan, LessThan, and
+* FactorOf, and special Predicate subclasses.
+***************************************************************/
+void runForAllForSome(string test, vector<int> d1, vector<int> d2, bool booleanExpected)
+{
+	cout << boolalpha;
+	cout << test << ".forAllForSome(d1, d2)\n"
+		<< "     expected to return " << booleanExpected << "; \n"
+		<< " actual return value is ";
+
+	//run the predicate test specified
+	//Greater than
+	if (test == "gt")
+	{
+		GreaterThan<int, int> gt;
+		cout << gt.forAllForSome(d1, d2) << ".";
+	}
+	//Less than
+	else if (test == "lt")
+	{
+		LessThan<int, int> lt;
+		cout << lt.forAllForSome(d1, d2) << ".";
+	}
+	//Factor of
+	else if (test == "fo")
+	{
+		FactorOf<int, int> fo;
+		cout << fo.forAllForSome(d1, d2) << ".";
+	}
+	//Special
+	else if (test == "sp")
+	{
+		HasSimilarInterests<int, int> interest;
+		cout << interest.forAllForSome(d1, d2) << ".";
+
+		//Special comments (for fun)
+		if (interest.forAllForSome(d1, d2))
+		{
+			cout << "\nPerfect match!\n";
+		}
+	}
+	else
+	{
+		cout << "Bad test\n";
+	}
+	cout << "\n\n";
 }
 
 /**************************************************************
-* runTrueForAllForAll tests the true return value for the
-* forAllForAll function, with the HasSimilarInterests Predicate subclass.
+* runForSomeForAll tests the return value for the
+* forSomeForAll function, with the GreaterThan, LessThan, and
+* FactorOf, and special Predicate subclasses.
 ***************************************************************/
-void runForAllForAllSpecial(vector<int> d1, vector<int> d2, bool trueFalse, string booleanExpectedSpecial)
+void runForSomeForAll(string test, vector<int> d1, vector<int> d2, bool booleanExpected)
 {
-	//Test predicate
-	HasSimilarInterests<int, int> interest;
-
 	cout << boolalpha;
-	cout << "interest.forAllForAll(d1, d2)\n"
-		<< "     expected to return " << booleanExpectedSpecial << "; \n"
-		<< " actual return value is "
-		<< ((trueFalse) ? interest.forAllForAll(d1, d2) : !interest.forAllForAll(d1, d2)) << ".\n";
+	cout << test << ".forSomeForAll(d1, d2)\n"
+		<< "     expected to return " << booleanExpected << "; \n"
+		<< " actual return value is ";
 
-	//Does everything for set 1 and set 2 match? If so, a perfect match!
-	if (interest.forAllForAll(d1, d2) && trueFalse)
+	//run the predicate test specified
+	//Greater than
+	if (test == "gt")
 	{
-		cout << "Perfect match!\n";
+		GreaterThan<int, int> gt;
+		cout << gt.forSomeForAll(d1, d2) << ".";
 	}
-	cout << "\n";
+	//Less than
+	else if (test == "lt")
+	{
+		LessThan<int, int> lt;
+		cout << lt.forSomeForAll(d1, d2) << ".";
+	}
+	//Factor of
+	else if (test == "fo")
+	{
+		FactorOf<int, int> fo;
+		cout << fo.forSomeForAll(d1, d2) << ".";
+	}
+	//Special
+	else if (test == "sp")
+	{
+		HasSimilarInterests<int, int> interest;
+		cout << interest.forSomeForAll(d1, d2) << ".";
+
+		//Special comments (for fun)
+		if (interest.forSomeForAll(d1, d2))
+		{
+			cout << "\nPerfect match!\n";
+		}
+	}
+	else
+	{
+		cout << "Bad test\n";
+	}
+	cout << "\n\n";
+}
+
+/**************************************************************
+* runForSomeForSome tests the return value for the
+* forSomeForSome function, with the GreaterThan, LessThan, and
+* FactorOf, and special Predicate subclasses.
+***************************************************************/
+void runForSomeForSome(string test, vector<int> d1, vector<int> d2, bool booleanExpected)
+{
+	cout << boolalpha;
+	cout << test << ".forSomeForSome(d1, d2)\n"
+		<< "     expected to return " << booleanExpected << "; \n"
+		<< " actual return value is ";
+
+	//run the predicate test specified
+	//Greater than
+	if (test == "gt")
+	{
+		GreaterThan<int, int> gt;
+		cout << gt.forSomeForSome(d1, d2) << ".";
+	}
+	//Less than
+	else if (test == "lt")
+	{
+		LessThan<int, int> lt;
+		cout << lt.forSomeForSome(d1, d2) << ".";
+	}
+	//Factor of
+	else if (test == "fo")
+	{
+		FactorOf<int, int> fo;
+		cout << fo.forSomeForSome(d1, d2) << ".";
+	}
+	//Special
+	else if (test == "sp")
+	{
+		HasSimilarInterests<int, int> interest;
+		cout << interest.forSomeForSome(d1, d2) << ".";
+
+		//Special comments (for fun)
+		if (interest.forSomeForSome(d1, d2))
+		{
+			cout << "\n\nPerfect match!\n";
+		}
+	}
+	else
+	{
+		cout << "Bad test\n";
+	}
+	cout << "\n\n";
 }
 
 /**************************************************************
@@ -329,64 +475,128 @@ void runForAllForAllSpecial(vector<int> d1, vector<int> d2, bool trueFalse, stri
 void runOne(string test)
 {
 	//Set that is bigger
-	vector<int> domain1;
-	domain1.push_back(6);
-	domain1.push_back(7);
-	domain1.push_back(8);
-	domain1.push_back(9);
-	domain1.push_back(10);
+	vector<int> bigNums;
+	bigNums.push_back(6);
+	bigNums.push_back(7);
+	bigNums.push_back(8);
+	bigNums.push_back(9);
+	bigNums.push_back(10);
 
 	//Set that is smaller
-	vector<int> domain2;
-	domain2.push_back(1);
-	domain2.push_back(2);
-	domain2.push_back(3);
-	domain2.push_back(4);
-	domain2.push_back(5);
+	vector<int> smallNums;
+	smallNums.push_back(1);
+	smallNums.push_back(2);
+	smallNums.push_back(3);
+	smallNums.push_back(4);
+	smallNums.push_back(5);
+
+	//Set that are factorABLE
+	vector<int> factorables;
+	factorables.push_back(30);
+	factorables.push_back(60);
+	factorables.push_back(120);
+	factorables.push_back(180);
+	factorables.push_back(240);
+
+	//Set that are factors
+	vector<int> factors;
+	factors.push_back(2);
+	factors.push_back(3);
+	factors.push_back(5);
+	factors.push_back(6);
+	factors.push_back(10);
 
 	//Simliar, but not exact - 1
 	vector<int> girl1;
-	girl1.push_back(1);
-	girl1.push_back(2);
-	girl1.push_back(7);
-	girl1.push_back(8);
-	girl1.push_back(9);
+	girl1.push_back(1); //Hiking
+	girl1.push_back(2); //Reading
+	girl1.push_back(7); //Piano
+	girl1.push_back(8); //Cooking
+	girl1.push_back(9); //Horses
 
 	//Simliar, but not exact - 1
 	vector<int> guy1;
-	guy1.push_back(3);
-	guy1.push_back(4);
-	guy1.push_back(8);
-	guy1.push_back(10);
+	guy1.push_back(3); //Basketball
+	guy1.push_back(4); //Biking
+	guy1.push_back(8); //Cooking
+	guy1.push_back(10); //Travelling
 
 	//Perfect Match - 2
 	vector<int> girl2;
-	girl2.push_back(4);
-	girl2.push_back(2);
-	girl2.push_back(5);
-	girl2.push_back(7);
-	girl2.push_back(9);
+	girl2.push_back(4); //Biking
+	girl2.push_back(2); //Reading
+	girl2.push_back(5); //Movies
+	girl2.push_back(7); //Piano
+	girl2.push_back(9); //Horses
 
 	//Perfect Match - 2
 	vector<int> guy2;
-	guy2.push_back(5);
-	guy2.push_back(9);
-	guy2.push_back(4);
-	guy2.push_back(2);
-	guy2.push_back(7);
+	guy2.push_back(5); //Movies
+	guy2.push_back(9); //Horses
+	guy2.push_back(4); //Biking
+	guy2.push_back(2); //Reading
+	guy2.push_back(7); //Piano
 
-   cout << "\nRunning test " << test << endl;
+   cout << "\nRunning test " << test << "\n\n";
    if (test == "TAA")
    {
-	   runForAllForAll(domain1, domain2, true, "true", "false", "false");
-	   runForAllForAllSpecial(girl1, guy1, true, "false");
-	   runForAllForAllSpecial(girl2, guy2, true, "true");
+	   runForAllForAll("gt", bigNums, smallNums, true);
+	   runForAllForAll("lt", smallNums, bigNums, true);
+	   runForAllForAll("fo", factorables, factors, true);
+	   runForAllForAll("sp", girl2, guy2, true);
    }
    else if (test == "FAA")
    {
-	   runForAllForAll(domain1, domain2, false, "true", "false", "false");
-	   runForAllForAllSpecial(girl1, guy1, false, "false");
-	   runForAllForAllSpecial(girl2, guy2, false, "true");
+	   runForAllForAll("gt", smallNums, bigNums, false);
+	   runForAllForAll("lt", bigNums, smallNums, false);
+	   runForAllForAll("fo", factors, factorables, false);
+	   runForAllForAll("sp", guy1, girl1, false);
+   }
+   else if (test == "TAS")
+   {
+	   runForAllForSome("gt", bigNums, smallNums, true);
+	   runForAllForSome("lt", smallNums, bigNums, true);
+	   runForAllForSome("fo", factorables, factors, true);
+	   runForAllForSome("sp", girl2, guy2, true);
+   }
+   else if (test == "FAS")
+   {
+	   runForAllForSome("gt", smallNums, bigNums, false);
+	   runForAllForSome("lt", bigNums, smallNums, false);
+	   runForAllForSome("fo", factors, factorables, false);
+	   runForAllForSome("sp", guy1, girl1, false);
+   }
+   else if (test == "TSA")
+   {
+	   runForSomeForAll("gt", bigNums, smallNums, true);
+	   runForSomeForAll("lt", smallNums, bigNums, true);
+	   runForSomeForAll("fo", factorables, factors, true);
+	   runForSomeForAll("sp", girl2, guy2, true);
+   }
+   else if (test == "FSA")
+   {
+	   runForSomeForAll("gt", smallNums, bigNums, false);
+	   runForSomeForAll("lt", bigNums, smallNums, false);
+	   runForSomeForAll("fo", factors, factorables, false);
+	   runForSomeForAll("sp", guy1, girl1, false);
+   }
+   else if (test == "TSS")
+   {
+	   runForSomeForSome("gt", bigNums, smallNums, true);
+	   runForSomeForSome("lt", smallNums, bigNums, true);
+	   runForSomeForSome("fo", factorables, factors, true);
+	   runForSomeForSome("sp", girl2, guy2, true);
+   }
+   else if (test == "FSS")
+   {
+	   runForSomeForSome("gt", smallNums, bigNums, false);
+	   runForSomeForSome("lt", bigNums, smallNums, false);
+	   runForSomeForSome("fo", factors, factorables, false);
+	   runForSomeForSome("sp", guy1, girl1, false);
+   }
+   else
+   {
+	   cout << "Bad test!";
    }
 }
 

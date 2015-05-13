@@ -6,14 +6,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; I had fun. (2 points)
-false
+true
 ;; I collaborated with one or more classmates. (2 points)
-false
+true
 ;; I learned something new. (3 points)
-false
+true
 ;; I achieved something meaningful,
 ;; or something I can build upon at a later time. (3 points)
-false
+true
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; What is true of my code's command-line interface?                       ;;
@@ -22,13 +22,13 @@ false
 ;; It uses *unmodified* the /home/cs237/cool/coolnessCLI.cpp file,
 ;; which interface handles the case of no command-line arguments, calling
 ;; a function named *learned*, and then a function named *usage*. (3 points)
-false
+true
 ;; The *learned* function outputs well-written words reporting
 ;; on the learning that happened. (3 points)
-false
+true
 ;; The *usage* function gives instructions on how to run WITH command-line
 ;; parameters to run the various tests. (3 points)
-false
+true
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; What is true of the mechanical "infelicities" (misspelled words,        ;;
@@ -36,13 +36,13 @@ false
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; There are fewer than four. (2 points)
-false
+true
 ;; There are fewer than three. (2 points)
-false
+true
 ;; There are fewer than two. (2 points)
-false
+true
 ;; There are none. (2 points)
-false
+true
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; What is true of how my code handles command-line arguments              ;;
@@ -136,10 +136,10 @@ false
 
 ;; It has some by virtue of its correctness, as first and foremost,
 ;; an elegant solution is a correct solution. (2 points)
-false
+true
 ;; It increases by using the four functions as intended without
 ;; modifying their signatures. (2 points)
-false
+true
 ;; It increases by extending without modifying
 ;; the given Predicate behaviors. (4 points)
 false
@@ -153,17 +153,17 @@ false
 
 ;; It is minimal,
 ;; but at least it shows how the GreaterThan predicate works. (2 points)
-false
+true
 ;; It increases by further using LessThan or some similar Predicate
 ;; with the same domain as GreaterThan. (2 points)
-false
+true
 ;; It increases by further using a Predicate of my own devising
 ;; that uses arithmetic and logic, or just numbers related by
 ;; a compound relational expression. (3 points)
-false
+true
 ;; It increases by including one or more Predicates that relate to my everyday
 ;; world or domain of discourse. (3 points)
-false
+true
 ))
 
 ;;; Local Variables: 
