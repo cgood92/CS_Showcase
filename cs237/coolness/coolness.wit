@@ -51,28 +51,28 @@ true
 
 ;; It handles TAA independently or in any combination
 ;; with the others. (2 points)
-false
+true
 ;; It handles FAA independently or in any combination
 ;; with the others. (2 points)
-false
+true
 ;; It handles TAS independently or in any combination
 ;; with the others. (2 points)
-false
+true
 ;; It handles FAS independently or in any combination
 ;; with the others. (2 points)
-false
+true
 ;; It handles TSA independently or in any combination
 ;; with the others. (2 points)
-false
+true
 ;; It handles FSA independently or in any combination
 ;; with the others. (2 points)
-false
+true
 ;; It handles TSS independently or in any combination
 ;; with the others. (2 points)
-false
+true
 ;; It handles FSS independently or in any combination
 ;; with the others. (2 points)
-false
+true
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; What is true about the correctness and completeness of my code?         ;;
@@ -114,21 +114,21 @@ false
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; true forAllForAll --- test TAA. (2 points)
-false
+true
 ;; false forAllForAll --- test FAA. (2 points)
-false
+true
 ;; true forAllForSome --- test TAS. (2 points)
-false
+true
 ;; false forAllForSome --- test FAS. (2 points)
-false
+true
 ;; true forSomeForAll --- test TSA. (2 points)
-false
+true
 ;; false forSomeForAll --- test FSA. (2 points)
-false
+true
 ;; true forSomeForSome --- test TSS. (2 points)
-false
+true
 ;; false forSomeForSome --- test FSS. (2 points)
-false
+true
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; What is true about the elegance of my code?                             ;;
