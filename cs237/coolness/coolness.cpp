@@ -275,16 +275,20 @@ void runForAllForAll(vector<int> d1, vector<int> d2, bool trueFalse, string bool
 	FactorOf<int, int> fo;
 
 	cout << boolalpha;
+
+	//Greater than
 	cout << "gt.forAllForAll(d1, d2)\n"
 		<< "     expected to return " << booleanExpectedGT << "; \n"
 		<< " actual return value is "
 		<< ((trueFalse) ? gt.forAllForAll(d1, d2) : !gt.forAllForAll(d1, d2)) << ".\n\n";
 
+	//Less than
 	cout << "lt.forAllForAll(d1, d2)\n"
 		<< "     expected to return " << booleanExpectedLT << "; \n"
 		<< " actual return value is "
 		<< ((trueFalse) ? lt.forAllForAll(d1, d2) : !lt.forAllForAll(d1, d2)) << ".\n\n";
 
+	//Factor of
 	cout << "fo.forAllForAll(d1, d2)\n"
 		<< "     expected to return " << booleanExpectedFO << "; \n"
 		<< " actual return value is "
@@ -297,6 +301,7 @@ void runForAllForAll(vector<int> d1, vector<int> d2, bool trueFalse, string bool
 ***************************************************************/
 void runForAllForAllSpecial(vector<int> d1, vector<int> d2, bool trueFalse, string booleanExpectedSpecial)
 {
+	//Test predicate
 	HasSimilarInterests<int, int> interest;
 
 	cout << boolalpha;
@@ -304,6 +309,8 @@ void runForAllForAllSpecial(vector<int> d1, vector<int> d2, bool trueFalse, stri
 		<< "     expected to return " << booleanExpectedSpecial << "; \n"
 		<< " actual return value is "
 		<< ((trueFalse) ? interest.forAllForAll(d1, d2) : !interest.forAllForAll(d1, d2)) << ".\n";
+
+	//Does everything for set 1 and set 2 match? If so, a perfect match!
 	if (interest.forAllForAll(d1, d2) && trueFalse)
 	{
 		cout << "Perfect match!\n";
@@ -321,6 +328,7 @@ void runForAllForAllSpecial(vector<int> d1, vector<int> d2, bool trueFalse, stri
  ***************************************************************/
 void runOne(string test)
 {
+	//Set that is bigger
 	vector<int> domain1;
 	domain1.push_back(6);
 	domain1.push_back(7);
@@ -328,6 +336,7 @@ void runOne(string test)
 	domain1.push_back(9);
 	domain1.push_back(10);
 
+	//Set that is smaller
 	vector<int> domain2;
 	domain2.push_back(1);
 	domain2.push_back(2);
@@ -335,7 +344,7 @@ void runOne(string test)
 	domain2.push_back(4);
 	domain2.push_back(5);
 
-	//Simliar, but not exact
+	//Simliar, but not exact - 1
 	vector<int> girl1;
 	girl1.push_back(1);
 	girl1.push_back(2);
@@ -343,14 +352,14 @@ void runOne(string test)
 	girl1.push_back(8);
 	girl1.push_back(9);
 
-	//Simliar, but not exact
+	//Simliar, but not exact - 1
 	vector<int> guy1;
 	guy1.push_back(3);
 	guy1.push_back(4);
 	guy1.push_back(8);
 	guy1.push_back(10);
 
-	//Perfect Match
+	//Perfect Match - 2
 	vector<int> girl2;
 	girl2.push_back(4);
 	girl2.push_back(2);
@@ -358,7 +367,7 @@ void runOne(string test)
 	girl2.push_back(7);
 	girl2.push_back(9);
 
-	//Perfect Match
+	//Perfect Match - 2
 	vector<int> guy2;
 	guy2.push_back(5);
 	guy2.push_back(9);
