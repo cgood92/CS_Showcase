@@ -11,6 +11,43 @@
 #include <string>
 using namespace std;
 
+
+//Setting up for the real world example
+struct action
+{
+	bool good;
+	string description;
+};
+
+struct consequence
+{
+	bool blessing;
+	string description;
+};
+
+//This method is used to compare actions with consequences
+bool operator== (action & myaction, consequence & mycon)
+{
+	return (myaction.good == mycon.blessing);
+}
+
+//These next 3 functions are for the purpose of removing errors only, and never actually intended to be ran.  Since each templated subclass will be
+// instantiated, these must exist ----------------------------------------------------------------------------------------------------------------
+bool operator > (action & myaction, consequence & mycon)
+{
+	return false;
+}
+
+bool operator < (action & myaction, consequence & mycon)
+{
+	return false;
+}
+
+bool operator % (action & myaction, consequence & mycon)
+{
+	return false;
+}
+
 /*************************************************************************
  * Binary predicate class declaration.
  *
@@ -137,15 +174,15 @@ bool Predicate<T1, T2>::forSomeForSome(vector<T1> domain1, vector<T2> domain2)
 
 
 template <typename T1, typename T2>
-class GreaterThan : public Predicate<int, int>
+class GreaterThan : public Predicate<T1, T2>
 {
 public:
-   bool isTrue(int x, int y)
+   bool isTrue(T1 x, T2 y)
    {
       return (x > y);
    }
 
-   bool isFalse(int x, int y)
+   bool isFalse(T1 x, T2 y)
    {
       return !isTrue(x, y);
    }
@@ -180,62 +217,20 @@ public:
 	}
 };
 
-
-/*
-	Simliar interests key
-	1 = Hiking
-	2 = Reading
-	3 = Basketball
-	4 = Biking
-	5 = Movies
-	6 = Tennis
-	7 = Piano
-	8 = Cooking
-	9 = Horses
-	10 = Travelling
-
-	Girl1 likes
-		Hiking (1)
-		Reading (2)
-		Piano (7)
-		Cooking (8)
-		Horses (9)
-
-	Guy1 likes
-		Basketball (3)
-		Biking (4)
-		Cooking (8)
-		Travelling (0)
-
-	Girl2 likes
-		Biking (4)
-		Reading (2)
-		Movies (5)
-		Piano (7)
-		Horses (9)
-
-	Guy2 likes
-		Movies (5)
-		Horses (9)
-		Biking (4)
-		Reading (2)
-		Piano (7)
-
-*/
-
 template<typename T1, typename T2>
-class HasSimilarInterests : public Predicate<T1, T2>
+class LawOfRestoration : public Predicate<T1, T2>
 {
 public:
-	bool isTrue(T1 one, T2 two)
+	bool isTrue(T1 myaction, T2 myconsequence)
 	{
-		return (one == two);
+		return (myaction ==  myconsequence);
 	}
-	bool isFalse(T1 one, T2 two)
+	bool isFalse(T1 myaction, T2 myconsequence)
 	{
-		return !isTrue(one, two);
+		return !isTrue(myaction, myconsequence);
 	}
 };
+
 
 /***************************************************************
  * Reports on what was learned.
@@ -250,7 +245,7 @@ void learned()
 		<< "\n\tset has at least one truth in the alternate set; rather it cares that at least one of the elements"
 		<< "\n\tin the second set is true when matched against every element in the first set.  Their logic is"
 		<< "\n\tcompletely different in some perspectives.  Yet the code looks remarkably similar, with only the"
-		<< "\n\tbooelans being inverted.  I found that to be interesting.  Again, to sum up, the most important"
+		<< "\n\tbooelans being inverted.  I found that to be lawing.  Again, to sum up, the most important"
 		<< "\n\tthing that I learned was that the order in which these two quantifiers occur changes the entire meaning."
 		<< "\n\n\tOther things that I learned included templated functions (not just templated classes), vectors,"
 		<< "\n\texposure to lisp, etc.\n\n" << endl;
@@ -269,7 +264,8 @@ void usage(const char * programName)
 * forAllForAll function, with the GreaterThan, LessThan, and 
 * FactorOf, and special Predicate subclasses.
 ***************************************************************/
-void runForAllForAll(string test, vector<int> d1, vector<int> d2, bool booleanExpected)
+template<typename T1, typename T2>
+void runForAllForAll(string test, vector<T1> d1, vector<T2> d2, bool booleanExpected)
 {
 	cout << boolalpha;
 	cout << test << ".forAllForAll(d1, d2)\n"
@@ -280,29 +276,29 @@ void runForAllForAll(string test, vector<int> d1, vector<int> d2, bool booleanEx
 	//Greater than
 	if (test == "gt")
 	{
-		GreaterThan<int, int> gt;
+		GreaterThan<T1, T2> gt;
 		cout << gt.forAllForAll(d1, d2) << ".";
 	}
 	//Less than
 	else if (test == "lt")
 	{
-		LessThan<int, int> lt;
+		LessThan<T1, T2> lt;
 		cout << lt.forAllForAll(d1, d2) << ".";
 	}
 	//Factor of
 	else if (test == "fo")
 	{
-		FactorOf<int, int> fo;
+		FactorOf<T1, T2> fo;
 		cout << fo.forAllForAll(d1, d2) << ".";
 	}
 	//Special
 	else if (test == "sp")
 	{
-		HasSimilarInterests<int, int> interest;
-		cout << interest.forAllForAll(d1, d2) << ".";
+		LawOfRestoration<T1, T2> law;
+		cout << law.forAllForAll(d1, d2) << ".";
 
 		//Special comments (for fun)
-		if (interest.forAllForAll(d1, d2))
+		if (law.forAllForAll(d1, d2))
 		{
 			cout << "\nPerfect match!\n";
 		}
@@ -319,7 +315,8 @@ void runForAllForAll(string test, vector<int> d1, vector<int> d2, bool booleanEx
 * forAllForSome function, with the GreaterThan, LessThan, and
 * FactorOf, and special Predicate subclasses.
 ***************************************************************/
-void runForAllForSome(string test, vector<int> d1, vector<int> d2, bool booleanExpected)
+template<typename T1, typename T2>
+void runForAllForSome(string test, vector<T1> d1, vector<T2> d2, bool booleanExpected)
 {
 	cout << boolalpha;
 	cout << test << ".forAllForSome(d1, d2)\n"
@@ -330,29 +327,29 @@ void runForAllForSome(string test, vector<int> d1, vector<int> d2, bool booleanE
 	//Greater than
 	if (test == "gt")
 	{
-		GreaterThan<int, int> gt;
+		GreaterThan<T1, T2> gt;
 		cout << gt.forAllForSome(d1, d2) << ".";
 	}
 	//Less than
 	else if (test == "lt")
 	{
-		LessThan<int, int> lt;
+		LessThan<T1, T2> lt;
 		cout << lt.forAllForSome(d1, d2) << ".";
 	}
 	//Factor of
 	else if (test == "fo")
 	{
-		FactorOf<int, int> fo;
+		FactorOf<T1, T2> fo;
 		cout << fo.forAllForSome(d1, d2) << ".";
 	}
 	//Special
 	else if (test == "sp")
 	{
-		HasSimilarInterests<int, int> interest;
-		cout << interest.forAllForSome(d1, d2) << ".";
+		LawOfRestoration<T1, T2> law;
+		cout << law.forAllForSome(d1, d2) << ".";
 
 		//Special comments (for fun)
-		if (interest.forAllForSome(d1, d2))
+		if (law.forAllForSome(d1, d2))
 		{
 			cout << "\nPerfect match!\n";
 		}
@@ -369,7 +366,8 @@ void runForAllForSome(string test, vector<int> d1, vector<int> d2, bool booleanE
 * forSomeForAll function, with the GreaterThan, LessThan, and
 * FactorOf, and special Predicate subclasses.
 ***************************************************************/
-void runForSomeForAll(string test, vector<int> d1, vector<int> d2, bool booleanExpected)
+template<typename T1, typename T2>
+void runForSomeForAll(string test, vector<T1> d1, vector<T2> d2, bool booleanExpected)
 {
 	cout << boolalpha;
 	cout << test << ".forSomeForAll(d1, d2)\n"
@@ -380,29 +378,29 @@ void runForSomeForAll(string test, vector<int> d1, vector<int> d2, bool booleanE
 	//Greater than
 	if (test == "gt")
 	{
-		GreaterThan<int, int> gt;
+		GreaterThan<T1, T2> gt;
 		cout << gt.forSomeForAll(d1, d2) << ".";
 	}
 	//Less than
 	else if (test == "lt")
 	{
-		LessThan<int, int> lt;
+		LessThan<T1, T2> lt;
 		cout << lt.forSomeForAll(d1, d2) << ".";
 	}
 	//Factor of
 	else if (test == "fo")
 	{
-		FactorOf<int, int> fo;
+		FactorOf<T1, T2> fo;
 		cout << fo.forSomeForAll(d1, d2) << ".";
 	}
 	//Special
 	else if (test == "sp")
 	{
-		HasSimilarInterests<int, int> interest;
-		cout << interest.forSomeForAll(d1, d2) << ".";
+		LawOfRestoration<T1, T2> law;
+		cout << law.forSomeForAll(d1, d2) << ".";
 
 		//Special comments (for fun)
-		if (interest.forSomeForAll(d1, d2))
+		if (law.forSomeForAll(d1, d2))
 		{
 			cout << "\nPerfect match!\n";
 		}
@@ -419,7 +417,8 @@ void runForSomeForAll(string test, vector<int> d1, vector<int> d2, bool booleanE
 * forSomeForSome function, with the GreaterThan, LessThan, and
 * FactorOf, and special Predicate subclasses.
 ***************************************************************/
-void runForSomeForSome(string test, vector<int> d1, vector<int> d2, bool booleanExpected)
+template<typename T1, typename T2>
+void runForSomeForSome(string test, vector<T1> d1, vector<T2> d2, bool booleanExpected)
 {
 	cout << boolalpha;
 	cout << test << ".forSomeForSome(d1, d2)\n"
@@ -430,29 +429,29 @@ void runForSomeForSome(string test, vector<int> d1, vector<int> d2, bool boolean
 	//Greater than
 	if (test == "gt")
 	{
-		GreaterThan<int, int> gt;
+		GreaterThan<T1, T2> gt;
 		cout << gt.forSomeForSome(d1, d2) << ".";
 	}
 	//Less than
 	else if (test == "lt")
 	{
-		LessThan<int, int> lt;
+		LessThan<T1, T2> lt;
 		cout << lt.forSomeForSome(d1, d2) << ".";
 	}
 	//Factor of
 	else if (test == "fo")
 	{
-		FactorOf<int, int> fo;
+		FactorOf<T1, T2> fo;
 		cout << fo.forSomeForSome(d1, d2) << ".";
 	}
 	//Special
 	else if (test == "sp")
 	{
-		HasSimilarInterests<int, int> interest;
-		cout << interest.forSomeForSome(d1, d2) << ".";
+		LawOfRestoration<T1, T2> law;
+		cout << law.forSomeForSome(d1, d2) << ".";
 
 		//Special comments (for fun)
-		if (interest.forSomeForSome(d1, d2))
+		if (law.forSomeForSome(d1, d2))
 		{
 			cout << "\n\nPerfect match!\n";
 		}
@@ -506,36 +505,52 @@ void runOne(string test)
 	factors.push_back(6);
 	factors.push_back(10);
 
-	//Simliar, but not exact - 1
-	vector<int> girl1;
-	girl1.push_back(1); //Hiking
-	girl1.push_back(2); //Reading
-	girl1.push_back(7); //Piano
-	girl1.push_back(8); //Cooking
-	girl1.push_back(9); //Horses
+	//Good actions only
+	vector<action> actions1;
+	actions1.push_back(action{ true, "Helped old lady across the street" });
+	actions1.push_back(action{ true, "Raked the leaves in the yard" });
+	actions1.push_back(action{ true, "Read my scriptures" });
+	actions1.push_back(action{ true, "Prayed in the morning" });
+	actions1.push_back(action{ true, "Exercised" });
+	actions1.push_back(action{ true, "Cleaned the house" });
 
-	//Simliar, but not exact - 1
-	vector<int> guy1;
-	guy1.push_back(3); //Basketball
-	guy1.push_back(4); //Biking
-	guy1.push_back(8); //Cooking
-	guy1.push_back(10); //Travelling
+	//Blessings only
+	vector<consequence> cons1;
+	cons1.push_back(consequence{ true, "Wisdom" });
+	cons1.push_back(consequence{ true, "Peace" });
+	cons1.push_back(consequence{ true, "Forgiveness" });
+	cons1.push_back(consequence{ true, "Mercy" });
+	cons1.push_back(consequence{ true, "Grace" });
 
-	//Perfect Match - 2
-	vector<int> girl2;
-	girl2.push_back(4); //Biking
-	girl2.push_back(2); //Reading
-	girl2.push_back(5); //Movies
-	girl2.push_back(7); //Piano
-	girl2.push_back(9); //Horses
+	//Mixed actions - for some for some
+	vector<action> actions2;
+	actions2.push_back(action{ true, "Made cookies for neighbors" });
+	actions2.push_back(action{ true, "Cleaned the church" });
+	actions2.push_back(action{ true, "Missionary work" });
+	actions2.push_back(action{ false, "Stole a popsicle" });
+	actions2.push_back(action{ false, "Vandalized the school" });
 
-	//Perfect Match - 2
-	vector<int> guy2;
-	guy2.push_back(5); //Movies
-	guy2.push_back(9); //Horses
-	guy2.push_back(4); //Biking
-	guy2.push_back(2); //Reading
-	guy2.push_back(7); //Piano
+	//Mixed consequences - for some for some
+	vector<consequence> cons2;
+	cons2.push_back(consequence{ true, "Happiness" });
+	cons2.push_back(consequence{ true, "Love" });
+	cons2.push_back(consequence{ false, "Guilt" });
+	cons2.push_back(consequence{ false, "Shame" });
+	cons2.push_back(consequence{ false, "Confusion" });
+
+	//Sins only
+	vector<action> actions3;
+	actions3.push_back(action{ false, "Steal a care" });
+	actions3.push_back(action{ false, "Eat junk food" });
+	actions3.push_back(action{ false, "View pornography" });
+	actions3.push_back(action{ false, "Lie" });
+
+	//Curses only
+	vector<consequence> cons3;
+	cons3.push_back(consequence{ false, "Hellfire" });
+	cons3.push_back(consequence{ false, "Sadness" });
+	cons3.push_back(consequence{ false, "Misery" });
+	cons3.push_back(consequence{ false, "Damnation" });
 
    cout << "\nRunning test " << test << "\n\n";
    if (test == "TAA")
@@ -543,56 +558,56 @@ void runOne(string test)
 	   runForAllForAll("gt", bigNums, smallNums, true);
 	   runForAllForAll("lt", smallNums, bigNums, true);
 	   runForAllForAll("fo", factorables, factors, true);
-	   runForAllForAll("sp", girl2, guy2, true);
+	   runForAllForAll("sp", actions1, cons1, true);
    }
    else if (test == "FAA")
    {
 	   runForAllForAll("gt", smallNums, bigNums, false);
 	   runForAllForAll("lt", bigNums, smallNums, false);
 	   runForAllForAll("fo", factors, factorables, false);
-	   runForAllForAll("sp", guy1, girl1, false);
+	   runForAllForAll("sp", actions3, cons3, false);
    }
    else if (test == "TAS")
    {
 	   runForAllForSome("gt", bigNums, smallNums, true);
 	   runForAllForSome("lt", smallNums, bigNums, true);
 	   runForAllForSome("fo", factorables, factors, true);
-	   runForAllForSome("sp", girl2, guy2, true);
+	   runForAllForSome("sp", actions1, cons2, true);
    }
    else if (test == "FAS")
    {
 	   runForAllForSome("gt", smallNums, bigNums, false);
 	   runForAllForSome("lt", bigNums, smallNums, false);
 	   runForAllForSome("fo", factors, factorables, false);
-	   runForAllForSome("sp", guy1, girl1, false);
+	   runForAllForSome("sp", actions3, cons2, false);
    }
    else if (test == "TSA")
    {
 	   runForSomeForAll("gt", bigNums, smallNums, true);
 	   runForSomeForAll("lt", smallNums, bigNums, true);
 	   runForSomeForAll("fo", factorables, factors, true);
-	   runForSomeForAll("sp", girl2, guy2, true);
+	   runForSomeForAll("sp", actions1, cons2, true);
    }
    else if (test == "FSA")
    {
 	   runForSomeForAll("gt", smallNums, bigNums, false);
 	   runForSomeForAll("lt", bigNums, smallNums, false);
 	   runForSomeForAll("fo", factors, factorables, false);
-	   runForSomeForAll("sp", guy1, girl1, false);
+	   runForSomeForAll("sp", actions2, cons1, false);
    }
    else if (test == "TSS")
    {
 	   runForSomeForSome("gt", bigNums, smallNums, true);
 	   runForSomeForSome("lt", smallNums, bigNums, true);
 	   runForSomeForSome("fo", factorables, factors, true);
-	   runForSomeForSome("sp", girl2, guy2, true);
+	   runForSomeForSome("sp", actions2, cons2, true);
    }
    else if (test == "FSS")
    {
 	   runForSomeForSome("gt", smallNums, bigNums, false);
 	   runForSomeForSome("lt", bigNums, smallNums, false);
 	   runForSomeForSome("fo", factors, factorables, false);
-	   runForSomeForSome("sp", guy1, girl1, false);
+	   runForSomeForSome("sp", actions2, cons2, false);
    }
    else
    {
