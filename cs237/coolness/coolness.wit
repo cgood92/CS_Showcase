@@ -83,28 +83,28 @@ true
 
 ;; Actual output matches expected output
 ;; for at least one *true* case of forAllForAll. (2 points)
-false
+true
 ;; Actual output matches expected output
 ;; for at least one *false* case of forAllForAll. (2 points)
-false
+true
 ;; Actual output matches expected output
 ;; for at least one *true* case of forAllForSome. (2 points)
-false
+true
 ;; Actual output matches expected output
 ;; for at least one *false* case of forAllForSome. (2 points)
-false
+true
 ;; Actual output matches expected output
 ;; for at least one *true* case of forSomeForAll. (2 points)
-false
+true
 ;; Actual output matches expected output
 ;; for at least one *false* case of forSomeForAll. (2 points)
-false
+true
 ;; Actual output matches expected output
 ;; for at least one *true* case of forSomeForSome. (2 points)
-false
+true
 ;; Actual output matches expected output
 ;; for at least one *false* case of forSomeForSome. (2 points)
-false
+true
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; What is true about the clarity of my test output?
@@ -142,10 +142,10 @@ true
 true
 ;; It increases by extending without modifying
 ;; the given Predicate behaviors. (4 points)
-false
+true
 ;; It increases by means of helper functions that increase cohesion,
 ;; and minimize the complexity of the logic. (7 points)
-false
+true
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; What is true about the creativity of my code?                           ;;

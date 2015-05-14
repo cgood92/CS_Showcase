@@ -3,7 +3,6 @@
  ***************************************************************/
 #include <cstdlib>
 #include <string>
-#include <iostream>
 using namespace std;
 
 /***************************************************************
@@ -53,8 +52,5 @@ int main(int argc, const char* argv[])
          runOne(string(argv[i]));
       }
    }
-   runAll();
-   string quit;
-   cin >> quit;
    return 0;
 }   
