@@ -31,8 +31,11 @@ bool operator== (action & myaction, consequence & mycon)
 	return (myaction.good == mycon.blessing);
 }
 
-//These next 3 functions are for the purpose of removing errors only, and never actually intended to be ran.  Since each templated subclass will be
-// instantiated, these must exist ----------------------------------------------------------------------------------------------------------------
+/*
+These next 3 functions are for the purpose of compiling error-free only.  Because of the way I designed my functions,
+a subclass will be instantiated for the struct <action, consequence>, and must have these 3 operators defined,
+for they are used in the GreaterThan, LessThan, and FactorOf subclasses
+*/
 bool operator > (action & myaction, consequence & mycon)
 {
 	return false;
@@ -300,7 +303,11 @@ void runForAllForAll(string test, vector<T1> d1, vector<T2> d2, bool booleanExpe
 		//Special comments (for fun)
 		if (law.forAllForAll(d1, d2))
 		{
-			cout << "\nPerfect match!\n";
+			cout << "\nYou live your life perfectly!\n";
+		}
+		else
+		{
+			cout << "\nYou are quite a sinner!\n";
 		}
 	}
 	else
@@ -351,7 +358,7 @@ void runForAllForSome(string test, vector<T1> d1, vector<T2> d2, bool booleanExp
 		//Special comments (for fun)
 		if (law.forAllForSome(d1, d2))
 		{
-			cout << "\nPerfect match!\n";
+			cout << "\nFor every good deed, there is a blessing in store.!\n";
 		}
 	}
 	else
@@ -398,12 +405,6 @@ void runForSomeForAll(string test, vector<T1> d1, vector<T2> d2, bool booleanExp
 	{
 		LawOfRestoration<T1, T2> law;
 		cout << law.forSomeForAll(d1, d2) << ".";
-
-		//Special comments (for fun)
-		if (law.forSomeForAll(d1, d2))
-		{
-			cout << "\nPerfect match!\n";
-		}
 	}
 	else
 	{
@@ -453,7 +454,7 @@ void runForSomeForSome(string test, vector<T1> d1, vector<T2> d2, bool booleanEx
 		//Special comments (for fun)
 		if (law.forSomeForSome(d1, d2))
 		{
-			cout << "\n\nPerfect match!\n";
+			cout << "\n\nThere is a blessing for a good deed.\n";
 		}
 	}
 	else
@@ -565,7 +566,7 @@ void runOne(string test)
 	   runForAllForAll("gt", smallNums, bigNums, false);
 	   runForAllForAll("lt", bigNums, smallNums, false);
 	   runForAllForAll("fo", factors, factorables, false);
-	   runForAllForAll("sp", actions3, cons3, false);
+	   runForAllForAll("sp", actions1, cons3, false);
    }
    else if (test == "TAS")
    {
@@ -579,21 +580,21 @@ void runOne(string test)
 	   runForAllForSome("gt", smallNums, bigNums, false);
 	   runForAllForSome("lt", bigNums, smallNums, false);
 	   runForAllForSome("fo", factors, factorables, false);
-	   runForAllForSome("sp", actions3, cons2, false);
+	   runForAllForSome("sp", actions1, cons3, false);
    }
    else if (test == "TSA")
    {
 	   runForSomeForAll("gt", bigNums, smallNums, true);
 	   runForSomeForAll("lt", smallNums, bigNums, true);
 	   runForSomeForAll("fo", factorables, factors, true);
-	   runForSomeForAll("sp", actions1, cons2, true);
+	   runForSomeForAll("sp", actions2, cons1, true);
    }
    else if (test == "FSA")
    {
 	   runForSomeForAll("gt", smallNums, bigNums, false);
 	   runForSomeForAll("lt", bigNums, smallNums, false);
 	   runForSomeForAll("fo", factors, factorables, false);
-	   runForSomeForAll("sp", actions2, cons1, false);
+	   runForSomeForAll("sp", actions1, cons2, false);
    }
    else if (test == "TSS")
    {
@@ -607,7 +608,7 @@ void runOne(string test)
 	   runForSomeForSome("gt", smallNums, bigNums, false);
 	   runForSomeForSome("lt", bigNums, smallNums, false);
 	   runForSomeForSome("fo", factors, factorables, false);
-	   runForSomeForSome("sp", actions2, cons2, false);
+	   runForSomeForSome("sp", actions1, cons3, false);
    }
    else
    {
