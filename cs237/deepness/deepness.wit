@@ -1,0 +1,119 @@
+(require 'ment "/home/neffr/emacs/ment.el")
+
+(defun whatIsTrue () (list
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true of my experience in general?                              ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; I had fun. (2 points)
+false
+;; I learned something new. (2 points)
+false
+;; I achieved something meaningful,
+;; or something I can build upon at a later time. (2 points)
+false
+;; I collaborated with one or more classmates. (2 points)
+false
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true of my code in general,                                     ;;
+;; because I took the time to make it so?                                  ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; My code has good, helpful comments in it. (3 points)
+false
+;; My code is in good style. (3 points)
+false
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true of my code's command-line interface?                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; It uses *unmodified* the /home/cs237/deep/deepnessCLI.cpp file,
+;; which interface handles the case of no command-line arguments, calling
+;; a function named *learned*, and then a function named *usage*. (3 points)
+false
+;; The *learned* function outputs several paragraphs reporting
+;; on the learning that happened. (3 points)
+false
+;; The *usage* function gives instructions on how to run WITH command-line
+;; parameters to run various tests. (3 points)
+false
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true of the mechanical "infelicities" (misspelled words,        ;;
+;; grammatical errors, punctuation errors) in my report of what I learned? ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; There are fewer than four. (2 points)
+false
+;; There are fewer than three. (2 points)
+false
+;; There are fewer than two. (2 points)
+false
+;; There are none. (2 points)
+false
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true about the correctness and completeness of my code?         ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; It is verified by showing no output that would report a failure
+;; to satisfy a correct conjecture. (3 points)
+false
+;; It can correctly keep running to completion without
+;; running out of memory. (3 points)
+false
+;; It can correctly keep running in the background when I log out of a
+;; Linux lab machine. (3 points)
+false
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true about the elegance of my code?                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; It has some by virtue of its correctness, as first and foremost,
+;; an elegant solution is a correct solution. (4 points)
+false
+;; It increases by using encapsulation appropriately. (4 points)
+false
+;; It increases by having loose coupling and high cohesion. (4 points)
+false
+;; It increases by having no unnecessary, redundant functionality. (4 points)
+false
+;; It increases by using data types/structures efficiently. (4 points)
+false
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true of the depth of my engagement with this exploration?       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; I found and grasped a clear,
+;; unambiguous statement of a conjecture. (5 points)
+false
+;; I succeeded in verifying this conjecture for many,
+;; many positive integers. (5 points)
+false
+;; I found the threshold beyond which simply using the primitive C++
+;; data types does not work. (5 points)
+false
+;; I went deeper by using an appropriate data type from the NTL so that my
+;; code could verify the conjecture well beyond that threshold. (5 points)
+false
+;; I went deeper by seeking for an approach to a proof. (5 points)
+false
+;; I went deeper by getting close, but not quite to the end. (5 points)
+false
+;; I went deeper by getting all the way to the end,
+;; and clinching the proof. (5 points)
+false
+;; I went still deeper by exploring possible applications
+;; of the ideas I discovered. (5 points)
+false
+))
+
+;;; Local Variables: 
+;;; mode: Emacs-Lisp
+;;; compile-command: "whatIsTrue /home/cs237/deep"
+;;; TeX-master: t
+;;; End: 
