@@ -1,0 +1,112 @@
+(require 'ment "/home/neffr/emacs/ment.el")
+
+(defun whatIsTrue () (list
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true of my experience in general?                              ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; I had fun. (2 points)
+false
+;; I learned something new. (2 points)
+false
+;; I achieved something meaningful,
+;; or something I can build upon at a later time. (2 points)
+false
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true of my collaboration?                                      ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; I collaborated with one or more classmates. (3 points)
+false
+;; I did *NOT* talk to any former CS237 students, which includes
+;; the tutor. (3 points) 
+false
+;; I collaborated with Victor Shoup, just not in person. (3 points)
+false
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true of my code's command-line interface?                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; It uses *unmodified* the /home/cs237/big/bignessCLI.cpp file,
+;; which interface handles the case of no command-line arguments, calling
+;; a function named *learned*, and then a function named *usage*. (3 points)
+false
+;; The *learned* function outputs several (> 9) well-written sentences
+;; reporting on the learning that happened. (3 points)
+false
+;; The *usage* function gives instructions on how to run WITH command-line
+;; parameters. (3 points)
+false
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true of the mechanical "infelicities" (misspelled words,        ;;
+;; grammatical errors, punctuation errors) in my report of what I learned? ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; There are fewer than four. (2 points)
+false
+;; There are fewer than three. (2 points)
+false
+;; There are fewer than two. (2 points)
+false
+;; There are none. (2 points)
+false
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true about the correctness and completeness of my code?         ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; It correctly passes the first-name-last-name test, verified by showing
+;; no diff output from make just. (6 points)
+false
+;; It correctly passes some other test I created for it. (8 points)
+false
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true about the elegance of my code?                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; It has some by virtue of its correctness, as first and foremost,
+;; an elegant solution is a correct solution. (4 points)
+false
+;; It increases by my implementing the helper function fromBase27
+;; in no more than 10 lines of code, not counting lines with just a single
+;; opening or closing curly brace on them. (4 points)
+false
+;; It increases by my implementing the helper function fromBase27
+;; in no more than 6 lines of code, same line counting proviso. (4 points)
+false
+;; It increases by my implementing the helper function toBase27
+;; in no more than 10 lines of code, same line counting proviso. (4 points)
+false
+;; It increases by my implementing the helper function toBase27
+;; in no more than 5 lines of code, same line counting proviso. (4 points)
+false
+;; It increases by my implementing the other four functions, modPow,
+;; findInverse, findE, and findPandQ, in a TOTAL of no more than 12
+;; lines of code, same line counting proviso. (4 points)
+false
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true of the engagement I had with this exploration?             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; It was big by virtue of the time I put into it,
+;; at least four hours. (10 points)
+false
+;; It got bigger by my finding where the Chinese Remainder Theorem is used
+;; in the proof in the rsa_theory.pdf file, identified in my report
+;; by PAGE and PARAGRAPH NUMBER. (10 points)
+false
+;; It got still bigger by my careful study of the pertinent algorithms
+;; in the NTL, expounded on in my report. (10 points)
+false
+))
+
+;;; Local Variables: 
+;;; mode: Emacs-Lisp
+;;; compile-command: "whatIsTrue /home/cs237/big"
+;;; TeX-master: t
+;;; End: 
